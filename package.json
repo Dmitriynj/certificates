@@ -9,8 +9,9 @@
     "angular": "^1.7.x",
     "angular-route": "^1.7.x",
     "bootstrap": "^4.3.1",
-    "jquery": "1.9.1",
-    "popper.js": "^1.14.7"
+    "jquery": "3.4.1",
+    "popper.js": "^1.14.7",
+    "angular-cookies": "1.7.x"
   },
   "devDependencies": {
     "angular-mocks": "^1.7.x",

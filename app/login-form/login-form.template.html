@@ -12,13 +12,24 @@
                         <label for="exampleInputEmail1">Email address</label>
                         <input type="email" name="emailInput" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                placeholder="Enter email" ng-model="$ctrl.credentials.login" ng-maxlength="{{$ctrl.maxlength}}" required="true">
-                        <p ng-show="userForm.emailInput.$invalid && !userForm.emailInput.$pristine">Enter a valid email.</p>
-                        <p ng-show="userForm.emailInput.$error.maxlength">Email is too long.</p>
+                        <div ng-show="userForm.emailInput.$invalid && !userForm.emailInput.$pristine" class="invalid-feedback">
+                            Enter a valid email.
+                        </div>
+                        <div ng-show="userForm.emailInput.$error.maxlength" class="invalid-feedback">
+                            Email is too long.
+                        </div>
+                        <div ng-show="userForm.emailInput.$valid && userForm.emailInput.$pristine" class="valid-feedback">
+                            Looks good!
+                        </div>
+<!--                        <p ng-show="userForm.emailInput.$invalid && !userForm.emailInput.$pristine">Enter a valid email.</p>-->
+<!--                        <p ng-show="userForm.emailInput.$error.maxlength">Email is too long.</p>-->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
                         <input type="password" name="passwordInput" class="form-control" id="exampleInputPassword1" placeholder="Password"
                                ng-model="$ctrl.credentials.password" ng-minlength="{{$ctrl.minlength}}" required="true">
+
+
                         <p ng-show="userForm.passwordInput.$invalid && !userForm.passwordInput.$pristine">Enter a valid password.</p>
                         <p ng-show="userForm.passwordInput.$error.minlength">Password is too short.</p>
                     </div>

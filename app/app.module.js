@@ -2,6 +2,10 @@
 
 angular.module('certificates', [
   'ngRoute',
+  'ngCookies',
   'loginForm',
-  'certificates'
 ]);
+
+
+
+
