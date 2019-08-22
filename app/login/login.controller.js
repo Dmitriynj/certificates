@@ -23,7 +23,7 @@
                 AuthenticationService.Login(vm.credentials, function (response) {
                     if(response.success){
                         AuthenticationService.SetCredentials(vm.credentials);
-                        $location.path('/');
+                        $location.path('/home');
                     }else {
                         MessageService.Error(response.message);
                     }

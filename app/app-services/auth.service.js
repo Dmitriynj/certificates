@@ -11,6 +11,7 @@
         service.Login = Login;
         service.SetCredentials = SetCredentials;
         service.ClearCredentials = ClearCredentials;
+        service.RequireAuth = RequireAuth;
 
         return service;
 
@@ -55,6 +56,16 @@
             $rootScope.globals = {};
             $cookies.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic';
+        }
+
+        function RequireAuth() {
+            // keep user logged in after page refresh
+            $rootScope.globals = $cookies.getObject('globals') || {};
+            if ($rootScope.globals.currentUser) {
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+            }else {
+                throw Error('User is not authenticated!');
+            }
         }
     }
 
