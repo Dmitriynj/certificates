@@ -3,7 +3,7 @@
          ng-if="message"
          role="alert">
         <strong>Notification!</strong> {{message.message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" ng-click="clearMessage()" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>

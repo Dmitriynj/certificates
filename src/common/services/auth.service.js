@@ -4,27 +4,32 @@
     angular.module('certificatesApp')
         .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService'];
-    function AuthenticationService($http, $cookies, $rootScope, $timeout, UserService) {
+    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', 'UserService'];
+    function AuthenticationService($http, $cookies, $rootScope, UserService) {
+
         var service = {};
 
         service.Login = Login;
         service.SetCredentials = SetCredentials;
         service.ClearCredentials = ClearCredentials;
         service.RequireAuth = RequireAuth;
+        service.IsAuthenticated = IsAuthenticated;
 
         return service;
 
         function Login(credentials, callback) {
             var response;
-            if(credentials.email !== 'admin@epam.com' && credentials.password !== 'admin') {
+            var user = UserService.GetByEmail(credentials.email);
+
+            if(user !== null && user.password === credentials.password){
+                response = { success: true };
+            }else {
                 response = {
                     success: false,
                     message: 'Username or password is incorrect'
                 };
-            } else {
-                response = { success: true };
             }
+
             callback(response);
 
             /* Use this for real authentication
@@ -38,11 +43,10 @@
         function SetCredentials(credentials) {
             var authdata = Base64.encode(credentials.email + ':' + credentials.password);
 
+            var user = UserService.GetByEmail(credentials.email);
+
             $rootScope.globals = {
-                currentUser: {
-                    email: credentials.email,
-                    password: credentials.password
-                }
+                currentUser: user
             };
 
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
@@ -66,6 +70,11 @@
             }else {
                 throw Error('User is not authenticated!');
             }
+        }
+
+        function IsAuthenticated() {
+            $rootScope.globals = $cookies.getObject('globals') || {};
+            return $rootScope.globals.currentUser;
         }
     }
 

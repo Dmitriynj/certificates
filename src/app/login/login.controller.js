@@ -9,10 +9,8 @@
     function LoginController($location, AuthenticationService, MessageService) {
         var vm = this;
         vm.login = login;
-
         vm.maxlength = 30;
         vm.minlength = 4;
-
         vm.credentials = {
             email: '',
             password: ''
@@ -29,7 +27,6 @@
                     }
                 });
             }
-
         }
     }
 })();

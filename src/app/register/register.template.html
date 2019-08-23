@@ -1,0 +1,92 @@
+<div class="container p-3">
+    <div class="w-75 shadow rounded-sm p-5 mx-auto">
+    <div class="row">
+        <div class="mx-auto">
+            <h1>Registration form</h1>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col">
+            <form name="userForm" ng-submit="vm.register(userForm.$valid)" novalidate>
+                <div class="form-group">
+                    <label for="firstNameInput">First name</label>
+                    <input type="email"
+                           name="firstNameInput"
+                           class="form-control"
+                           id="firstNameInput"
+                           placeholder="First name"
+                           ng-model="vm.credentials.firstName"
+                           ng-maxlength="{{vm.maxlength}}"
+                           required="true"
+                           ng-class="{'is-invalid': userForm.firstNameInput.$touched && userForm.firstNameInput.$invalid,
+                                            'is-valid': userForm.firstNameInput.$touched && userForm.firstNameInput.$valid}">
+                    <div ng-show="userForm.firstNameInput.$error.maxlength" class="invalid-feedback">
+                        First name is too long.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastNameInput">Last name</label>
+                    <input type="email"
+                           name="lastNameInput"
+                           class="form-control"
+                           id="lastNameInput"
+                           placeholder="Enter last name"
+                           ng-model="vm.credentials.lastName"
+                           ng-maxlength="{{vm.maxlength}}"
+                           required="true"
+                           ng-class="{'is-invalid': userForm.lastNameInput.$touched && userForm.lastNameInput.$invalid,
+                                            'is-valid': userForm.lastNameInput.$touched && userForm.lastNameInput.$valid}">
+                    <div ng-show="userForm.lastNameInput.$error.maxlength" class="invalid-feedback">
+                        Last name is too long.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email"
+                           name="emailInput"
+                           class="form-control"
+                           id="exampleInputEmail1"
+                           aria-describedby="emailHelp"
+                           placeholder="Enter email"
+                           ng-model="vm.credentials.email"
+                           ng-maxlength="{{vm.maxlength}}"
+                           required="true"
+                           ng-class="{'is-invalid': userForm.emailInput.$touched && userForm.emailInput.$invalid,
+                                            'is-valid': userForm.emailInput.$touched && userForm.emailInput.$valid}">
+                    <div ng-show="userForm.emailInput.$error.maxlength" class="invalid-feedback">
+                        Email is too long.
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password"
+                           name="passwordInput"
+                           class="form-control"
+                           id="exampleInputPassword1"
+                           placeholder="Password"
+                           ng-model="vm.credentials.password"
+                           ng-minlength="{{vm.minlength}}" required="true"
+                           ng-class="{'is-invalid': userForm.passwordInput.$touched && userForm.passwordInput.$invalid,
+                                            'is-valid': userForm.passwordInput.$touched && userForm.passwordInput.$valid}">
+                    <div ng-show="userForm.passwordInput.$error.minlength" class="invalid-feedback">Password is too short.</div>
+                </div>
+                <div ng-show="userForm.$valid" class="valid-feedback">
+                    Looks good!
+                </div>
+                <button class="btn btn-primary border" ng-disabled="userForm.$invalid">Login</button>
+                <div ng-class="{ 'alert alert-dismissible fade show mt-2': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }"
+                     ng-if="message"
+                     role="alert">
+                    <strong>Notification!</strong> {{message.message}}
+                    <button type="button" ng-click="vm.clearMessage()" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </form>
+            </div>
+    </div>
+    </div>
+</div>
