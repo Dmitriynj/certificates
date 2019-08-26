@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="mx-auto">
+    <h1>Registration form</h1>
+  </div>
+</div>
+<auth-form
+  user="$ctrl.user"
+  on-submit="$ctrl.createUser($event)"
+  button="Create user"
+  message="{{ $ctrl.error }}">
+</auth-form>
+<div class="row">
+  <a href="" ui-sref="auth.register">Login</a>
+</div>

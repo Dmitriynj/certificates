@@ -1,7 +1,4 @@
-logs/*
-!.gitkeep
-node_modules/
-src/lib/
-tmp
-.DS_Store
-.idea
+node_modules
+dist
+coverage
+/.idea

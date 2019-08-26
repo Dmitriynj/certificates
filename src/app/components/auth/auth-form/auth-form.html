@@ -1,0 +1,56 @@
+
+<div class="row mx-md-n5 align-items-center">
+  <div class="col px-md-5">
+    <div class="p-3">
+      <form name="userForm" ng-submit="$ctrl.submitForm();" novalidate>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email"
+                 name="emailInput"
+                 class="form-control"
+                 id="exampleInputEmail1"
+                 aria-describedby="emailHelp"
+                 placeholder="Enter email"
+                 ng-model="$ctrl.user.email"
+                 ng-maxlength="{{$ctrl.maxlength}}"
+                 required="true"
+                 ng-class="{'is-invalid': userForm.emailInput.$touched && userForm.emailInput.$invalid,
+                                            'is-valid': userForm.emailInput.$touched && userForm.emailInput.$valid}">
+          <div ng-show="userForm.emailInput.$error.maxlength" class="invalid-feedback">
+            Email is too long.
+          </div>
+          <div ng-show="userForm.emailInput.$touched && userForm.emailInput.$valid" class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password"
+                 name="passwordInput"
+                 class="form-control"
+                 id="exampleInputPassword1"
+                 placeholder="Password"
+                 ng-model="$ctrl.user.password"
+                 ng-minlength="{{$ctrl.minlength}}" required="true"
+                 ng-class="{'is-invalid': userForm.passwordInput.$touched && userForm.passwordInput.$invalid,
+                                            'is-valid': userForm.passwordInput.$touched && userForm.passwordInput.$valid}">
+          <div ng-show="userForm.passwordInput.$error.minlength" class="invalid-feedback">Password is too short.</div>
+        </div>
+        <button type="submit" class="btn btn-primary border" ng-disabled="userForm.$invalid">{{ $ctrl.button }}</button>
+        <div ng-class="{ 'alert alert-dismissible fade show mt-2': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }"
+             ng-if="$ctrl.error"
+             role="alert">
+          <strong>Notification!</strong> {{$ctrl.error}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col px-md-5">
+    <div class="p-3">
+      <img src="/img/welcome-image.jpg" class="responsive-image" alt="">
+    </div>
+  </div>
+</div>

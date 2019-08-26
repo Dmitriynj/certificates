@@ -1,28 +1,55 @@
-//jshint strict: false
-module.exports = function(config) {
+// Reference: http://karma-runner.github.io/0.12/config/configuration-file.html
+module.exports = function karmaConfig (config) {
   config.set({
-
-    basePath: './src',
-
-    files: [
-      'lib/angular/angular.js',
-      'lib/angular-route/angular-route.js',
-      '../node_modules/angular-mocks/angular-mocks.js',
-      'core/**/*.js',
-      'view*/**/*.js'
+    frameworks: [
+      // Reference: https://github.com/karma-runner/karma-jasmine
+      // Set framework to jasmine
+      'jasmine'
     ],
 
-    autoWatch: true,
+    reporters: [
+      // Reference: https://github.com/mlex/karma-spec-reporter
+      // Set reporter to print detailed results to console
+      'progress',
 
-    frameworks: ['jasmine'],
+      // Reference: https://github.com/karma-runner/karma-coverage
+      // Output code coverage files
+      'coverage'
+    ],
 
-    browsers: ['Chrome'],
+    files: [
+      // Grab all files in the app folder that contain .spec.
+      'src/tests.webpack.js'
+    ],
 
-    plugins: [
-      'karma-chrome-launcher',
-      'karma-firefox-launcher',
-      'karma-jasmine'
-    ]
+    preprocessors: {
+      // Reference: http://webpack.github.io/docs/testing.html
+      // Reference: https://github.com/webpack/karma-webpack
+      // Convert files with webpack and load sourcemaps
+      'src/tests.webpack.js': ['webpack', 'sourcemap']
+    },
 
+    browsers: [
+      // Run tests using PhantomJS
+      'PhantomJS'
+    ],
+
+    singleRun: true,
+
+    // Configure code coverage reporter
+    coverageReporter: {
+      dir: 'coverage/',
+      reporters: [
+        {type: 'text-summary'},
+        {type: 'html'}
+      ]
+    },
+
+    webpack: require('./webpack.config'),
+
+    // Hide webpack build information from output
+    webpackMiddleware: {
+      noInfo: 'errors-only'
+    }
   });
 };
