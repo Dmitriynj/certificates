@@ -3,6 +3,7 @@
 export class PagerService {
   constructor() {
     'ngInject';
+
     this.totalPages = 0;
     this.startPage = 0;
     this.endPage = 0;

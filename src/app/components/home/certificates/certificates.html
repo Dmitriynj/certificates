@@ -17,7 +17,7 @@
   <div class="col-4">
     <div class="input-group">
       <input type="text"
-             ng-model="search.title"
+             ng-model="search"
              class="form-control"
              placeholder="Search certificates by name">
     </div>
@@ -35,13 +35,11 @@
   </div>
 </div>
 
-
 <div class="row justify-content-md-center">
   <certificate on-add-tag="$ctrl.addQueryTag($event)"
                class="m-3" certificate="certificate"
                ng-repeat="certificate in $ctrl.certificates
-               | filter:search:strict
-               | certificateTagsFilter:$ctrl.queryTags">
+               | certificateTagsFilter:search:$ctrl.queryTags:$ctrl.pager:$ctrl.pageSize:$ctrl.currentPage:$ctrl.allCertificates">
   </certificate>
 </div>
 
@@ -50,7 +48,7 @@
     <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === 1}">
       <a class="page-link" href="#" ng-click="$ctrl.setPage(1)">First</a>
     </li>
-    <li class="page-item" ng-class="{disabled:$ctrl.pager.getCurrentPage() === 1}">
+    <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === 1}">
       <a class="page-link" href="#" ng-click="$ctrl.setPage($ctrl.pager.currentPage - 1)">Previous</a>
     </li>
     <li class="page-item" ng-repeat="page in $ctrl.pager.pages" ng-class="{active:$ctrl.pager.currentPage === page}">
