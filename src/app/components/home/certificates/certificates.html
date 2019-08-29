@@ -36,25 +36,34 @@
 </div>
 
 
-<div class="row">
+<div class="row justify-content-md-center">
   <certificate on-add-tag="$ctrl.addQueryTag($event)"
                class="m-3" certificate="certificate"
-               ng-repeat="certificate in $ctrl.certificates.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))
+               ng-repeat="certificate in $ctrl.certificates
                | filter:search:strict
                | certificateTagsFilter:$ctrl.queryTags">
   </certificate>
-
-  <pagination uib-pagination
-              total-items="$ctrl.totalItems"
-              ng-model="$ctrl.currentPage"
-              ng-change="$ctrl.pageChanged()"></pagination>
-
-  <pager total-items="totalItems"
-         ng-model="currentPage"
-         items-per-page="itemsPerPage"></pager>
-
 </div>
 
+<div class="row justify-content-md-center">
+  <ul ng-if="$ctrl.pager.pages.length" class="pagination">
+    <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === 1}">
+      <a class="page-link" href="#" ng-click="$ctrl.setPage(1)">First</a>
+    </li>
+    <li class="page-item" ng-class="{disabled:$ctrl.pager.getCurrentPage() === 1}">
+      <a class="page-link" href="#" ng-click="$ctrl.setPage($ctrl.pager.currentPage - 1)">Previous</a>
+    </li>
+    <li class="page-item" ng-repeat="page in $ctrl.pager.pages" ng-class="{active:$ctrl.pager.currentPage === page}">
+      <a class="page-link" href="#" ng-click="$ctrl.setPage(page)">{{page}}</a>
+    </li>
+    <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === $ctrl.pager.totalPages}">
+      <a class="page-link"href="#" ng-click="$ctrl.setPage($ctrl.pager.currentPage + 1)">Next</a>
+    </li>
+    <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === $ctrl.pager.totalPages}">
+      <a class="page-link" href="#" ng-click="$ctrl.setPage($ctrl.pager.totalPages)">Last</a>
+    </li>
+  </ul>
+</div>
 
 <div ng-if="!$ctrl.certificates.length">
   There's no one here

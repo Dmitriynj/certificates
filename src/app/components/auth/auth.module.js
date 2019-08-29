@@ -23,7 +23,7 @@ export const auth = angular
       to: 'auth.*',
     }, () => {
       if (AuthService.isAuthenticated())
-        return $state.target('certificates');
+        return $state.target('app');
     });
   })
   .service('AuthService', AuthService)

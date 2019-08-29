@@ -1,20 +1,22 @@
-<div class="row">
-  <div class="mx-auto">
-    <h1>Login form</h1>
+<div class="container p-3 mt-5 shadow rounded-sm">
+  <div class="row">
+    <div class="mx-auto">
+      <h1>Login form</h1>
+    </div>
   </div>
-</div>
-<auth-form
-  user="$ctrl.user"
-  message="{{$ctrl.message}}"
-  button="Login"
-  on-submit="$ctrl.login($event)">
-</auth-form>
-<div ng-if="!!$ctrl.message" class="alert alert-dismissible fade show mt-2 alert-danger"
-     role="alert">
-  <strong>Notification!</strong> {{ $ctrl.message }}
-  <button type="button" ng-click="$ctrl.deleteMessage()" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+  <auth-form
+    user="$ctrl.user"
+    message="{{$ctrl.message}}"
+    button="Login"
+    on-submit="$ctrl.login($event)">
+  </auth-form>
+  <div ng-if="!!$ctrl.message" class="alert alert-dismissible fade show mt-2 alert-danger"
+       role="alert">
+    <strong>Notification!</strong> {{ $ctrl.message }}
+    <button type="button" ng-click="$ctrl.deleteMessage()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 </div>
 
 

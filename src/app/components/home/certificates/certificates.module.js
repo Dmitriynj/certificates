@@ -1,6 +1,7 @@
 import uiRouter from '@uirouter/angularjs';
 import { certificatesComponent } from './certificates.component';
 import { certificateTagsFilter } from './certificates.tag.filter';
+import { PagerService } from './certificates.pager.service';
 
 export const certificates = angular
   .module('components.home.certificates', [
@@ -13,15 +14,20 @@ export const certificates = angular
 
     $stateProvider
       .state('certificates', {
+        parent: 'app',
         url: '/certificates',
         component: 'certificates',
         data: {
           requiredAuth: true,
         },
         resolve: {
-          certificates: CertificateService => CertificateService.getCertificatesList(),
-          // filter: certificateTagsFilter
+          allCertificates: CertificateService => {
+            'ngInject';
+
+            return CertificateService.getCertificatesList();
+          },
         }
       });
   })
+  .service('PagerService', PagerService)
   .name;
