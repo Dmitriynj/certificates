@@ -19,47 +19,62 @@ export class AuthService {
   }
 
   login(user) {
+    let obj = this;
     return new Promise((resolve, reject) => {
-      for(let i=0; i<this.users.length; i++){
-        if(user.email === this.users[i].email && user.password === this.users[i].password) {
+      for (let i = 0; i < obj.users.length; i++) {
+        if (user.email === obj.users[i].email && user.password === obj.users[i].password) {
           user.password = Base64.encode(user.password);
-          this.authData = user;
+          obj.authData = user;
 
-          var authdata = Base64.encode(user.email + ':' + user.password);
-          this.$rootScope.globals = {
+          let authdata = Base64.encode(user.email + ':' + user.password);
+          obj.$rootScope.globals = {
             currentUser: user
           };
-          this.$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-          var cookieExp = new Date();
+          obj.$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+          let cookieExp = new Date();
           cookieExp.setDate(cookieExp.getDate() + 7);
           this.$cookies.putObject('globals', this.$rootScope.globals, {expires: cookieExp});
 
           resolve();
+          return;
         }
       }
-      reject('Error with auth!');
+      reject({message: 'Error with auth!'});
     });
   }
 
   logout() {
-    this.authData = null;
-    this.$rootScope.globals = {};
-    this.$cookies.remove('globals');
-    this.$http.defaults.headers.common.Authorization = 'Basic';
+    let obj = this;
+    return new Promise((resolve, reject) => {
+      obj.authData = null;
+      obj.$rootScope.globals = {};
+      obj.$cookies.remove('globals');
+      obj.$http.defaults.headers.common.Authorization = 'Basic';
+      resolve();
+    });
   }
 
   getUser() {
-    if (this.authData) return this.authData;
+    if (!!this.$cookies.getObject('globals')) {
+      let currentUser = this.$cookies.getObject('globals').currentUser;
+      currentUser.password = Base64.decode(currentUser.password);
+      return currentUser;
+    }
   }
 
   requireAuthentication() {
+    var obj = this;
     return new Promise((resolve, reject) => {
-      if (this.authData !== null) {
+      if (!!obj.$cookies.getObject('globals')) {
         resolve();
       } else {
         reject('Something was wrong!');
       }
     })
+  }
+
+  isAuthenticated() {
+    return !!this.$cookies.getObject('globals');
   }
 
   register(user) {

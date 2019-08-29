@@ -1,14 +1,7 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-4 bg-white border-bottom shadow-sm">
   <h5 class="my-0 mr-md-auto">Certificates</h5>
-  <div>{{::$ctrl.user.email}}</div>
-  <div>
-    <button class="btn pr-0 mr-0">Ru/</button>
-    <button class="btn pl-0 ml-0">En</button>
-  </div>
-
   <nav class="my-2 my-md-0 mr-md-3">
-    <a href=""> {{ ::$ctrl.user.email }}</a>
-    <a class="p-2 text-dark" ui-sref="auth.login">Login</a>
-    <a ng-click="$ctrl.logout()" class="btn btn-danger">Logout</a>
+<!--    <a class="p-2 text-dark">{{::$ctrl.user.email}}</a>-->
+    <a href="#" ng-click="$ctrl.logout()" class="btn btn-danger">Logout</a>
   </nav>
 </div>

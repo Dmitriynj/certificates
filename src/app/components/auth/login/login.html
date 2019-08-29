@@ -5,10 +5,16 @@
 </div>
 <auth-form
   user="$ctrl.user"
-  on-submit="$ctrl.login($event)"
+  message="{{$ctrl.message}}"
   button="Login"
-  message="{{ $ctrl.error }}">
+  on-submit="$ctrl.login($event)">
 </auth-form>
-<div class="row">
-  <a href="" ui-sref="auth.register">Register</a>
+<div ng-if="!!$ctrl.message" class="alert alert-dismissible fade show mt-2 alert-danger"
+     role="alert">
+  <strong>Notification!</strong> {{ $ctrl.message }}
+  <button type="button" ng-click="$ctrl.deleteMessage()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
+
+

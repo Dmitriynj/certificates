@@ -1,17 +1,20 @@
 export const navComponent ={
   bindings: {
-    user: '<',
+    user: '&',
     onLogout: '&'
   },
   template: require('./app-nav.html'),
   controller: class AppNavComponent {
 
-    constructor(AuthService, $state) {
+    constructor(AuthService, $state, $rootScope) {
       'ngInject';
 
       this.authService = AuthService;
       this.$state = $state;
-      this.user = AuthService.getUser();
+    }
+
+    $onInit() {
+      this.user = this.authService.getUser();
     }
 
     logout() {

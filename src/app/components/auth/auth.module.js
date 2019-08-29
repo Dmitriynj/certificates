@@ -15,9 +15,15 @@ export const auth = angular
     $transitions.onStart({
       to: (state) => !!(state.data && state.data.requiredAuth),
     }, () => {
-      return AuthService
-        .requireAuthentication()
-        .catch(() => $state.target('login'));
+      return AuthService.requireAuthentication()
+        .catch(() => $state.target('auth.login'));
+    });
+
+    $transitions.onStart({
+      to: 'auth.*',
+    }, () => {
+      if (AuthService.isAuthenticated())
+        return $state.target('certificates');
     });
   })
   .service('AuthService', AuthService)

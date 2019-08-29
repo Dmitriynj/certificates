@@ -10,10 +10,10 @@ export const appNav = angular
       .state('app', {
         redirectTo: 'certificates',
         url: '/app',
-        // data: {
-        //   requiredAuth: true,
-        // },
-        component: 'appNav',
-      });
+        data: {
+          requireAuth: true
+        },
+        component:'appNav'
+      })
   })
   .name;

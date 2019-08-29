@@ -12,7 +12,7 @@ export const formComponent = {
 
       this.maxlength = 30;
       this.minlength = 4;
-
+      this.message = null;
       this.user = {
         email: '',
         password: ''
@@ -31,5 +31,7 @@ export const formComponent = {
         },
       });
     }
+
+
   }
 };

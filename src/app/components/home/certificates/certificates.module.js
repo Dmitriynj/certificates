@@ -1,31 +1,27 @@
 import uiRouter from '@uirouter/angularjs';
 import { certificatesComponent } from './certificates.component';
+import { certificateTagsFilter } from './certificates.tag.filter';
 
 export const certificates = angular
   .module('components.home.certificates', [
     uiRouter,
   ])
-  .component('certificates', certificateComponent)
-  .config(($stateProfider) => {
+  .component('certificates', certificatesComponent)
+  .filter('certificateTagsFilter', certificateTagsFilter)
+  .config(($stateProvider) => {
     'ngInject';
 
-    $stateProfider
+    $stateProvider
       .state('certificates', {
-        parent: 'app',
         url: '/certificates',
         component: 'certificates',
-        params: {
-          filter: {
-            value: 'none',
-          },
+        data: {
+          requiredAuth: true,
         },
         resolve: {
-          certificates(CertificatesService) {
-            'ngInject';
-
-            return CertificatesService.getCertificatesList();
-          },
-        },
+          certificates: CertificateService => CertificateService.getCertificatesList(),
+          // filter: certificateTagsFilter
+        }
       });
   })
   .name;

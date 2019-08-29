@@ -1,1 +1,64 @@
+<div class="row mb-3">
+  <h2 class="mx-auto">Certificates</h2>
+</div>
+<div class="row justify-content-center align-items-center">
+
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="input-group">
+      <input type="text"
+             ng-model="search.title"
+             class="form-control"
+             placeholder="Search certificates by name">
+    </div>
+  </div>
+
+    <div class="col-4" ng-show="$ctrl.queryTags.length">
+    <div class="card">
+      <div class="card-body">
+        Tags:
+        <button class="btn btn-warning btn-sm mr-1 ml-1"
+                ng-repeat="tag in $ctrl.queryTags"
+                ng-click="$ctrl.removeQueryTag(tag)">{{tag}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <certificate on-add-tag="$ctrl.addQueryTag($event)"
+               class="m-3" certificate="certificate"
+               ng-repeat="certificate in $ctrl.certificates.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))
+               | filter:search:strict
+               | certificateTagsFilter:$ctrl.queryTags">
+  </certificate>
+
+  <pagination uib-pagination
+              total-items="$ctrl.totalItems"
+              ng-model="$ctrl.currentPage"
+              ng-change="$ctrl.pageChanged()"></pagination>
+
+  <pager total-items="totalItems"
+         ng-model="currentPage"
+         items-per-page="itemsPerPage"></pager>
+
+</div>
+
+
+<div ng-if="!$ctrl.certificates.length">
+  There's no one here
+</div>
+
+
 

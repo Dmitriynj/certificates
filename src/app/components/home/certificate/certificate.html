@@ -1,11 +1,13 @@
-<div class="card">
-  <div class="card-header">
-    {{$ctrl.certificate.name}}
-  </div>
+<div class="card" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Buy</a>
+    <h5 class="card-title"> {{ $ctrl.certificate.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Date: {{$ctrl.certificate.date | date: "MMM d, yy h:mm a"}}</h6>
+    <p class="card-text">{{ $ctrl.certificate.description }}</p>
+    <certificate-tag
+      tags="$ctrl.certificate.tags"
+      on-add-tag="$ctrl.addTag($event)">
+    </certificate-tag>
+    <a href="#" class="btn btn-danger">Delete</a>
     <a href="#" class="btn btn-primary">Buy</a>
   </div>
 </div>

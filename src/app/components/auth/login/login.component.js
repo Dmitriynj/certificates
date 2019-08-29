@@ -1,4 +1,7 @@
 export const loginComponent = {
+  bindings: {
+    message: '&'
+  },
   template: require('./login.html'),
   controller: class LoginComponent {
     constructor(AuthService, $state) {
@@ -11,7 +14,7 @@ export const loginComponent = {
     $onInit() {
       this.maxlength = 30;
       this.minlength = 4;
-      this.error = null;
+      this.message = null;
       this.user = {
         email: '',
         password: '',
@@ -22,10 +25,14 @@ export const loginComponent = {
         this.authService
           .login(event.user)
           .then(() => {
-            this.$state.go('home');
+            this.$state.go('certificates');
           }, reason => {
-            this.error = reason.message;
+            this.message = reason.message;
           });
+    }
+
+    deleteMessage() {
+      delete this.message;
     }
   }
 };
