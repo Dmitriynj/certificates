@@ -21,10 +21,10 @@ export const certificates = angular
           requiredAuth: true,
         },
         resolve: {
-          allCertificates: CertificateService => {
+          getAllCertificates: CertificateService => {
             'ngInject';
 
-            return CertificateService.getCertificatesList();
+            return CertificateService.getAllCertificates;
           },
         }
       });

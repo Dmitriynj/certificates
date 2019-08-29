@@ -1,7 +1,8 @@
 export class CertificateService {
-  constructor($rootScope, $q, $timeout) {
+  constructor($rootScope, $q, $timeout, $http) {
     'ngInject';
 
+    this.$http = $http;
     this.$rootScope = $rootScope;
     this.$q = $q;
     this.$timeout = $timeout;
@@ -68,6 +69,10 @@ export class CertificateService {
 
   getCertificatesList() {
     return this.$rootScope.globals.certificates;
+  }
+
+  getAllCertificates() {
+    return this.$http.get('/data/certificates.json');
   }
 
 

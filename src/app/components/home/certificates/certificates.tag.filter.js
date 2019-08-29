@@ -22,10 +22,12 @@ export function certificateTagsFilter() {
 
 function tagsFilter(certificates, tags) {
   let filtered = [];
+  let searchTagsNames = tags.map((tag) => tag.name);
   for(let i=0; i<certificates.length; i++){
     let isFits = true;
-    for(let j=0; j<tags.length; j++){
-      if(!certificates[i].tags.includes(tags[j])){
+    let certificateTagsNames = certificates[i].tags.map((tag) => tag.name);
+    for(let j=0; j<searchTagsNames.length; j++){
+      if(!certificateTagsNames.includes(searchTagsNames[j])){
         isFits = false;
       }
     }

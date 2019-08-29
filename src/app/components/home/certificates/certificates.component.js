@@ -1,38 +1,38 @@
 export const certificatesComponent = {
   bindings: {
-    allCertificates: '<',
+    getAllCertificates: '<',
     filter: '<',
     queryTags: '&',
   },
   template: require('./certificates.html'),
   controller: class CertificatesComponent {
-    constructor(PagerService) {
+    constructor(PagerService, CertificateService) {
       'ngInject';
 
+      this.certificateService = CertificateService;
       this.pagerService = PagerService;
       this.pager = {};
     }
 
     $onInit() {
       this.queryTags = [];
-      this.allCertificates.sort((a, b) => {
-        if (a.date > b.date) return -1;
-        if (a.date < b.date) return 1;
-        return 0;
-      });
-
-      // this.setPage(1);
+      this.allCertificates = [];
       this.currentPage = 1;
-      this.pageSize = 3;
-
-      this.certificates = this.allCertificates;
+      this.pageSize = 9;
       this.pager = new this.pagerService.constructor();
-      this.pager.init(this.allCertificates.length, 1, this.pageSize);
 
-      // this.certificates = this.allCertificates.slice(
-      //   this.pager.startIndex,
-      //   this.pager.endIndex + 1
-      // );
+      let $ctrl = this;
+      this.certificateService.getAllCertificates().then((response) => {
+        $ctrl.allCertificates = response.data;
+
+        $ctrl.allCertificates.sort((a, b) => {
+          if (a.date > b.date) return -1;
+          if (a.date < b.date) return 1;
+          return 0;
+        });
+
+        $ctrl.pager.init($ctrl.allCertificates.length, 1, $ctrl.pageSize);
+      });
     }
 
     addQueryTag(event) {
@@ -54,9 +54,7 @@ export const certificatesComponent = {
         return;
       }
 
-      // this.pager = new this.pagerService.constructor();
       this.pager.init(this.allCertificates.length, page, this.pageSize);
-
       this.certificates = this.allCertificates.slice(
         this.pager.startIndex,
         this.pager.endIndex + 1

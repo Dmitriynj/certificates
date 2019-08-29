@@ -3,5 +3,7 @@ export class UserService {
     'ngInject';
   }
 
+  getUserByEmail() {
 
+  }
 }
