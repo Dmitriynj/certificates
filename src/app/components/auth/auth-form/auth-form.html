@@ -2,7 +2,7 @@
 <div class="row mx-md-n5 align-items-center">
   <div class="col px-md-5">
     <div class="p-3">
-      <form name="userForm" ng-submit="$ctrl.submitForm();" novalidate>
+      <form name="userForm" ng-submit="$ctrl.submitForm()" novalidate>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
           <input type="email"
@@ -31,7 +31,8 @@
                  id="exampleInputPassword1"
                  placeholder="Password"
                  ng-model="$ctrl.user.password"
-                 ng-minlength="{{$ctrl.minlength}}" required="true"
+                 ng-minlength="{{$ctrl.minlength}}"
+                 required="true"
                  ng-class="{'is-invalid': userForm.passwordInput.$touched && userForm.passwordInput.$invalid,
                                             'is-valid': userForm.passwordInput.$touched && userForm.passwordInput.$valid}">
           <div ng-show="userForm.passwordInput.$error.minlength" class="invalid-feedback">Password is too short.</div>

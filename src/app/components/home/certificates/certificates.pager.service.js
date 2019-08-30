@@ -1,5 +1,3 @@
-// import underscore from 'underscore/underscore-min.js.map';
-
 export class PagerService {
   constructor() {
     'ngInject';
@@ -45,43 +43,11 @@ export class PagerService {
     this.endIndex = Math.min(this.startIndex + pageSize - 1, totalItems - 1);
 
     this.pages = [];
-    let size =  this.getEndPage() - this.getStartPage() + 1;
-    let index = this.getStartPage();
+    let size =  this.endPage - this.startPage + 1;
+    let index = this.startPage;
     for(let i=0; i<size; i++) {
       this.pages[i] = index;
       index++;
     }
-  }
-
-  getTotalPages() {
-    return this.totalPages;
-  }
-
-  getStartPage() {
-    return this.startPage;
-  }
-
-  getEndPage() {
-    return this.endPage;
-  }
-
-  getStartIndex() {
-    return this.startIndex;
-  }
-
-  getEndIndex() {
-    return this.endIndex;
-  }
-
-  getPages() {
-
-  }
-
-  getCurrentPage() {
-    return this.currentPage;
-  }
-
-  getPageSize() {
-    return this.pageSize;
   }
 }

@@ -4,7 +4,8 @@
 <div class="row justify-content-center align-items-center">
 
   <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
       Dropdown button
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -19,23 +20,24 @@
       <input type="text"
              ng-model="search"
              class="form-control"
-             placeholder="Search certificates by name">
+             placeholder="Search certificates">
     </div>
   </div>
 
-    <div class="col-4" ng-show="$ctrl.queryTags.length">
+  <div class="col-4" ng-show="$ctrl.queryTags.length">
     <div class="card">
       <div class="card-body">
         Tags:
         <button class="btn btn-warning btn-sm mr-1 ml-1"
                 ng-repeat="tag in $ctrl.queryTags"
-                ng-click="$ctrl.removeQueryTag(tag)">{{tag.name}}</button>
+                ng-click="$ctrl.removeQueryTag(tag)">{{tag.name}}
+        </button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="row justify-content-md-center">
+<div class="card-columns mt-3">
   <certificate on-add-tag="$ctrl.addQueryTag($event)"
                class="m-3" certificate="certificate"
                ng-repeat="certificate in $ctrl.certificates
@@ -55,16 +57,12 @@
       <a class="page-link" href="#" ng-click="$ctrl.setPage(page)">{{page}}</a>
     </li>
     <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === $ctrl.pager.totalPages}">
-      <a class="page-link"href="#" ng-click="$ctrl.setPage($ctrl.pager.currentPage + 1)">Next</a>
+      <a class="page-link" href="#" ng-click="$ctrl.setPage($ctrl.pager.currentPage + 1)">Next</a>
     </li>
     <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === $ctrl.pager.totalPages}">
       <a class="page-link" href="#" ng-click="$ctrl.setPage($ctrl.pager.totalPages)">Last</a>
     </li>
   </ul>
-</div>
-
-<div ng-if="!$ctrl.certificates.length">
-  There's no one here
 </div>
 
 

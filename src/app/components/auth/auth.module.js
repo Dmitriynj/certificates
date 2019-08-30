@@ -9,7 +9,7 @@ export const auth = angular
     login,
     authForm
   ])
-  .run(($transitions, $state, AuthService) => {
+  .run(($transitions, $state, AuthService, $q) => {
     'ngInject';
 
     $transitions.onStart({
@@ -17,6 +17,13 @@ export const auth = angular
     }, () => {
       return AuthService.requireAuthentication()
         .catch(() => $state.target('auth.login'));
+    });
+
+    $transitions.onStart({
+      to: (state) => !!(state.data && state.data.requireAdmin),
+    }, () => {
+      return AuthService.requireAdmin()
+        .catch(() => $state.target('certificates'));
     });
 
     $transitions.onStart({

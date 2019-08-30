@@ -12,7 +12,6 @@ export const login = angular
 
     $stateProvider
       .state('auth', {
-
         redirectTo: 'auth.login',
         url: '/auth',
         template: '<div ui-view></div>',

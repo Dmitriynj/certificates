@@ -2,6 +2,7 @@ import loader from 'angular-loading-bar';
 import { appNav } from './app-nav/app-nav.module';
 import { commonComponent } from './common.component';
 import uiRouter from '@uirouter/angularjs';
+import { UserService } from './services/user.service';
 
 export const common = angular
   .module('common', [
@@ -29,4 +30,5 @@ export const common = angular
     $transitions.onStart({}, cfpLoadingBar.start);
     $transitions.onSuccess({}, cfpLoadingBar.complete);
   })
+  .service('userService', UserService)
   .name;

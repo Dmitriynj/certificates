@@ -1,7 +1,9 @@
 export class AuthService {
-  constructor($rootScope, $cookies, $http) {
+  constructor($rootScope, $cookies, $http, $q, UserService) {
     'ngInject';
 
+    this.$q = $q;
+    this.userService = UserService;
     this.$rootScope = $rootScope;
     this.$cookies = $cookies;
     this.$http = $http;
@@ -20,28 +22,34 @@ export class AuthService {
 
   login(user) {
     let obj = this;
-    return new Promise((resolve, reject) => {
-      for (let i = 0; i < obj.users.length; i++) {
-        if (user.email === obj.users[i].email && user.password === obj.users[i].password) {
-          user.password = Base64.encode(user.password);
-          obj.authData = user;
+    return this.userService.getUserByEmail(user.email).then((response) => {
+      let deferred = obj.$q.defer();
 
-          let authdata = Base64.encode(user.email + ':' + user.password);
-          obj.$rootScope.globals = {
-            currentUser: user
-          };
-          obj.$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-          let cookieExp = new Date();
-          cookieExp.setDate(cookieExp.getDate() + 7);
-          this.$cookies.putObject('globals', this.$rootScope.globals, {expires: cookieExp});
+      let userFromDb = response;
+      if(!!userFromDb && userFromDb.password === user.password) {
+        userFromDb.password = Base64.encode(userFromDb.password);
+        obj.authData = userFromDb;
 
-          resolve();
-          return;
-        }
+        let authdata = Base64.encode(userFromDb.email + ':' + userFromDb.password + ':' + userFromDb.requireAdmin);
+        obj.$rootScope.globals = {
+          currentUser: userFromDb
+        };
+        obj.$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+        let cookieExp = new Date();
+        cookieExp.setDate(cookieExp.getDate() + 7);
+        obj.$cookies.putObject('globals', obj.$rootScope.globals, {expires: cookieExp});
+
+        deferred.resolve();
+        return;
       }
-      reject({message: 'Error with auth!'});
+
+      deferred.reject({message: 'Error with auth!'});
+
+      return deferred.promise;
     });
   }
+
+
 
   logout() {
     let obj = this;
@@ -63,7 +71,7 @@ export class AuthService {
   }
 
   requireAuthentication() {
-    var obj = this;
+    let obj = this;
     return new Promise((resolve, reject) => {
       if (!!obj.$cookies.getObject('globals')) {
         resolve();
@@ -75,6 +83,19 @@ export class AuthService {
 
   isAuthenticated() {
     return !!this.$cookies.getObject('globals');
+  }
+
+  requireAdmin() {
+    let deferred = this.$q.defer();
+
+    let user = this.getUser();
+    if(user && user.isAdmin) {
+      deferred.resolve();
+    } else {
+      deferred.reject("You are not authenticated!");
+    }
+
+    return deferred.promise;
   }
 
   register(user) {

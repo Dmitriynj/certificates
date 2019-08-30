@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+  <div class="col-5">
+    <h2>Edit certificate</h2>
+    <form name="certificateForm" ng-submit="$ctrl.submitForm()" novalidate>
+      <div class="form-group">
+        <label for="titleInput">Title</label>
+        <input value="{{$ctrl.certificate.title}}"
+               type="text"
+               class="form-control"
+               id="titleInput"
+               placeholder="Enter title"
+               name="title"
+               ng-model="$ctrl.newCertificate.certificateTitle"
+               required="true"
+               ng-maxlength="{{$ctrl.titleMaxlength}}"
+               ng-class="{'is-invalid': certificateForm.title.$touched && certificateForm.title.$invalid,
+                                            'is-valid': certificateForm.title.$touched && certificateForm.title.$valid}">
+        <div ng-show="certificateForm.title.$error.maxlength" class="invalid-feedback">
+          Title is too long.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descriptionInput">Description</label>
+        <input value="{{$ctrl.certificate.description}}"
+               type="text"
+               class="form-control"
+               id="descriptionInput"
+               placeholder="Enter description"
+               name="description"
+               ng-model="$ctrl.newCertificate.certificateDescription"
+               required="true"
+               ng-maxlength="$ctrl.descriptionMaxLength"
+               ng-class="{'is-invalid': certificateForm.description.$touched && certificateForm.description.$invalid,
+                                            'is-valid': certificateForm.description.$touched && certificateForm.description.$valid}">
+        <div ng-show="certificateForm.description.$error.maxlength" class="invalid-feedback">
+          Description is too long.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="costInput">Price</label>
+        <input value="{{$ctrl.certificate.cost}}"
+               type="number"
+               class="form-control"
+               id="costInput"
+               placeholder="Enter price"
+               name="cost"
+               ng-model="$ctrl.newCertificate.certificateCost"
+               required="true"
+               pattern="{{$ctrl.costRegex}}"
+               ng-class="{'is-invalid': certificateForm.cost.$touched && certificateForm.cost.$invalid,
+                                            'is-valid': certificateForm.cost.$touched && certificateForm.cost.$valid}">
+        <div ng-show="certificateForm.cost.$error.pattern" class="invalid-feedback">
+          Invalid cost
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="input-group mb-3">
+            <input ng-model="$ctrl.tagName" type="text" class="form-control" placeholder="Enter tag name" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button ng-click="$ctrl.addTag()" class="btn btn-outline-primary" type="button" id="button-addon2">Add</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          Tags:
+          <button ng-click="$ctrl.deleteTag(tag)" type="button" ng-repeat="tag in $ctrl.certificate.tags" class="btn btn-warning btn-sm mr-1 ml-1">
+            {{tag.name}}
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" ng-disabled="certificateForm.$invalid" class="btn btn-primary btn-lg btn-block mt-3">Edit</button>
+    </form>
+
+  </div>
+</div>
