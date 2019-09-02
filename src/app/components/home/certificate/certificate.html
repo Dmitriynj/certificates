@@ -8,6 +8,6 @@
         on-add-tag="$ctrl.addTag($event)">
       </certificate-tag>
       <a href="#" class="btn btn-primary" ng-click="$ctrl.edit()" ng-if="$ctrl.user && $ctrl.user.isAdmin">Edit</a>
-      <a href="#" class="btn btn-primary" ng-if="$ctrl.user && !$ctrl.user.isAdmin">Buy</a>
+      <a href="#" class="btn btn-primary" ng-click="$ctrl.buy()">Buy</a>
     </div>
 </div>

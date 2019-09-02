@@ -1,7 +1,10 @@
 import { certificateEditComponent } from './certificate-edit.component';
 
+
 export const certificateEdit = angular
-  .module('components.home.certificate-edit', [])
+  .module('components.home.certificate-edit', [
+
+  ])
   .component('certificateEdit', certificateEditComponent)
   .config(($stateProvider) => {
     'ngInject';

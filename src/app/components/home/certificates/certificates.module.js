@@ -38,9 +38,24 @@ export const certificates = angular
   .run(($rootScope, $localStorage) => {
     'ngInject';
 
-    // $localStorage.globals = {
-    //   certificates: allCertificates()
-    // };
+      // $localStorage.globals = {
+      //   certificates: allCertificates()
+      // };
+      // $localStorage.globals.users = [
+      //
+      //     {
+      //       id: 1,
+      //       email: 'admin@epam.com',
+      //       password: 'admin',
+      //       isAdmin: true
+      //     },
+      //     {
+      //       id: 2,
+      //       email: 'user@epam.com',
+      //       password: 'user',
+      //       isAdmin: false
+      //     }
+      //   ];
   })
   .service('UserService', UserService)
   .service('PagerService', PagerService)

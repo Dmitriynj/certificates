@@ -21,17 +21,16 @@ export const certificatesComponent = {
       this.pageSize = 9;
       this.pager = new this.pagerService.constructor();
 
-      let $ctrl = this;
       this.certificateService.getAllCertificates().then((response) => {
-        $ctrl.allCertificates = response.data;
+        this.allCertificates = response.data;
 
-        $ctrl.allCertificates.sort((a, b) => {
+        this.allCertificates.sort((a, b) => {
           if (a.date > b.date) return -1;
           if (a.date < b.date) return 1;
           return 0;
         });
 
-        $ctrl.pager.init($ctrl.allCertificates.length, 1, $ctrl.pageSize);
+        this.pager.init(this.allCertificates.length, 1, this.pageSize);
       });
     }
 
@@ -60,6 +59,8 @@ export const certificatesComponent = {
         this.pager.endIndex + 1
       );
     }
+
+
 
 
   }

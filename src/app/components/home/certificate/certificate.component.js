@@ -5,11 +5,12 @@ export const certificateComponent = {
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
-    constructor($state, AuthService) {
+    constructor($state, AuthService, UserService) {
       'ngInject';
 
       this.$state = $state;
       this.authService = AuthService;
+      this.userService = UserService;
     }
 
     $onInit() {
@@ -28,6 +29,12 @@ export const certificateComponent = {
       this.$state.go(
         'certificate-edit',
         {certificateId: this.certificate.id});
+    }
+
+    buy() {
+      let user = this.authService.getUser();
+
+      this.userService.update()
     }
 
   }

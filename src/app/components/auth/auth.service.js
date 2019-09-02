@@ -49,8 +49,6 @@ export class AuthService {
     });
   }
 
-
-
   logout() {
     let obj = this;
     return new Promise((resolve, reject) => {
