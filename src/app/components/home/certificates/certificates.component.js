@@ -1,37 +1,38 @@
 export const certificatesComponent = {
   bindings: {
-    getAllCertificates: '<',
+    certificates: '<',
     filter: '<',
     queryTags: '&',
   },
   template: require('./certificates.html'),
   controller: class CertificatesComponent {
-    constructor(PagerService, CertificateService) {
+    constructor(CertificateService) {
       'ngInject';
 
       this.certificateService = CertificateService;
-      this.pagerService = PagerService;
-      this.pager = {};
     }
 
     $onInit() {
-      this.queryTags = [];
-      this.allCertificates = [];
-      this.currentPage = 1;
       this.pageSize = 9;
-      this.pager = new this.pagerService.constructor();
+      this.allCertificates = this.certificates;
+      // this.sertificatesToShow = this.allCertificates;
+      this.queryTags = [];
 
-      this.certificateService.getAllCertificates().then((response) => {
-        this.allCertificates = response.data;
-
-        this.allCertificates.sort((a, b) => {
-          if (a.date > b.date) return -1;
-          if (a.date < b.date) return 1;
-          return 0;
-        });
-
-        this.pager.init(this.allCertificates.length, 1, this.pageSize);
-      });
+      // this.allCertificates = [];
+      // this.currentPage = 1;
+      // this.pager = new this.pagerService.constructor();
+      //
+      // this.certificateService.getAllCertificates().then((response) => {
+      //   this.allCertificates = response.data;
+      //
+      //   this.allCertificates.sort((a, b) => {
+      //     if (a.date > b.date) return -1;
+      //     if (a.date < b.date) return 1;
+      //     return 0;
+      //   });
+      //
+      //   this.pager.init(this.allCertificates.length, 1, this.pageSize);
+      // });
     }
 
     addQueryTag(event) {
@@ -47,22 +48,23 @@ export const certificatesComponent = {
       }
     }
 
-    setPage(page) {
-      this.currentPage = page;
-      if (page < 1 || page > this.pager.totalPages) {
-        return;
-      }
+    // setPage(page) {
+    //   this.currentPage = page;
+    //   if (page < 1 || page > this.pager.totalPages) {
+    //     return;
+    //   }
+    //
+    //   this.pager.init(this.allCertificates.length, page, this.pageSize);
+    //   this.certificates = this.allCertificates.slice(
+    //     this.pager.startIndex,
+    //     this.pager.endIndex + 1
+    //   );
+    // }
 
-      this.pager.init(this.allCertificates.length, page, this.pageSize);
-      this.certificates = this.allCertificates.slice(
-        this.pager.startIndex,
-        this.pager.endIndex + 1
-      );
+
+    showItems(event) {
+      this.sertificatesToShow = event.items;
     }
-
-
-
-
   }
 };
 

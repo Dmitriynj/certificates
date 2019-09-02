@@ -1,22 +1,25 @@
 export function certificateTagsFilter() {
-  return (certificates, input, tags, pager, pageSize, currentPage, allCertificates) => {
-    let hasTags = (!!tags && !!tags.length) || false;
-    let hasInput = !!input || false;
-    let filtered = allCertificates;
+  return (certificates, ctrl) => {
+    // input, tags, pager, pageSize, currentPage, allCertificates
+    let hasTags = (!!ctrl.tags && !!ctrl.tags.length) || false;
+    let hasInput = !!ctrl.search || false;
+    let filtered = ctrl.allCertificates;
     if (hasTags) {
-      filtered = tagsFilter(allCertificates, tags);
+      filtered = tagsFilter(ctrl.allCertificates, tags);
     }
     if(hasInput) {
-      filtered = inputFilter(filtered, input);
+      filtered = inputFilter(filtered, ctrl.search);
     }
+    ctrl.items = filtered;
 
-    pager.init(filtered.length, currentPage, pageSize);
-    filtered = filtered.slice(
-      pager.startIndex,
-      pager.endIndex + 1
-    );
-    currentPage = 1;
-    return filtered;
+    // ctrl.pager.init(filtered.length, ctrl.currentPage, ctrl.pageSize);
+    // filtered = filtered.slice(
+    //   pager.startIndex,
+    //   pager.endIndex + 1
+    // );
+    // ctrl.currentPage = 1;
+
+    return ctrl.sertificatesToShow;
   }
 }
 

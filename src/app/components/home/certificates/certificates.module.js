@@ -1,10 +1,8 @@
 import uiRouter from '@uirouter/angularjs';
 import { certificatesComponent } from './certificates.component';
 import { certificateTagsFilter } from './certificates.tag.filter';
-import { PagerService } from './certificates.pager.service';
 import { UserService } from "../../../common/services/user.service";
-import { allCertificates } from './allcertificates';
-import 'ngstorage/ngStorage.min'
+import 'ngstorage/ngStorage.min';
 
 export const certificates = angular
   .module('components.home.certificates', [
@@ -25,22 +23,24 @@ export const certificates = angular
           requiredAuth: true,
         },
         resolve: {
-          allCertificates: CertificateService => {
+          certificates: async CertificateService => {
             'ngInject';
-
-            return CertificateService.getAllCertificates();
+            let response = await CertificateService.getAllCertificates();
+            return response.data;
           },
         }
       });
 
-
   })
-  .run(($rootScope, $localStorage) => {
+  .run(($rootScope, $localStorage, $http) => {
     'ngInject';
 
-      // $localStorage.globals = {
-      //   certificates: allCertificates()
-      // };
+    // $http.get('/data/certificates.json').then((response) => {
+    //   $localStorage.globals = {
+    //     certificates: response.data,
+    //   };
+    // }, (error) => {});
+
       // $localStorage.globals.users = [
       //
       //     {
@@ -58,5 +58,4 @@ export const certificates = angular
       //   ];
   })
   .service('UserService', UserService)
-  .service('PagerService', PagerService)
   .name;

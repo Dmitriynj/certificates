@@ -3,11 +3,13 @@ import { appNav } from './app-nav/app-nav.module';
 import { commonComponent } from './common.component';
 import uiRouter from '@uirouter/angularjs';
 import { UserService } from './services/user.service';
+import {pagination} from "./pagination/pagination.module";
 
 export const common = angular
   .module('common', [
     loader,
     appNav,
+    pagination,
     uiRouter
   ])
   .component('commonComponent', commonComponent)
