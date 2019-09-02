@@ -24,6 +24,5 @@ export const app = angular
     'ngInject';
 
     $locationProvider.html5Mode(true);
-
   });
 
