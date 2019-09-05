@@ -5,12 +5,11 @@ export const certificatesComponent = {
   },
   template: require('./certificates.html'),
   controller: class CertificatesComponent {
-    static $inject = ['$filter', '$interval'];
+    static $inject = ['$filter'];
 
-    constructor($filter, $interval) {
+    constructor($filter) {
 
       this.$filter = $filter;
-      this.$interval = $interval;
     }
 
 

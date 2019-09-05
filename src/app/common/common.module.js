@@ -4,6 +4,7 @@ import {commonComponent} from './common.component';
 import uiRouter from '@uirouter/angularjs';
 import {UserService} from './services/user.service';
 import {pagination} from "./pagination/pagination.module";
+import { lang } from "./lang/language.module";
 
 export const common = angular
   .module('common', [
@@ -11,6 +12,7 @@ export const common = angular
     appNav,
     pagination,
     uiRouter,
+    lang
   ])
   .component('commonComponent', commonComponent)
   .config(config)
@@ -18,8 +20,8 @@ export const common = angular
   .service('UserService', UserService)
   .name;
 
-config.$inject = ['$stateProvider'];
 
+config.$inject = ['$stateProvider'];
 function config($stateProvider) {
 
   $stateProvider
