@@ -1,6 +1,7 @@
 export class UserService {
+  static $inject = ['$http', '$q', '$localStorage'];
+
   constructor($http, $q, $localStorage) {
-    'ngInject';
 
     this.$http = $http;
     this.$q = $q;
@@ -36,7 +37,22 @@ export class UserService {
     return deferred.promise;
   }
 
-  update(user) {
+  create(user) {
+    this.$localStorage.globals.users.push(user);
+  }
 
+  update(user) {
+    return this.getUserByEmail(user.email).then((response) => {
+      let deferred = this.$q.defer();
+
+      let userFromDb = response;
+      userFromDb.email = user.email;
+      userFromDb.password = user.password;
+      userFromDb.isAdmin = user.isAdmin;
+      userFromDb.certificates = user.certificates;
+
+      deferred.resolve(userFromDb);
+      return deferred.promise;
+    });
   }
 }

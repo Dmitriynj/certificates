@@ -1,14 +1,16 @@
 export const formComponent = {
   bindings: {
     user: '<',
+    link: '<',
     button: '@',
     message: '@',
     onSubmit: '&'
   },
   template: require('./auth-form.html'),
   controller: class LoginComponent {
+    static $inject = [];
+
     constructor() {
-      'ngInject';
 
       this.maxlength = 30;
       this.minlength = 4;

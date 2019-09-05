@@ -1,6 +1,7 @@
 export class AuthService {
+  static $inject = ['$rootScope', '$cookies', '$http', '$q', 'UserService'];
+
   constructor($rootScope, $cookies, $http, $q, UserService) {
-    'ngInject';
 
     this.$q = $q;
     this.userService = UserService;
@@ -8,12 +9,7 @@ export class AuthService {
     this.$cookies = $cookies;
     this.$http = $http;
     this.authData = null;
-    this.users = [
-      {
-        email: 'admin@epam.com',
-        password: 'admin'
-      }
-    ];
+
     this.user = {
       email: 'admin@epam.com',
       password: 'admin'
@@ -21,23 +17,22 @@ export class AuthService {
   }
 
   login(user) {
-    let obj = this;
     return this.userService.getUserByEmail(user.email).then((response) => {
-      let deferred = obj.$q.defer();
+      let deferred = this.$q.defer();
 
       let userFromDb = response;
       if(!!userFromDb && userFromDb.password === user.password) {
         userFromDb.password = Base64.encode(userFromDb.password);
-        obj.authData = userFromDb;
+        this.authData = userFromDb;
 
         let authdata = Base64.encode(userFromDb.email + ':' + userFromDb.password + ':' + userFromDb.requireAdmin);
-        obj.$rootScope.globals = {
+        this.$rootScope.globals = {
           currentUser: userFromDb
         };
-        obj.$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+        this.$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
         let cookieExp = new Date();
         cookieExp.setDate(cookieExp.getDate() + 7);
-        obj.$cookies.putObject('globals', obj.$rootScope.globals, {expires: cookieExp});
+        this.$cookies.putObject('globals', this.$rootScope.globals, {expires: cookieExp});
 
         deferred.resolve();
         return;
@@ -97,10 +92,13 @@ export class AuthService {
   }
 
   register(user) {
-    return new Promise((resolve, reject) => {
-      this.users[length] = user;
+    let defer = this.$q.defer();
+    return  this.userService.getUserByEmail(user.email).then((response) => {
+      defer.reject('User already exists!');
+    }, (error) => {
+      this.userService.create(user);
       this.login(user);
-      resolve();
+      defer.resolve();
     });
   }
 

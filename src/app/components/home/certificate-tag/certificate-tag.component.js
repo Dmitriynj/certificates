@@ -5,8 +5,9 @@ export const certificateTagComponent = {
   },
   template: require('./certificate-tag.html'),
   controller: class CertificateTagComponent {
+    static $inject = [];
+
     constructor() {
-      'ngInject';
     }
 
     addTag(index) {

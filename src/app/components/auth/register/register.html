@@ -6,11 +6,12 @@
   </div>
   <auth-form
     user="$ctrl.user"
+    link="$ctrl.link"
     on-submit="$ctrl.createUser($event)"
     button="Create user"
     message="{{ $ctrl.error }}">
   </auth-form>
-  <div class="row">
-    <a href="" ui-sref="auth.register">Login</a>
-  </div>
+<!--  <div class="row">-->
+<!--    <a href="" ui-sref="auth.register">Login</a>-->
+<!--  </div>-->
 </div>

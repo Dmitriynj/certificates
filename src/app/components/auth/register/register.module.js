@@ -6,13 +6,15 @@ export const register = angular
     uiRouter,
   ])
   .component('register', registerComponent)
-  .config(($stateProvider) => {
-    'ngInject';
-
-    $stateProvider
-      .state('auth.register', {
-        url: '/register',
-        component: 'register',
-      });
-  })
+  .config(config)
   .name;
+
+config.$inject = ['$stateProvider'];
+function config($stateProvider) {
+
+  $stateProvider
+    .state('auth.register', {
+      url: '/register',
+      component: 'register',
+    });
+}

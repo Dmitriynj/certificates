@@ -2,12 +2,14 @@ export const certificateEditFormComponent = {
   bindings: {
     certificateId: '<',
     newCertificate: '<',
+    buttonName: '<',
     onSubmit: '&',
   },
   template: require('./certificate-edit-from.html'),
   controller: class CertificateComponent {
+    static $inject = ['CertificateService', '$stateParams'];
+
     constructor(CertificateService, $stateParams) {
-      'ngInject';
 
       this.certificateService = CertificateService;
       this.$stateParams = $stateParams;

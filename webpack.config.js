@@ -7,8 +7,10 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var MinifyPlugin = require('babel-minify-webpack-plugin');
 
-/**
+
+  /**
  * Env
  * Get npm lifecycle event to identify the environment
  */
@@ -31,7 +33,7 @@ module.exports = function makeWebpackConfig() {
    * Karma will set this when it's a test build
    */
   config.entry = isTest ? void 0 : {
-    app: './src/app/app.module.js'
+    app: ['@babel/polyfill', './src/app/app.module.js']
   };
 
   /**
@@ -88,7 +90,7 @@ module.exports = function makeWebpackConfig() {
       // Compiles ES6 and ES7 into ES5 code
       test: /\.js$/,
       loader: 'babel-loader',
-      exclude: /node_modules/
+      exclude: /node_modules/,
     }, {
       // CSS LOADER
       // Reference: https://github.com/webpack/css-loader
@@ -169,7 +171,9 @@ module.exports = function makeWebpackConfig() {
           plugins: [autoprefixer]
         }
       }
-    })
+    }),
+    new MinifyPlugin(),
+
   ];
 
   // Skip rendering index.html in test mode
@@ -198,7 +202,7 @@ module.exports = function makeWebpackConfig() {
 
       // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
       // Minify all javascript, switch loaders to minimizing mode
-      new webpack.optimize.UglifyJsPlugin(),
+      // new webpack.optimize.UglifyJsPlugin(),
 
       // Copy assets from the public folder
       // Reference: https://github.com/kevlened/copy-webpack-plugin

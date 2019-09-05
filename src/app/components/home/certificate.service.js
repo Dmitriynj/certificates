@@ -1,6 +1,7 @@
 export class CertificateService {
+  static $inject = ['$cookies', '$localStorage', '$q'];
+
   constructor($cookies, $localStorage, $q) {
-    'ngInject';
 
     this.$localStorage = $localStorage;
     this.$q = $q;

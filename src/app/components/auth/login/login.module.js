@@ -7,19 +7,22 @@ export const login = angular
     'ngCookies'
   ])
   .component('login', loginComponent)
-  .config(($stateProvider, $urlRouterProvider) => {
-    'ngInject';
-
-    $stateProvider
-      .state('auth', {
-        redirectTo: 'auth.login',
-        url: '/auth',
-        template: '<div ui-view></div>',
-      })
-      .state('auth.login', {
-        url: '/login',
-        component: 'login',
-      });
-    $urlRouterProvider.otherwise('/auth/login');
-  })
+  .config(config)
   .name;
+
+config.$inject = ['$stateProvider', '$urlRouterProvider'];
+function config($stateProvider, $urlRouterProvider) {
+
+  $stateProvider
+    .state('auth', {
+      // redirectTo: 'auth.login',
+      url: '/auth',
+      template: '<div ui-view></div>',
+    })
+    .state('auth.login', {
+      url: '/login',
+      component: 'login',
+    });
+
+  $urlRouterProvider.otherwise('/auth/login');
+}

@@ -5,8 +5,9 @@ export const certificateComponent = {
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
+    static $inject = ['$state', 'AuthService', 'UserService'];
+
     constructor($state, AuthService, UserService) {
-      'ngInject';
 
       this.$state = $state;
       this.authService = AuthService;
@@ -15,6 +16,7 @@ export const certificateComponent = {
 
     $onInit() {
       this.user = this.authService.getUser();
+      this.isUserHaveThisCertificate = this.isUserHaveThisCertificate();
     }
 
     addTag(event) {
@@ -32,10 +34,39 @@ export const certificateComponent = {
     }
 
     buy() {
-      let user = this.authService.getUser();
-
-      this.userService.update()
+      if (!this.user.certificates) {
+        this.user.certificates = [];
+      }
+      this.user.certificates.push(this.certificate);
+      this.userService.update(this.user).then((response) => {
+        this.user = response;
+        this.isUserHaveThisCertificate = true;
+      });
     }
+
+    cell() {
+      for (let i = 0; i < this.user.certificates.length; i++) {
+        if (this.user.certificates[i].id === this.certificate.id) {
+          this.user.certificates.splice(i, 1);
+          this.userService.update(this.user).then((response) => {
+            this.user = response;
+            this.isUserHaveThisCertificate = false;
+          });
+        }
+      }
+    }
+
+    isUserHaveThisCertificate() {
+      if (!!this.user.certificates) {
+        for (let i = 0; i < this.user.certificates.length; i++) {
+          if (this.user.certificates[i].id === this.certificate.id) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+
 
   }
 };

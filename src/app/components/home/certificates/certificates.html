@@ -15,9 +15,10 @@
   <div class="col-4">
     <div class="input-group">
       <input type="text"
-             ng-model="search"
+             ng-model="$ctrl.search"
              class="form-control"
-             placeholder="Search certificates">
+             placeholder="Search certificates"
+             ng-change="$ctrl.updateCertificates($ctrl.search, $ctrl.queryTags)">
     </div>
   </div>
 
@@ -34,40 +35,19 @@
   </div>
 </div>
 
-<!--| certificateTagsFilter:search:$ctrl.queryTags:$ctrl.pager:$ctrl.pageSize:$ctrl.currentPage:$ctrl.allCertificates-->
 <div class="card-columns mt-3">
   <certificate on-add-tag="$ctrl.addQueryTag($event)"
                class="m-3" certificate="certificate"
-               ng-repeat="certificate in $ctrl.sertificatesToShow
-               | certificateTagsFilter:$ctrl">
+               ng-repeat="certificate in $ctrl.sertificatesToShow">
   </certificate>
 </div>
 
 <pagination-component
-  items="$ctrl.allCertificates"
+  some-field="$ctrl.someField"
+  items="$ctrl.items"
   pageSize="{{$ctrl.pageSize}}"
   on-show-items="$ctrl.showItems($event)">
 </pagination-component>
-
-<!--<div class="row justify-content-md-center">-->
-<!--  <ul ng-if="$ctrl.pager.pages.length" class="pagination">-->
-<!--    <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === 1}">-->
-<!--      <a class="page-link" href="#" ng-click="$ctrl.setPage(1)">First</a>-->
-<!--    </li>-->
-<!--    <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === 1}">-->
-<!--      <a class="page-link" href="#" ng-click="$ctrl.setPage($ctrl.pager.currentPage - 1)">Previous</a>-->
-<!--    </li>-->
-<!--    <li class="page-item" ng-repeat="page in $ctrl.pager.pages" ng-class="{active:$ctrl.pager.currentPage === page}">-->
-<!--      <a class="page-link" href="#" ng-click="$ctrl.setPage(page)">{{page}}</a>-->
-<!--    </li>-->
-<!--    <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === $ctrl.pager.totalPages}">-->
-<!--      <a class="page-link" href="#" ng-click="$ctrl.setPage($ctrl.pager.currentPage + 1)">Next</a>-->
-<!--    </li>-->
-<!--    <li class="page-item" ng-class="{disabled:$ctrl.pager.currentPage === $ctrl.pager.totalPages}">-->
-<!--      <a class="page-link" href="#" ng-click="$ctrl.setPage($ctrl.pager.totalPages)">Last</a>-->
-<!--    </li>-->
-<!--  </ul>-->
-<!--</div>-->
 
 
 

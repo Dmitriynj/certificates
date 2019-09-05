@@ -5,9 +5,8 @@ export const navComponent ={
   },
   template: require('./app-nav.html'),
   controller: class AppNavComponent {
-
+    static $inject = ['AuthService', '$state', '$rootScope'];
     constructor(AuthService, $state, $rootScope) {
-      'ngInject';
 
       this.authService = AuthService;
       this.$state = $state;

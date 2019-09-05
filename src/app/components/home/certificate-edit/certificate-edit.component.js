@@ -4,8 +4,9 @@ export const certificateEditComponent = {
   },
   template: require('./certificate-edit.html'),
   controller: class CertificateEditComponent {
+    static $inject = ['CertificateService', '$stateParams', '$state'];
+
     constructor(CertificateService, $stateParams, $state) {
-      'ngInject';
 
       this.certificateService = CertificateService;
       this.certificateId = $stateParams.certificateId;
@@ -13,13 +14,11 @@ export const certificateEditComponent = {
     }
 
     $onInit() {
-
     }
 
     updateCertificate(event) {
-      let thisObj = this;
       this.certificateService.update(event.certificate).then((response) => {
-        thisObj.$state.go('certificates');
+        this.$state.go('certificates');
       });
     }
   }

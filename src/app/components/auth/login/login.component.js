@@ -4,8 +4,9 @@ export const loginComponent = {
   },
   template: require('./login.html'),
   controller: class LoginComponent {
+    static $inject = ['AuthService', '$state'];
+
     constructor(AuthService, $state) {
-      'ngInject';
 
       this.authService = AuthService;
       this.$state = $state;
@@ -19,6 +20,10 @@ export const loginComponent = {
         email: '',
         password: '',
       };
+      this.link = {
+        state: 'auth.register',
+        name: 'Registration'
+      }
     }
 
     login(event) {
