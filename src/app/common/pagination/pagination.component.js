@@ -3,6 +3,7 @@ import { getPager } from './getpager';
 export const paginationComponent = {
   bindings: {
     items: '<',
+    currentPage: '<',
     pageSize: '<',
     onShowItems: '&'
   },
@@ -14,9 +15,9 @@ export const paginationComponent = {
     }
 
     $onInit() {
-      this.currentPage = 1;
+      this.currentPage = this.currentPage || 1;
       this.pageSize = this.pageSize || 9;
-      this.setPage(1);
+      this.setPage(this.currentPage);
     }
 
     $onChanges(changes) {
@@ -24,16 +25,16 @@ export const paginationComponent = {
         this.items = angular.copy(this.items);
         this.setPage(this.currentPage);
       }
+      if(changes.pageSize) {
+        this.pageSize = angular.copy(this.pageSize);
+      }
     }
 
     setPage(page) {
       this.pager = getPager(this.items.length, page, this.pageSize);
-
       this.itemsToShow = this.items.slice(
         this.pager.startIndex,
-        this.pager.endIndex + 1
-      );
-
+        this.pager.endIndex + 1);
       this.showItems();
     }
 

@@ -15,6 +15,7 @@ export const certificatesComponent = {
 
 
     $onInit() {
+      this.currentPage = 1;
       this.pageSize = 9;
       this.items = this.certificates;
       this.queryTags = [];
