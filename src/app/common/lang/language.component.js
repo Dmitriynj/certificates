@@ -3,15 +3,15 @@ export const languageComponent = {
   },
   template: require('./language.html'),
   controller: class LanguageComponent {
-    static $inject = ['$rootScope', '$translate'];
+    static $inject = ['$translate', '$localStorage'];
 
-    constructor($rootScope, $translate) {
-      this.$rootScope = $rootScope;
+    constructor($translate, $localStorage) {
       this.$translate = $translate;
+      this.$localStorage = $localStorage;
     }
 
     changeLanguage(lang) {
-      this.$rootScope.lang = lang;
+      this.$localStorage.globals.lang = lang;
       this.$translate.use(lang);
     }
   }

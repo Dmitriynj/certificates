@@ -5,6 +5,8 @@ import uiRouter from '@uirouter/angularjs';
 import {UserService} from './services/user.service';
 import {pagination} from "./pagination/pagination.module";
 import { lang } from "./lang/language.module";
+import { confirmModal } from './confirm-modal/confirm-modal.module'
+import {ngReallyClickDirective} from "./directives/ng.really.click";
 
 export const common = angular
   .module('common', [
@@ -13,11 +15,13 @@ export const common = angular
     pagination,
     uiRouter,
     lang,
+    confirmModal
   ])
   .component('commonComponent', commonComponent)
   .config(config)
   .run(run)
   .service('UserService', UserService)
+  .directive('ngReallyClick', ngReallyClickDirective)
   .name;
 
 

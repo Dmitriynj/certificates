@@ -17,5 +17,11 @@
 
   "BUTTON_BUY": "Купить",
   "BUTTON_CELL": "Продать",
-  "BUTTON_EDIT": "Изменить"
+  "BUTTON_EDIT": "Изменить",
+  "BUTTON_DELETE": "Удалить",
+
+  "CONFIRM_MESSAGE": "Вы уверены?",
+  "BUY_CONFIRM_MESSAGE": "Вы действительно хотите купить сертификат?",
+  "CELL_CONFIRM_MESSAGE": "Вы действительно хотите продать сертификат?",
+  "DELETE_CONFIRM_MESSAGE": "Вы действительно хотите удалить этот сертификат?"
 }

@@ -4,7 +4,7 @@ import uiRouter from '@uirouter/angularjs';
 
 export const certificateSingle = angular
   .module('components.home.certificate', [
-    uiRouter
+    uiRouter,
   ])
   .component('certificate', certificateComponent)
   .service('AuthService', AuthService)

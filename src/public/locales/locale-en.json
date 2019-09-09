@@ -17,5 +17,11 @@
 
   "BUTTON_BUY": "Buy",
   "BUTTON_CELL": "Cell",
-  "BUTTON_EDIT": "Edit"
+  "BUTTON_EDIT": "Edit",
+  "BUTTON_DELETE": "Delete",
+
+  "CONFIRM_MESSAGE": "Are you sure?",
+  "BUY_CONFIRM_MESSAGE": "Are you really want to buy certificate?",
+  "CELL_CONFIRM_MESSAGE": "Are you really want to cell certificate?",
+  "DELETE_CONFIRM_MESSAGE": "Are you really want to delete certificate?"
 }

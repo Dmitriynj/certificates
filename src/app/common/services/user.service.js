@@ -56,4 +56,19 @@ export class UserService {
       return deferred.promise;
     });
   }
+
+  deleteCertificateFromUsers(certificateId) {
+    return this.getAllUsers().then(users => {
+      let defer = this.$q.defer();
+      users.forEach((user) => {
+        if(user.certificates &&  user.certificates.length > 0) {
+          user.certificates = user.certificates.filter(certificate =>
+            certificate.id !== certificateId
+          );
+        }
+      });
+      defer.resolve();
+      return defer;
+    });
+  }
 }

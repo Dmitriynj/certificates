@@ -15,7 +15,7 @@ export const app = angular
     uiRouter,
     'ngCookies',
     common,
-    components
+    components,
   ])
   .component('app', appComponent)
   .config(config);

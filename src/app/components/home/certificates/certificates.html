@@ -49,8 +49,8 @@
 <div class="card-columns mt-3">
   <certificate user="$ctrl.user"
                on-add-tag="$ctrl.addQueryTag($event);"
-               on-change-user-certificate="$ctrl.filterCertificates($ctrl.search, $ctrl.queryTags);"
-               on-delete="$ctrl.updateCertificates();"
+               on-cell-certificate="$ctrl.onCellCertificate();"
+               on-delete="$ctrl.onDeleteCertificate();"
                class="m-3"
                certificate="certificate"
                ng-repeat="certificate in $ctrl.sertificatesToShow">
@@ -63,6 +63,10 @@
   page-size="$ctrl.pageSize"
   on-show-items="$ctrl.showItems($event)">
 </pagination-component>
+
+<!--<confirm-modal-component-->
+<!--  showConfirmationModal="$ctrl.showConfirmationModal">-->
+<!--</confirm-modal-component>-->
 
 
 

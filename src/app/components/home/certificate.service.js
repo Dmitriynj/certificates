@@ -1,12 +1,13 @@
 export class CertificateService {
-  static $inject = ['$cookies', '$localStorage', '$q'];
+  static $inject = ['$cookies', '$localStorage', '$q', 'UserService'];
 
-  constructor($cookies, $localStorage, $q) {
+  constructor($cookies, $localStorage, $q, UserService) {
 
     this.$localStorage = $localStorage;
     this.$q = $q;
     this.certificates = {};
     this.certificates.data = $localStorage.globals.certificates;
+    this.userService = UserService;
   }
 
   /**
@@ -21,8 +22,8 @@ export class CertificateService {
     return new Promise((resolve, reject) => {
       let certificates = this.$localStorage.globals.certificates;
       let intId = Number.parseInt(id);
-      for(let i=0; i<certificates.length; i++) {
-        if(certificates[i].id === intId) {
+      for (let i = 0; i < certificates.length; i++) {
+        if (certificates[i].id === intId) {
           resolve(certificates[i]);
         }
       }
@@ -42,24 +43,16 @@ export class CertificateService {
   }
 
   delete(certificateId) {
-    let defer = this.$q.defer();
-    this.getAllCertificates().then((response) => {
-      let certificates = response.data;
-      certificates.forEach((certificate, index) => {
-        if(certificate.id === certificateId) {
-          certificates.splice(index, 1);
+    return this.userService.deleteCertificateFromUsers(certificateId).then(response => {
+      let defer = this.$q.defer();
+      this.certificates.data.forEach((certificate, index) => {
+        if (certificate.id === certificateId) {
+          this.certificates.data.splice(index, 1);
+          defer.resolve();
         }
       });
-
-      defer.resolve();
-    }, (error) => {
-      defer.reject(error);
+      defer.reject();
+      return defer.promise;
     });
-    return defer.promise;
   }
-
-
-
-
-
 }

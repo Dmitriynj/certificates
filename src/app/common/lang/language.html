@@ -4,10 +4,10 @@
   </button>
   <div class="dropdown-menu">
     <a class="dropdown-item" href="#"
-       ng-show="$ctrl.$rootScope.lang == 'ru'"
+       ng-show="$ctrl.$localStorage.globals.lang == 'ru'"
        ng-click="$ctrl.changeLanguage('en')">English</a>
     <a class="dropdown-item" href="#"
-       ng-show="$ctrl.$rootScope.lang == 'en'"
+       ng-show="$ctrl.$localStorage.globals.lang == 'en'"
        ng-click="$ctrl.changeLanguage('ru')">Русский</a>
   </div>
 </div>

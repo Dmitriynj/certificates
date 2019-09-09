@@ -22,12 +22,12 @@ export const certificatesComponent = {
       this.queryTags = [];
       this.showMy = false;
       this.authService.getUser().then(response => {
-         this.user = response;
+        this.user = response;
       });
     }
 
     $onChanges(changes) {
-      if(changes.user) {
+      if (changes.user) {
         this.user = angular.copy(this.user);
       }
     }
@@ -77,18 +77,19 @@ export const certificatesComponent = {
       this.filterCertificates(this.search, this.queryTags);
     }
 
-    updateCertificates() {
-      // this.certificateService.getAllCertificates().then((response) => {
-      //   this.certificates = response.data;
-      //   this.filterCertificates(this.search, this.queryTags);
-      // });
-      this.certificateService.getAllCertificates().then(response => {
-        this.certificates = response.data;
-        this.filterCertificates(this.search, this.queryTags);
-      });
+    onDeleteCertificate() {
+      this.$state.reload();
     }
 
+    onCellCertificate() {
+      if(this.showMy) {
+        this.filterCertificates(this.search, this.queryTags);
+      }
+    }
 
+    // confirmAction() {
+    //   this.showConfirmationModal = true;
+    // }
   }
 };
 

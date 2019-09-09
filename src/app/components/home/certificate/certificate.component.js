@@ -3,8 +3,8 @@ export const certificateComponent = {
     user: '<',
     certificate: '<',
     onAddTag: '&',
-    onChangeUserCertificate: '&',
-    onDelete: '&'
+    onCellCertificate: '&',
+    onDelete: '&',
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
@@ -14,7 +14,7 @@ export const certificateComponent = {
 
       this.$state = $state;
       this.userService = UserService;
-      this.certificateCervice = CertificateService;
+      this.certificateService = CertificateService;
     }
 
     $onInit() {
@@ -43,21 +43,20 @@ export const certificateComponent = {
       this.userService.update(this.user).then((response) => {
         this.user = response;
         this.isUserHaveThisCertificate = true;
-        this.onChangeUserCertificate();
       });
     }
 
     cell() {
-      for (let i = 0; i < this.user.certificates.length; i++) {
-        if (this.user.certificates[i].id === this.certificate.id) {
-          this.user.certificates.splice(i, 1);
+      this.user.certificates.forEach((certificate, index) => {
+        if (certificate.id === this.certificate.id) {
+          this.user.certificates.splice(index, 1);
           this.userService.update(this.user).then((response) => {
             this.user = response;
             this.isUserHaveThisCertificate = false;
-            this.onChangeUserCertificate();
+            this.onCellCertificate();
           });
         }
-      }
+      });
     }
 
     isUserHaveThisCertificateFun() {
@@ -72,24 +71,9 @@ export const certificateComponent = {
     }
 
     delete() {
-      this.certificateCervice.delete(this.certificate.id).then(() => {
+      this.certificateService.delete(this.certificate.id).then(() => {
         this.onDelete();
       });
-      // this.user.password = '';
-      // this.onDelete();
-      // this.certificateCervice.delete(this.certificate.id).then((response) => {
-      //   if (this.isUserHaveThisCertificate) {
-      //     this.user.certificates.filter((certificate) => {
-      //       return certificate.id !== this.certificate.id;
-      //     });
-      //     // this.userService.update(this.user).then((response) => {
-      //     //   this.user = response;
-      //     // });
-      //     this.user = {};
-      //   }
-      //   this.onDelete();
-      // });
-
     }
 
   }
