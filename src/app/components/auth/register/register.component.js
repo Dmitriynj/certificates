@@ -11,7 +11,7 @@ export const registerComponent = {
     $onInit() {
       this.maxlength = 30;
       this.minlength = 4;
-      this.error = null;
+      this.message = null;
       this.user = {
         email: '',
         password: '',
@@ -27,7 +27,7 @@ export const registerComponent = {
         .then(() => {
           this.$state.go('certificates');
         }, reason => {
-          this.error = reason.message;
+          this.message = reason.message;
         });
     }
   },

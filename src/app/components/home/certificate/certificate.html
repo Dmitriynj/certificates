@@ -1,17 +1,22 @@
 <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title"> {{ $ctrl.certificate.title }}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Date: {{$ctrl.certificate.date | date: "MMM d, yy h:mm a"}}</h6>
-      <p class="card-text">{{ $ctrl.certificate.description }}</p>
-      <certificate-tag
-        tags="$ctrl.certificate.tags"
-        on-add-tag="$ctrl.addTag($event)">
-      </certificate-tag>
-      <a href="#" class="btn btn-primary"
-         ng-click="$ctrl.edit()" ng-if="$ctrl.user && $ctrl.user.isAdmin">Edit</a>
-      <a href="#" class="btn btn-primary"
-         ng-click="$ctrl.buy()" ng-if="$ctrl.user && !$ctrl.isUserHaveThisCertificate">Buy</a>
-      <a href="#" class="btn btn-danger"
-         ng-click="$ctrl.cell()" ng-if="$ctrl.user && $ctrl.isUserHaveThisCertificate">Cell</a>
+  <div class="card-body">
+    <h5 class="card-title"> {{ $ctrl.certificate.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Date: {{$ctrl.certificate.date | date: "MMM d, yy h:mm a"}}</h6>
+    <p class="card-text">{{ $ctrl.certificate.description }}</p>
+    <certificate-tag
+      tags="$ctrl.certificate.tags"
+      on-add-tag="$ctrl.addTag($event)">
+    </certificate-tag>
+
+    <div class="d-flex bd-highlight mb-3">
+      <a href="#" class="btn btn-primary mr-1 p-2 bd-highlight"
+         ng-click="$ctrl.edit()" ng-if="$ctrl.user && $ctrl.user.isAdmin">{{'BUTTON_EDIT' | translate}}</a>
+      <a href="#" class="btn btn-primary mr-1 p-2 bd-highlight"
+         ng-click="$ctrl.buy()" ng-if="$ctrl.user && !$ctrl.isUserHaveThisCertificate">{{'BUTTON_BUY' | translate}}</a>
+      <a href="#" class="btn btn-danger p-2 bd-highlight"
+         ng-click="$ctrl.cell()" ng-if="$ctrl.user && $ctrl.isUserHaveThisCertificate">{{'BUTTON_CELL' | translate}}</a>
+      <a href="#" class="btn btn-dark ml-auto p-2 bd-highlight"
+         ng-click="$ctrl.delete()" ng-if="$ctrl.user && $ctrl.user.isAdmin">Delete</a>
     </div>
+  </div>
 </div>

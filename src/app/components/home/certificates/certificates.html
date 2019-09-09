@@ -1,14 +1,17 @@
 <div class="row mb-3">
-  <h2 class="mx-auto">Certificates</h2>
+  <h2 class="mx-auto">{{'CERTIFICATES' | translate}}</h2>
 </div>
 <div class="row justify-content-center align-items-center">
 
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-outline-primary">
-      <input type="radio" name="options" id="option1" autocomplete="off" checked> All certificates
+  <div class="btn-group btn-group-toggle" data-toggle="buttons"
+       ng-show="$ctrl.user.certificates && $ctrl.user.certificates.length > 0">
+    <label class="btn btn-outline-primary" ng-click="$ctrl.showAllCertificates()">
+      <input type="radio" name="options" id="option1" autocomplete="off" checked>
+      {{'BUTTON_ALL_CERTIFICATES' | translate}}
     </label>
-    <label class="btn btn-outline-primary">
-      <input type="radio" name="options" id="option2" autocomplete="off"> My certificates
+    <label class="btn btn-outline-primary" ng-click="$ctrl.showMyCertificates()">
+      <input type="radio" name="options" id="option2" autocomplete="off">
+      {{'BUTTON_MY_CERTIFICATES' | translate}}
     </label>
   </div>
 
@@ -17,15 +20,15 @@
       <input type="text"
              ng-model="$ctrl.search"
              class="form-control"
-             placeholder="Search certificates"
-             ng-change="$ctrl.updateCertificates($ctrl.search, $ctrl.queryTags)">
+             placeholder="{{'SEARCH_CERTIFICATES' | translate}}"
+             ng-change="$ctrl.filterCertificates($ctrl.search, $ctrl.queryTags);">
     </div>
   </div>
 
   <div class="col-4" ng-show="$ctrl.queryTags.length">
     <div class="card">
       <div class="card-body">
-        Tags:
+        <span>{{'TAGS' | translate}}:</span>
         <button class="btn btn-warning btn-sm mr-1 ml-1"
                 ng-repeat="tag in $ctrl.queryTags"
                 ng-click="$ctrl.removeQueryTag(tag)">{{tag.name}}
@@ -35,9 +38,21 @@
   </div>
 </div>
 
+<div class="row justify-content-center align-items-center mt-5" ng-show="$ctrl.emptyMessage">
+  <div class="col">
+    <div class="alert alert-warning w-75 mx-auto" role="alert">
+      None certificates were found by your query!
+    </div>
+  </div>
+</div>
+
 <div class="card-columns mt-3">
-  <certificate on-add-tag="$ctrl.addQueryTag($event)"
-               class="m-3" certificate="certificate"
+  <certificate user="$ctrl.user"
+               on-add-tag="$ctrl.addQueryTag($event);"
+               on-change-user-certificate="$ctrl.filterCertificates($ctrl.search, $ctrl.queryTags);"
+               on-delete="$ctrl.updateCertificates();"
+               class="m-3"
+               certificate="certificate"
                ng-repeat="certificate in $ctrl.sertificatesToShow">
   </certificate>
 </div>

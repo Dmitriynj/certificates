@@ -37,7 +37,7 @@ export const certificateEditFormComponent = {
       this.certificate.tags.push({
         id: this.certificate.tags.length + 1,
         name: this.tagName
-      })
+      });
     }
 
     deleteTag(tag) {

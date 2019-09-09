@@ -7,11 +7,15 @@
   <auth-form
     user="$ctrl.user"
     link="$ctrl.link"
+    message="{{$ctrl.message}}"
     on-submit="$ctrl.createUser($event)"
-    button="Create user"
-    message="{{ $ctrl.error }}">
+    button="Create user">
   </auth-form>
-<!--  <div class="row">-->
-<!--    <a href="" ui-sref="auth.register">Login</a>-->
-<!--  </div>-->
+  <div ng-if="!!$ctrl.message" class="alert alert-dismissible fade show mt-2 alert-danger"
+       role="alert">
+    <strong>Notification!</strong> {{ $ctrl.message }}
+    <button type="button" ng-click="$ctrl.deleteMessage()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 </div>

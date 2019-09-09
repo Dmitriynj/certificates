@@ -1,7 +1,8 @@
 import uiRouter from '@uirouter/angularjs';
 import {certificatesComponent} from './certificates.component';
-import {certificateTagsFilter} from './certificates.tags.filter';
-import {certificateInputFilter} from "./certificates.input.filter";
+import {certificateTagsFilter} from './certificates.filter';
+import {certificateInputFilter} from "./certificates.filter";
+import {myCertificatesFilter} from "./certificates.filter";
 import {UserService} from "../../../common/services/user.service";
 import {pagination} from "../../../common/pagination/pagination.module";
 import 'ngstorage/ngStorage.min';
@@ -15,6 +16,7 @@ export const certificates = angular
   .component('certificates', certificatesComponent)
   .filter('certificateTagsFilter', certificateTagsFilter)
   .filter('certificateInputFilter', certificateInputFilter)
+  .filter('myCertificatesFilter', myCertificatesFilter)
   .config(config)
   .run(run)
   .service('UserService', UserService)
@@ -54,13 +56,13 @@ function run($rootScope, $localStorage, $http) {
   //       {
   //         id: 1,
   //         email: 'admin@epam.com',
-  //         password: 'admin',
+  //         password: 'YWRtaW4=',
   //         isAdmin: true
   //       },
   //       {
   //         id: 2,
   //         email: 'user@epam.com',
-  //         password: 'user',
+  //         password: 'dXNlcg==',
   //         isAdmin: false
   //       }
   //     ]

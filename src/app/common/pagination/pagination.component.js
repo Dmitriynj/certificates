@@ -1,4 +1,4 @@
-import { getPager } from './getpager';
+import { pager } from './pager';
 
 export const paginationComponent = {
   bindings: {
@@ -31,7 +31,7 @@ export const paginationComponent = {
     }
 
     setPage(page) {
-      this.pager = getPager(this.items.length, page, this.pageSize);
+      this.pager = pager(this.items.length, page, this.pageSize);
       this.itemsToShow = this.items.slice(
         this.pager.startIndex,
         this.pager.endIndex + 1);

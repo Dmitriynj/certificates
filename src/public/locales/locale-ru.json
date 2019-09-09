@@ -1,4 +1,21 @@
 {
+  "CERTIFICATES": "Сертификаты",
+
+  "BUTTON_ALL_CERTIFICATES": "Все сертификаты",
+  "BUTTON_MY_CERTIFICATES": "Мои сертификаты",
+
+  "SEARCH_CERTIFICATES": "Поиск сертификатов",
+  "TAGS": "Тэги",
+
   "BUTTON_FIRST": "Первая",
-  "BUTTON_LANG": "Язык"
+  "BUTTON_PREV": "Предыдущая",
+  "BUTTON_NEXT": "Следующая",
+  "BUTTON_LAST": "Последняя",
+
+  "BUTTON_LOGOUT": "Выйти",
+  "BUTTON_LANG": "Язык",
+
+  "BUTTON_BUY": "Купить",
+  "BUTTON_CELL": "Продать",
+  "BUTTON_EDIT": "Изменить"
 }

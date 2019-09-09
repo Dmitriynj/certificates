@@ -1,4 +1,4 @@
-export function getPager(totalItems, currentPage, pageSize) {
+export function pager(totalItems, currentPage, pageSize) {
   // default to first page
   currentPage = currentPage || 1;
 

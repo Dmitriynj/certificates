@@ -8,22 +8,14 @@ export class AuthService {
     this.$rootScope = $rootScope;
     this.$cookies = $cookies;
     this.$http = $http;
-    this.authData = null;
-
-    this.user = {
-      email: 'admin@epam.com',
-      password: 'admin'
-    };
   }
 
   login(user) {
     return this.userService.getUserByEmail(user.email).then((response) => {
       let deferred = this.$q.defer();
 
-      let userFromDb = response;
-      if(!!userFromDb && userFromDb.password === user.password) {
-        userFromDb.password = Base64.encode(userFromDb.password);
-        this.authData = userFromDb;
+      let userFromDb = angular.copy(response);
+      if(!!userFromDb && Base64.decode(userFromDb.password) === user.password) {
 
         let authdata = Base64.encode(userFromDb.email + ':' + userFromDb.password + ':' + userFromDb.requireAdmin);
         this.$rootScope.globals = {
@@ -45,22 +37,28 @@ export class AuthService {
   }
 
   logout() {
-    let obj = this;
     return new Promise((resolve, reject) => {
-      obj.authData = null;
-      obj.$rootScope.globals = {};
-      obj.$cookies.remove('globals');
-      obj.$http.defaults.headers.common.Authorization = 'Basic';
+      this.$rootScope.globals = {};
+      this.$cookies.remove('globals');
+      this.$http.defaults.headers.common.Authorization = 'Basic';
       resolve();
     });
   }
 
   getUser() {
+    let deferred = this.$q.defer();
     if (!!this.$cookies.getObject('globals')) {
-      let currentUser = this.$cookies.getObject('globals').currentUser;
-      currentUser.password = Base64.decode(currentUser.password);
-      return currentUser;
+      let user = this.$cookies.getObject('globals').currentUser;
+      this.userService.getUserByEmail(user.email).then(response => {
+        let userFromDb = angular.copy(response);
+        return deferred.resolve(userFromDb);
+      }, error => {
+        return deferred.reject("Something was wrong!");
+      });
+    } else {
+      deferred.reject()
     }
+    return deferred.promise;
   }
 
   requireAuthentication() {
@@ -92,18 +90,21 @@ export class AuthService {
   }
 
   register(user) {
-    let defer = this.$q.defer();
-    return  this.userService.getUserByEmail(user.email).then((response) => {
-      defer.reject('User already exists!');
-    }, (error) => {
-      this.userService.create(user);
-      this.login(user);
-      defer.resolve();
+    return this.userService.getUserByEmail(user.email).then((response) => {
+      let defer = this.$q.defer();
+      if(response === null) {
+        user.password = Base64.encode(user.password);
+        user.isAdmin = false;
+        this.userService.create(user);
+        this.login(user);
+        defer.resolve();
+      } else {
+        defer.reject({ message: 'User already exists!' });
+      }
+      return defer.promise;
     });
   }
-
 }
-
 
 // Base64 encoding service used by AuthenticationService
 var Base64 = {

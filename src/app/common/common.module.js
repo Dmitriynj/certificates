@@ -12,7 +12,7 @@ export const common = angular
     appNav,
     pagination,
     uiRouter,
-    lang
+    lang,
   ])
   .component('commonComponent', commonComponent)
   .config(config)

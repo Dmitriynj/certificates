@@ -13,7 +13,9 @@ export const navComponent ={
     }
 
     $onInit() {
-      this.user = this.authService.getUser();
+      this.authService.getUser().then((response) => {
+        this.user = response;
+      });
     }
 
     logout() {

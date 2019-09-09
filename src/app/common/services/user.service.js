@@ -1,11 +1,13 @@
 export class UserService {
-  static $inject = ['$http', '$q', '$localStorage'];
+  static $inject = ['$http', '$q', '$localStorage', '$cookies', '$rootScope'];
 
-  constructor($http, $q, $localStorage) {
+  constructor($http, $q, $localStorage, $cookies, $rootScope) {
 
     this.$http = $http;
     this.$q = $q;
     this.$localStorage = $localStorage;
+    this.$cookies = $cookies;
+    this.$rootScope = $rootScope;
   }
 
   getUserByEmail(email) {
@@ -16,7 +18,7 @@ export class UserService {
           return users[i];
         }
       }
-      return {};
+      return null;
     });
   }
 
@@ -45,13 +47,12 @@ export class UserService {
     return this.getUserByEmail(user.email).then((response) => {
       let deferred = this.$q.defer();
 
-      let userFromDb = response;
-      userFromDb.email = user.email;
-      userFromDb.password = user.password;
-      userFromDb.isAdmin = user.isAdmin;
-      userFromDb.certificates = user.certificates;
+      response.email = user.email;
+      response.password = user.password;
+      response.isAdmin = user.isAdmin;
+      response.certificates = user.certificates;
 
-      deferred.resolve(userFromDb);
+      deferred.resolve(angular.copy(response));
       return deferred.promise;
     });
   }

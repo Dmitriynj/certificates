@@ -1,4 +1,21 @@
 {
+  "CERTIFICATES": "Certificates",
+
+  "BUTTON_ALL_CERTIFICATES": "All certificates",
+  "BUTTON_MY_CERTIFICATES": "My certificates",
+
+  "SEARCH_CERTIFICATES": "Search certificates",
+  "TAGS": "Tags",
+
   "BUTTON_FIRST": "First",
-  "BUTTON_LANG": "Language"
+  "BUTTON_PREV": "Previous",
+  "BUTTON_NEXT": "Next",
+  "BUTTON_LAST": "Last",
+
+  "BUTTON_LOGOUT": "Logout",
+  "BUTTON_LANG": "Language",
+
+  "BUTTON_BUY": "Buy",
+  "BUTTON_CELL": "Cell",
+  "BUTTON_EDIT": "Edit"
 }
