@@ -5,18 +5,19 @@ export const certificatesComponent = {
   },
   template: require('./certificates.html'),
   controller: class CertificatesComponent {
-    static $inject = ['$filter', '$state', 'AuthService', 'CertificateService'];
+    static $inject = ['$filter', '$stateParams', '$state', 'AuthService', 'CertificateService'];
 
-    constructor($filter, $state, AuthService, CertificateService) {
+    constructor($filter, $stateParams, $state, AuthService, CertificateService) {
 
       this.$filter = $filter;
+      this.$stateParams = $stateParams;
       this.$state = $state;
       this.authService = AuthService;
       this.certificateService = CertificateService;
     }
 
     $onInit() {
-      this.currentPage = 1;
+      this.currentPage = this.$stateParams.page;
       this.pageSize = 9;
       this.items = this.certificates;
       this.queryTags = [];
@@ -86,10 +87,6 @@ export const certificatesComponent = {
         this.filterCertificates(this.search, this.queryTags);
       }
     }
-
-    // confirmAction() {
-    //   this.showConfirmationModal = true;
-    // }
   }
 };
 

@@ -23,5 +23,9 @@ export const navComponent ={
         .logout()
         .then(() => this.$state.go('auth.login'));
     }
+
+    goToAddCertificate() {
+      this.$state.go('certificate-add');
+    }
   }
 };

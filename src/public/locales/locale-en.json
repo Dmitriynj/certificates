@@ -19,9 +19,22 @@
   "BUTTON_CELL": "Cell",
   "BUTTON_EDIT": "Edit",
   "BUTTON_DELETE": "Delete",
+  "BUTTON_CANCEL": "Cancel",
+  "BUTTON_ADD": "Add",
 
   "CONFIRM_MESSAGE": "Are you sure?",
   "BUY_CONFIRM_MESSAGE": "Are you really want to buy certificate?",
   "CELL_CONFIRM_MESSAGE": "Are you really want to cell certificate?",
-  "DELETE_CONFIRM_MESSAGE": "Are you really want to delete certificate?"
+  "DELETE_CONFIRM_MESSAGE": "Are you really want to delete certificate?",
+
+  "EDIT_CERTIFICATE": "Edit certificate",
+  "ADD_CERTIFICATE": "Add certificate",
+
+  "TITLE": "Title",
+  "COST": "Cost",
+
+  "VALIDATION_MAX_LENGTH_MESSAGE": "This field is too long. Max length is ",
+  "VALIDATION_MIN_LENGTH_MESSAGE": "This field is too little. Min length is ",
+  "VALIDATION_PATTERN_MESSAGE": "This field is not correct",
+  "VALIDATION_REQUIRED_MESSAGE": "This field is required"
 }

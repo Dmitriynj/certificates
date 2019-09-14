@@ -4,7 +4,7 @@ import {certificateTagsFilter} from './certificates.filter';
 import {certificateInputFilter} from "./certificates.filter";
 import {myCertificatesFilter} from "./certificates.filter";
 import {UserService} from "../../../common/services/user.service";
-import {pagination} from "../../../common/pagination/pagination.module";
+import {pagination} from "../../../common/components/pagination/pagination.module";
 import 'ngstorage/ngStorage.min';
 
 export const certificates = angular

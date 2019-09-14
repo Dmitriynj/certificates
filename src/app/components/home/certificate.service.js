@@ -19,27 +19,41 @@ export class CertificateService {
   }
 
   getById(id) {
-    return new Promise((resolve, reject) => {
-      let certificates = this.$localStorage.globals.certificates;
-      let intId = Number.parseInt(id);
-      for (let i = 0; i < certificates.length; i++) {
-        if (certificates[i].id === intId) {
-          resolve(certificates[i]);
-        }
+    let defer = this.$q.defer();
+    let certificates = this.$localStorage.globals.certificates;
+    let intId = Number.parseInt(id);
+    for (let i = 0; i < certificates.length; i++) {
+      if (certificates[i].id === intId) {
+        defer.resolve(angular.copy(certificates[i]));
       }
-      reject('Certificate with the given id was not found!');
-    });
+    }
+    defer.reject('Certificate with the given id was not found!');
+    return defer.promise;
   }
 
-  update(certificate) {
-    return new Promise((resolve, reject) => {
-      let certificateToUpdate = this.getById(certificate.id);
-      certificateToUpdate.title = certificate.title;
-      certificateToUpdate.description = certificate.description;
-      certificateToUpdate.cost = certificate.cost;
-      certificateToUpdate.tags = certificate.tags;
-      resolve();
-    });
+  getByIdToChange(id) {
+    let defer = this.$q.defer();
+    let certificates = this.$localStorage.globals.certificates;
+    let intId = Number.parseInt(id);
+    for (let i = 0; i < certificates.length; i++) {
+      if (certificates[i].id === intId) {
+        defer.resolve(certificates[i]);
+      }
+    }
+    defer.reject('Certificate with the given id was not found!');
+    return defer.promise;
+  }
+
+  async update(certificate) {
+    let defer = this.$q.defer();
+    let certificateToUpdate = await this.getByIdToChange(certificate.id);
+    certificateToUpdate.title = certificate.title;
+    certificateToUpdate.description = certificate.description;
+    certificateToUpdate.cost = certificate.cost;
+    certificateToUpdate.tags = certificate.tags;
+    certificateToUpdate.date = certificate.date;
+    defer.resolve();
+    return defer.promise;
   }
 
   delete(certificateId) {
@@ -54,5 +68,17 @@ export class CertificateService {
       defer.reject();
       return defer.promise;
     });
+  }
+
+  create(certificate) {
+    let defer = this.$q.defer();
+
+    let certificates = this.$localStorage.globals.certificates;
+    let lastCertificateId = certificates.slice(-1).pop().id;
+    certificate.id = lastCertificateId + 1;
+    certificates.push(certificate);
+
+    defer.resolve();
+    return defer.promise;
   }
 }

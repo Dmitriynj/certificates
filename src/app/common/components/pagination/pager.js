@@ -5,11 +5,13 @@ export function pager(totalItems, currentPage, pageSize) {
 
   let startPage = 0;
   let endPage = 0;
+
   if (totalPages <= 10) {
     // less than 10 total pages so show all
     startPage = 1;
     endPage = totalPages;
-  } else {
+  }
+  else {
     // more than 10 total pages so calculate start and end pages
     if (currentPage <= 6) {
       startPage = 1;

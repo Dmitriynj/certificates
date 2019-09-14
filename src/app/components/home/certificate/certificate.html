@@ -3,6 +3,7 @@
     <h5 class="card-title"> {{ $ctrl.certificate.title }}</h5>
     <h6 class="card-subtitle mb-2 text-muted">Date: {{ $ctrl.certificate.date | date: "MMM d, yy h:mm a" }}</h6>
     <p class="card-text">{{ $ctrl.certificate.description }}</p>
+    <p class="text-success">Cost: {{$ctrl.certificate.cost}}</p>
     <certificate-tag
       tags="$ctrl.certificate.tags"
       on-add-tag="$ctrl.addTag($event)">

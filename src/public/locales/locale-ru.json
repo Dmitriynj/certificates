@@ -19,9 +19,22 @@
   "BUTTON_CELL": "Продать",
   "BUTTON_EDIT": "Изменить",
   "BUTTON_DELETE": "Удалить",
+  "BUTTON_CANCEL": "Отмена",
+  "BUTTON_ADD": "Добавить",
 
   "CONFIRM_MESSAGE": "Вы уверены?",
   "BUY_CONFIRM_MESSAGE": "Вы действительно хотите купить сертификат?",
   "CELL_CONFIRM_MESSAGE": "Вы действительно хотите продать сертификат?",
-  "DELETE_CONFIRM_MESSAGE": "Вы действительно хотите удалить этот сертификат?"
+  "DELETE_CONFIRM_MESSAGE": "Вы действительно хотите удалить этот сертификат?",
+
+  "EDIT_CERTIFICATE": "Изменение сертификата",
+  "ADD_CERTIFICATE": "Добавление сертификата",
+
+  "TITLE": "Название",
+  "COST": "Стоимость",
+
+  "VALIDATION_MAX_LENGTH_MESSAGE": "Введённое поле слишком длинное. Максимальная длина ",
+  "VALIDATION_MIN_LENGTH_MESSAGE": "Введённое поле слишком мало. Минимальная длина ",
+  "VALIDATION_IS_NOT_CORRECT_MESSAGE": "Введённое поле некорректно",
+  "VALIDATION_REQUIRED_MESSAGE": "Это поле обязательно для заполнения"
 }

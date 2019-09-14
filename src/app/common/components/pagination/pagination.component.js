@@ -27,6 +27,7 @@ export const paginationComponent = {
       }
       if(changes.pageSize) {
         this.pageSize = angular.copy(this.pageSize);
+        this.setPage(1);
       }
     }
 
@@ -35,10 +36,6 @@ export const paginationComponent = {
       this.itemsToShow = this.items.slice(
         this.pager.startIndex,
         this.pager.endIndex + 1);
-      this.showItems();
-    }
-
-    showItems() {
       this.onShowItems({
         $event: {
           items: this.itemsToShow

@@ -1,21 +1,23 @@
 import loader from 'angular-loading-bar';
-import {appNav} from './app-nav/app-nav.module';
-import {commonComponent} from './common.component';
+import { appNav } from './components/app-nav/app-nav.module';
+import { commonComponent } from './common.component';
 import uiRouter from '@uirouter/angularjs';
-import {UserService} from './services/user.service';
-import {pagination} from "./pagination/pagination.module";
-import { lang } from "./lang/language.module";
-import { confirmModal } from './confirm-modal/confirm-modal.module'
-import {ngReallyClickDirective} from "./directives/ng.really.click";
+import { UserService } from './services/user.service';
+import {pagination} from "./components/pagination/pagination.module";
+import { lang } from "./components/lang/language.module";
+import {ngReallyClickDirective} from "./directives/ng-really-click.directive";
+import { formField } from "./components/form-field/form-field.module";
+import uiValidate from 'angular-ui-validate'
 
 export const common = angular
   .module('common', [
     loader,
+    uiValidate,
     appNav,
     pagination,
     uiRouter,
     lang,
-    confirmModal
+    formField
   ])
   .component('commonComponent', commonComponent)
   .config(config)

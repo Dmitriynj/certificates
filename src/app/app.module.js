@@ -9,6 +9,8 @@ import { appComponent } from './app.component';
 import { common } from './common/common.module';
 import { components } from "./components/components.module";
 import 'angular-cookies';
+import 'angularjs-datepicker';
+import 'angularjs-datepicker/src/css/angular-datepicker.css';
 
 export const app = angular
   .module('app', [
@@ -16,6 +18,7 @@ export const app = angular
     'ngCookies',
     common,
     components,
+    '720kb.datepicker'
   ])
   .component('app', appComponent)
   .config(config);

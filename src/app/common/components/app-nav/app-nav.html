@@ -2,6 +2,10 @@
   <h5 class="my-0 mr-md-auto">{{'CERTIFICATES' | translate}}</h5>
   <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark">{{::$ctrl.user.email}}</a>
+    <button type="button"
+            ng-if="$ctrl.user && $ctrl.user.isAdmin && !$ctrl.$state.includes('certificate-add')"
+            class="btn btn-success btn-sm mr-1"
+            ng-click="$ctrl.goToAddCertificate()">{{'BUTTON_ADD' | translate}}</button>
     <language-component></language-component>
     <a href="#" ng-click="$ctrl.logout()" class="btn btn-danger">{{'BUTTON_LOGOUT' | translate}}</a>
   </nav>

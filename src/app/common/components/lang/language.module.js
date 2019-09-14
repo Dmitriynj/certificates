@@ -1,5 +1,5 @@
 import { languageComponent } from './language.component';
-import angularTranslate from'angular-translate/dist/angular-translate';
+import angularTranslate from'angular-translate';
 import staticLoader from 'angular-translate-loader-static-files/angular-translate-loader-static-files';
 import 'ngstorage/ngStorage.min';
 
@@ -23,10 +23,15 @@ function config($translateProvider) {
       suffix: '.json'
     })
     // remove the warning from console log by putting the sanitize strategy
-    .useSanitizeValueStrategy('sanitizeParameters');
+    .useSanitizeValueStrategy('sanitizeParameters')
+    .preferredLanguage('ru');
 }
 
 run.$inject = ['$localStorage', '$translate'];
 function run($localStorage, $translate) {
-  $translate.use($localStorage.globals.lang || 'en')
+  let lang =  $localStorage.globals ? $localStorage.globals.lang : {};
+  if(!lang) {
+    lang = $localStorage.globals.lang = 'ru';
+  }
+  // $translate.use(lang);
 }

@@ -76,11 +76,11 @@ export class AuthService {
     return !!this.$cookies.getObject('globals');
   }
 
-  requireAdmin() {
+  async requireAdmin() {
     let deferred = this.$q.defer();
 
-    let user = this.getUser();
-    if(user && user.isAdmin) {
+    let user = await this.getUser();
+    if (user && user.isAdmin) {
       deferred.resolve();
     } else {
       deferred.reject("You are not authenticated!");
@@ -96,7 +96,6 @@ export class AuthService {
         user.password = Base64.encode(user.password);
         user.isAdmin = false;
         this.userService.create(user);
-        this.login(user);
         defer.resolve();
       } else {
         defer.reject({ message: 'User already exists!' });
