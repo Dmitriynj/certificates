@@ -33,5 +33,4 @@ function run($localStorage, $translate) {
   if(!lang) {
     lang = $localStorage.globals.lang = 'ru';
   }
-  // $translate.use(lang);
 }

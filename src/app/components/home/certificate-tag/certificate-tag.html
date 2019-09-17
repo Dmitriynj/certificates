@@ -1,6 +1,23 @@
-<div class="mb-3" ng-if="$ctrl.tags">
-  Tags:<a href="#"
-          ng-repeat="tag in $ctrl.tags"
-          class="btn btn-warning btn-sm ml-1 mr-1 mt-1"
-          ng-click="$ctrl.addTag($index)">{{tag.name}}</a>
+<div class="mb-3" ng-keydown="$ctrl.onKeyboardEvent($event)">
+
+  <span ng-if="$ctrl.copyOnDndEvent">Ctrl pressed</span>
+  <span ng-if="!!$ctrl.tags.length">{{'TAGS' | translate}}:</span>
+  <div ui-sortable="$ctrl.sortableOptions"
+       ui-sortable-deactivate="$ctrl.onUpdate($ctrl)"
+       ng-model="$ctrl.tags"
+       ng-style="{'min-height': '2px'}"
+       class="tags-container">
+
+    <a href="#"
+       ng-repeat="tag in $ctrl.tags"
+       class="btn btn-warning btn-sm ml-1 mr-1 mt-1"
+       ng-click="$ctrl.addTag($index)">{{tag.name}}</a>
+  </div>
+
+  <ctrl-key-pressed
+      on-ctrl-down="$ctrl.onKeyboardEvent($event)"
+      on-ctrl-up="$ctrl.onKeyboardEvent($event)">
+
+  </ctrl-key-pressed>
+
 </div>

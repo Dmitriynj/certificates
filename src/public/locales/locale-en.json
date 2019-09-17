@@ -32,9 +32,18 @@
 
   "TITLE": "Title",
   "COST": "Cost",
+  "DESCRIPTION": "Description",
+  "DATE": "Date",
+
+  "ADD": "Add",
+  "ENTER_TAGS": "Enter tag name",
 
   "VALIDATION_MAX_LENGTH_MESSAGE": "This field is too long. Max length is ",
   "VALIDATION_MIN_LENGTH_MESSAGE": "This field is too little. Min length is ",
-  "VALIDATION_PATTERN_MESSAGE": "This field is not correct",
-  "VALIDATION_REQUIRED_MESSAGE": "This field is required"
+  "VALIDATION_IS_NOT_CORRECT_MESSAGE": "This field is not correct",
+  "VALIDATION_REQUIRED_MESSAGE": "This field is required",
+
+  "CONFIRMATION": "Confirmation",
+  "OK": "OK",
+  "CANCEL": "Cancel"
 }

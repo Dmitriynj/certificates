@@ -8,11 +8,12 @@ export const certificateComponent = {
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
-    static $inject = ['UserService', '$state', 'CertificateService'];
+    static $inject = ['UserService', '$state', '$uibModal', 'CertificateService'];
 
-    constructor(UserService, $state, CertificateService) {
+    constructor(UserService, $state, $uibModal, CertificateService) {
 
       this.$state = $state;
+      this.$uibModal = $uibModal;
       this.userService = UserService;
       this.certificateService = CertificateService;
     }
@@ -29,6 +30,11 @@ export const certificateComponent = {
       });
     }
 
+    updateTags(event) {
+      this.certificate.tags = event.tags;
+      this.certificateService.update(this.certificate);
+    }
+
     edit() {
       this.$state.go(
         'certificate-edit',
@@ -36,27 +42,43 @@ export const certificateComponent = {
     }
 
     buy() {
-      if (!this.user.certificates) {
-        this.user.certificates = [];
-      }
-      this.user.certificates.push(this.certificate);
-      this.userService.update(this.user).then((response) => {
-        this.user = response;
-        this.isUserHaveThisCertificate = true;
-      });
+      this.$uibModal.open({
+        animate: true,
+        component: 'confirmModalComponent',
+        resolve: {
+          bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE'
+        }
+      }).result.then(result => {
+        if (!this.user.certificates) {
+          this.user.certificates = [];
+        }
+        this.user.certificates.push(this.certificate);
+        this.userService.update(this.user).then((response) => {
+          this.user = response;
+          this.isUserHaveThisCertificate = true;
+        });
+      }, reason => {});
     }
 
     cell() {
-      this.user.certificates.forEach((certificate, index) => {
-        if (certificate.id === this.certificate.id) {
-          this.user.certificates.splice(index, 1);
-          this.userService.update(this.user).then((response) => {
-            this.user = response;
-            this.isUserHaveThisCertificate = false;
-            this.onCellCertificate();
-          });
+      this.$uibModal.open({
+        animate: true,
+        component: 'confirmModalComponent',
+        resolve: {
+          bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE'
         }
-      });
+      }).result.then(result => {
+        this.user.certificates.forEach((certificate, index) => {
+          if (certificate.id === this.certificate.id) {
+            this.user.certificates.splice(index, 1);
+            this.userService.update(this.user).then((response) => {
+              this.user = response;
+              this.isUserHaveThisCertificate = false;
+              this.onCellCertificate();
+            });
+          }
+        });
+      }, reason => {});
     }
 
     isUserHaveThisCertificateFun() {
@@ -71,10 +93,17 @@ export const certificateComponent = {
     }
 
     delete() {
-      this.certificateService.delete(this.certificate.id).then(() => {
-        this.onDelete();
-      });
+      this.$uibModal.open({
+        animate: true,
+        component: 'confirmModalComponent',
+        resolve: {
+          bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE'
+        }
+      }).result.then(result => {
+        this.certificateService.delete(this.certificate.id).then(() => {
+          this.onDelete();
+        });
+      }, reason => {});
     }
-
   }
 };

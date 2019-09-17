@@ -2,24 +2,30 @@
   <div class="card-body">
     <h5 class="card-title"> {{ $ctrl.certificate.title }}</h5>
     <h6 class="card-subtitle mb-2 text-muted">Date: {{ $ctrl.certificate.date | date: "MMM d, yy h:mm a" }}</h6>
-    <p class="card-text">{{ $ctrl.certificate.description }}</p>
-    <p class="text-success">Cost: {{$ctrl.certificate.cost}}</p>
-    <certificate-tag
-      tags="$ctrl.certificate.tags"
-      on-add-tag="$ctrl.addTag($event)">
-    </certificate-tag>
+    <p class="card-text">
+      {{ $ctrl.certificate.description }}
+      <span class="text-success"><br>Cost: {{$ctrl.certificate.cost}}</span>
+      <certificate-tag
+        tags="$ctrl.certificate.tags"
+        on-add-tag="$ctrl.addTag($event);"
+        on-update-tags="$ctrl.updateTags($event);">
+      </certificate-tag>
+    </p>
 
     <div class="d-flex bd-highlight mb-3">
       <a href="#" ng-click="$ctrl.edit()"
          class="btn btn-primary btn-sm mr-1 p-2 bd-highlight"
          ng-if="$ctrl.user && $ctrl.user.isAdmin">{{'BUTTON_EDIT' | translate}}</a>
-      <a href="#" ng-really-message="{{'BUY_CONFIRM_MESSAGE' | translate}}" ng-really-click="$ctrl.buy()"
+
+      <a href="#" ng-click="$ctrl.buy()"
          class="btn btn-primary btn-sm mr-1 p-2 bd-highlight"
          ng-if="$ctrl.user && !$ctrl.isUserHaveThisCertificate">{{'BUTTON_BUY' | translate}}</a>
-      <a href="#" ng-really-message="{{'CELL_CONFIRM_MESSAGE'| translate}}" ng-really-click="$ctrl.cell()"
+
+      <a href="#" ng-click="$ctrl.cell()"
          class="btn btn-danger btn-sm p-2 bd-highlight"
          ng-if="$ctrl.user && $ctrl.isUserHaveThisCertificate">{{'BUTTON_CELL' | translate}}</a>
-      <a href="#" ng-really-message="{{'DELETE_CONFIRM_MESSAGE' | translate}}" ng-really-click="$ctrl.delete()"
+
+      <a href="#" ng-click="$ctrl.delete()"
          class="btn btn-dark btn-sm ml-auto p-2 bd-highlight"
          ng-if="$ctrl.user && $ctrl.user.isAdmin">{{'BUTTON_DELETE' | translate}}</a>
     </div>

@@ -33,6 +33,16 @@ export const certificatesComponent = {
       }
     }
 
+    setUpSortableOptions() {
+      this.sortableOptions = {
+        stop: (e, ui) => {
+          this.sertificatesToShow.forEach((item, index) => {
+            item.i = index;
+          });
+        }
+      };
+    }
+
     addQueryTag(event) {
       let queryTagNames = this.queryTags.map((tag) => tag.name);
       if (!queryTagNames.includes(event.tag.name)) {
@@ -51,6 +61,7 @@ export const certificatesComponent = {
 
     showItems(event) {
       this.sertificatesToShow = event.items;
+      this.setUpSortableOptions();
     }
 
     filterCertificates(input, queryTags) {

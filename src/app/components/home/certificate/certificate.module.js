@@ -1,4 +1,4 @@
-import { certificateComponent } from './certificate.component';
+import {certificateComponent} from './certificate.component';
 import {AuthService} from "../../auth/auth.service";
 import uiRouter from '@uirouter/angularjs';
 import {certificateEdit} from "../certificate-edit/certificate-edit.module";
@@ -8,9 +8,8 @@ export const certificateSingle = angular
   .module('components.home.certificate', [
     uiRouter,
     certificateEdit,
-    certificateEditForm
+    certificateEditForm,
   ])
   .component('certificate', certificateComponent)
   .service('AuthService', AuthService)
   .name;
-

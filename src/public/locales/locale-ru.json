@@ -32,9 +32,18 @@
 
   "TITLE": "Название",
   "COST": "Стоимость",
+  "DESCRIPTION": "Описание",
+  "DATE": "Дата",
+
+  "ADD": "Добавить",
+  "ENTER_TAGS": "Введите название тэга",
 
   "VALIDATION_MAX_LENGTH_MESSAGE": "Введённое поле слишком длинное. Максимальная длина ",
   "VALIDATION_MIN_LENGTH_MESSAGE": "Введённое поле слишком мало. Минимальная длина ",
   "VALIDATION_IS_NOT_CORRECT_MESSAGE": "Введённое поле некорректно",
-  "VALIDATION_REQUIRED_MESSAGE": "Это поле обязательно для заполнения"
+  "VALIDATION_REQUIRED_MESSAGE": "Это поле обязательно для заполнения",
+
+  "CONFIRMATION": "Подтверждение",
+  "OK": "Да",
+  "CANCEL": "Отменить"
 }

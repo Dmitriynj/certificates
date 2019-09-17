@@ -11,9 +11,6 @@ export const formFieldComponent = {
     constructor() {
     }
 
-    $onInit() {
-    }
-
     $onChanges(changes) {
       if (changes.fieldModel) {
         this.fieldModel = angular.copy(this.fieldModel);

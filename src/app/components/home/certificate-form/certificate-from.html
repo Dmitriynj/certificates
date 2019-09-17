@@ -7,18 +7,15 @@
         on-update="$ctrl.updateTitle($event);">
       </form-field-component>
 
-      <div class="form-group">
-        Date:
-        <datepicker date-format="yyyy-MM-dd" selector="form-control">
-          <div class="input-group">
-            <input class="form-control" ng-model="$ctrl.certificate.date" placeholder="Choose a date"/>
-            <span class="input-group-addon" style="cursor: pointer">
-              <i class="fa fa-lg fa-calendar"></i>
-            </span>
-          </div>
-        </datepicker>
-      </div>
-
+      <datepicker date-format="yyyy-MM-dd" selector="form-control">
+        <form-field-component
+          field-model="$ctrl.dateFieldModel"
+          on-update="$ctrl.updateDate($event);">
+        </form-field-component>
+        <span class="input-group-addon" style="cursor: pointer">
+          <i class="fa fa-lg fa-calendar"></i>
+        </span>
+      </datepicker>
 
       <form-field-component
         field-model="$ctrl.descriptionFieldModel"
@@ -27,23 +24,23 @@
 
       <form-field-component
         field-model="$ctrl.costFieldModel"
-        on-validate="$ctrl.exampleCustomValidationFunction($value);"
         on-update="$ctrl.updateCost($event);">
       </form-field-component>
 
       <div class="card">
         <div class="card-header">
           <div class="input-group mb-3">
-            <input ng-model="$ctrl.tagName" type="text" class="form-control" placeholder="Enter tag name"
+            <input ng-model="$ctrl.tagName" type="text" class="form-control" placeholder="{{'ENTER_TAGS' | translate}}"
                    aria-label="Recipient's username" aria-describedby="button-addon2">
             <div class="input-group-append">
-              <button ng-click="$ctrl.addTag()" class="btn btn-outline-primary" type="button" id="button-addon2">Add
+              <button ng-click="$ctrl.addTag()" class="btn btn-outline-primary" type="button" id="button-addon2">
+                {{'ADD' | translate}}
               </button>
             </div>
           </div>
         </div>
         <div class="card-body">
-          Tags:
+          <span>{{'TAGS' | translate}}:</span>
           <button ng-click="$ctrl.deleteTag(tag)" type="button" ng-repeat="tag in $ctrl.certificate.tags"
                   class="btn btn-warning btn-sm mr-1 ml-1 mb-1">
             {{tag.name}}
@@ -53,18 +50,17 @@
       <div class="d-flex bd-highlight mb-3">
         <div class="row">
           <div class="col-sm-8">
-            <button type="submit" ng-disabled="certificateForm.$invalid"
-                    class="btn btn-primary btn-lg btn-block mt-3">{{$ctrl.buttonName}}
+            <button type="submit" ng-disabled="certificateForm.$invalid" class="btn btn-primary btn-lg btn-block mt-3">
+              {{$ctrl.buttonName}}
             </button>
           </div>
           <div class="col-sm-4">
-            <button type="button" ng-click="$ctrl.cancel()" class="btn btn-secondary mt-3">{{'BUTTON_CANCEL' |
-              translate}}
+            <button type="button" ng-click="$ctrl.cancel()" class="btn btn-secondary mt-3">
+              {{'BUTTON_CANCEL' | translate}}
             </button>
           </div>
         </div>
       </div>
     </form>
-
   </div>
 </div>

@@ -6,14 +6,13 @@ export const certificateFormComponent = {
   },
   template: require('./certificate-from.html'),
   controller: class CertificateComponent {
-    static $inject = ['CertificateService', '$stateParams', '$state', '$translate'];
+    static $inject = ['CertificateService', '$stateParams', '$state'];
 
-    constructor(CertificateService, $stateParams, $state, $translate) {
+    constructor(CertificateService, $stateParams, $state) {
 
       this.certificateService = CertificateService;
       this.$stateParams = $stateParams;
       this.$state = $state;
-      this.$translate = $translate;
     }
 
     $onInit() {
@@ -37,6 +36,14 @@ export const certificateFormComponent = {
             maxlength: 30,
             haveCustomFun: false,
           };
+          this.dateFieldModel = {
+            fieldNameKey: 'DATE',
+            fieldType: '',
+            fieldValue: this.certificate.date,
+            required: true,
+            pattern: '([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))',
+            haveCustomFun: false,
+          };
           this.descriptionFieldModel = {
             fieldNameKey: 'DESCRIPTION',
             fieldType: 'text',
@@ -51,7 +58,7 @@ export const certificateFormComponent = {
             fieldValue: this.certificate.cost,
             required: true,
             pattern: '^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$',
-            haveCustomFun: true,
+            haveCustomFun: false,
           };
         });
     }
@@ -86,17 +93,14 @@ export const certificateFormComponent = {
     updateTitle(event) {
       this.certificate.title = event.fieldValue;
     }
-
-    updateCost(event) {
-      this.certificate.cost = event.fieldValue;
+    updateDate(event) {
+      this.certificate.date = event.fieldValue;
     }
-
     updateDescription(event) {
       this.certificate.description = event.fieldValue;
     }
-
-    exampleCustomValidationFunction(value) {
-      return true;
+    updateCost(event) {
+      this.certificate.cost = event.fieldValue;
     }
   }
 };

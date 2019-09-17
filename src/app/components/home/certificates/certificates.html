@@ -31,7 +31,8 @@
         <span>{{'TAGS' | translate}}:</span>
         <button class="btn btn-warning btn-sm mr-1 ml-1"
                 ng-repeat="tag in $ctrl.queryTags"
-                ng-click="$ctrl.removeQueryTag(tag)">{{tag.name}}
+                ng-click="$ctrl.removeQueryTag(tag)">
+          {{tag.name}}
         </button>
       </div>
     </div>
@@ -46,12 +47,13 @@
   </div>
 </div>
 
-<div class="card-columns mt-3">
+<div class="card-deck mt-3" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.sertificatesToShow">
   <certificate user="$ctrl.user"
                on-add-tag="$ctrl.addQueryTag($event);"
                on-cell-certificate="$ctrl.onCellCertificate();"
                on-delete="$ctrl.onDeleteCertificate();"
                class="m-3"
+               style="cursor: move;"
                certificate="certificate"
                ng-repeat="certificate in $ctrl.sertificatesToShow">
   </certificate>
