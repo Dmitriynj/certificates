@@ -1,15 +1,9 @@
 import {confirmModalComponent} from "./confirm-modal.component";
+import modal from 'ui-bootstrap4/src/modal';
 
 export const confirmModal = angular
   .module('confirmModal', [
-    'ui.bootstrap'
+    modal
   ])
-  .config(config)
   .component('confirmModalComponent', confirmModalComponent)
   .name;
-
-config.$inject = ['$uibModalProvider'];
-function config($uibModalProvider) {
-  $uibModalProvider.options.windowClass = 'show';
-  $uibModalProvider.options.backdropClass = 'show';
-}

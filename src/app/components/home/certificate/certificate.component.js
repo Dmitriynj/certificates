@@ -43,11 +43,11 @@ export const certificateComponent = {
 
     buy() {
       this.$uibModal.open({
-        animate: true,
+        animation: true,
         component: 'confirmModalComponent',
         resolve: {
           bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE'
-        }
+        },
       }).result.then(result => {
         if (!this.user.certificates) {
           this.user.certificates = [];

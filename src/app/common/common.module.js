@@ -9,7 +9,6 @@ import {ngReallyClickDirective} from "./directives/ng-really-click.directive";
 import { formField } from "./components/form-field/form-field.module";
 import uiValidate from 'angular-ui-validate'
 import {confirmModal} from "./components/confirm-modal/confirm-modal.module";
-import {ctrlKeyPressed} from "./directives/ctrl-key-pressed.directive";
 
 export const common = angular
   .module('common', [
@@ -27,7 +26,6 @@ export const common = angular
   .run(run)
   .service('UserService', UserService)
   .directive('ngReallyClick', ngReallyClickDirective)
-  .directive('ctrlKeyPressed', ctrlKeyPressed)
   .name;
 
 

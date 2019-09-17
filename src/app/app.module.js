@@ -1,7 +1,7 @@
 import angular from 'angular';
 import '../style/app.css';
 import '../style/_loading-bar.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min';
 import uiRouter from '@uirouter/angularjs';
 import { appComponent } from './app.component';
@@ -10,10 +10,8 @@ import { components } from "./components/components.module";
 import 'angular-cookies';
 import 'angularjs-datepicker';
 import 'angularjs-datepicker/src/css/angular-datepicker.css';
-
-import 'angular-ui-bootstrap';
 import 'angular-animate';
-import 'angular-sanitize';
+import 'angular-touch';
 
 export const app = angular
   .module('app', [
@@ -22,9 +20,8 @@ export const app = angular
     common,
     components,
     '720kb.datepicker',
-    'ui.bootstrap',
     'ngAnimate',
-    'ngSanitize'
+    'ngTouch'
   ])
   .component('app', appComponent)
   .config(config);
