@@ -32,9 +32,7 @@
     "angular-ui-validate": "1.2.3",
     "angular-ui-sortable": "0.19.0",
     "angular-ui-sortable-loader": "0.1.0",
-    "ui-bootstrap4": "^3.0.6",
-    "angular-animate": "^1.7.8",
-    "angular-touch": "^1.7.8"
+    "ui-bootstrap4": "^3.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

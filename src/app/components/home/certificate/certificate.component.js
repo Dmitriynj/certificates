@@ -43,7 +43,6 @@ export const certificateComponent = {
 
     buy() {
       this.$uibModal.open({
-        animation: true,
         component: 'confirmModalComponent',
         resolve: {
           bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE'
@@ -62,7 +61,6 @@ export const certificateComponent = {
 
     cell() {
       this.$uibModal.open({
-        animate: true,
         component: 'confirmModalComponent',
         resolve: {
           bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE'
@@ -94,7 +92,6 @@ export const certificateComponent = {
 
     delete() {
       this.$uibModal.open({
-        animate: true,
         component: 'confirmModalComponent',
         resolve: {
           bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE'

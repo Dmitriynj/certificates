@@ -11,7 +11,6 @@ export const lang = angular
   ])
   .component('languageComponent', languageComponent)
   .config(config)
-  .run(run)
   .name;
 
 
@@ -24,13 +23,5 @@ function config($translateProvider) {
     })
     // remove the warning from console log by putting the sanitize strategy
     .useSanitizeValueStrategy('sanitizeParameters')
-    .preferredLanguage('ru');
-}
-
-run.$inject = ['$localStorage', '$translate'];
-function run($localStorage, $translate) {
-  let lang =  $localStorage.globals ? $localStorage.globals.lang : {};
-  if(!lang) {
-    lang = $localStorage.globals.lang = 'ru';
-  }
+    .preferredLanguage('en');
 }

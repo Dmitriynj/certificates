@@ -26,6 +26,7 @@
   "BUY_CONFIRM_MESSAGE": "Are you really want to buy certificate?",
   "CELL_CONFIRM_MESSAGE": "Are you really want to cell certificate?",
   "DELETE_CONFIRM_MESSAGE": "Are you really want to delete certificate?",
+  "LEAVE_CONFIRM_MESSAGE": "Are you really want to leave?",
 
   "EDIT_CERTIFICATE": "Edit certificate",
   "ADD_CERTIFICATE": "Add certificate",

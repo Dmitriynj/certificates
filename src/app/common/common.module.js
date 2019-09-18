@@ -5,7 +5,6 @@ import uiRouter from '@uirouter/angularjs';
 import { UserService } from './services/user.service';
 import {pagination} from "./components/pagination/pagination.module";
 import { lang } from "./components/lang/language.module";
-import {ngReallyClickDirective} from "./directives/ng-really-click.directive";
 import { formField } from "./components/form-field/form-field.module";
 import uiValidate from 'angular-ui-validate'
 import {confirmModal} from "./components/confirm-modal/confirm-modal.module";
@@ -25,7 +24,6 @@ export const common = angular
   .config(config)
   .run(run)
   .service('UserService', UserService)
-  .directive('ngReallyClick', ngReallyClickDirective)
   .name;
 
 

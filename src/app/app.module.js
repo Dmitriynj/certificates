@@ -10,8 +10,6 @@ import { components } from "./components/components.module";
 import 'angular-cookies';
 import 'angularjs-datepicker';
 import 'angularjs-datepicker/src/css/angular-datepicker.css';
-import 'angular-animate';
-import 'angular-touch';
 
 export const app = angular
   .module('app', [
@@ -20,8 +18,6 @@ export const app = angular
     common,
     components,
     '720kb.datepicker',
-    'ngAnimate',
-    'ngTouch'
   ])
   .component('app', appComponent)
   .config(config);

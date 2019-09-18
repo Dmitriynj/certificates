@@ -26,7 +26,7 @@ export function certificateTagsFilter() {
     let searchTagsNames = queryTags.map((tag) => tag.name);
     return certificates.filter(certificate => {
       let isFits = true;
-      let certificateTagsNames = certificate.tags.map((tag) => tag.name);
+      let certificateTagsNames = certificate.tags.map(tag => tag.name);
       searchTagsNames.forEach(tagName => {
         if (!certificateTagsNames.includes(tagName)) {
           isFits = false;
