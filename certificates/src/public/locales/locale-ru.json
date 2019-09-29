@@ -1,5 +1,7 @@
 {
   "CERTIFICATES": "Сертификаты",
+  "LOGIN": "Войти",
+  "REGISTER": "Зарегистрироваться",
 
   "BUTTON_ALL_CERTIFICATES": "Все сертификаты",
   "BUTTON_MY_CERTIFICATES": "Мои сертификаты",
@@ -35,6 +37,9 @@
   "COST": "Стоимость",
   "DESCRIPTION": "Описание",
   "DATE": "Дата",
+  "EMAIL": "Электронная почта",
+  "PASSWORD": "Пароль",
+  "CONFIRM_PASSWORD": "Подтверждение пароля",
 
   "ADD": "Добавить",
   "ENTER_TAGS": "Введите название тэга",
@@ -43,6 +48,7 @@
   "VALIDATION_MIN_LENGTH_MESSAGE": "Введённое поле слишком мало. Минимальная длина ",
   "VALIDATION_IS_NOT_CORRECT_MESSAGE": "Введённое поле некорректно",
   "VALIDATION_REQUIRED_MESSAGE": "Это поле обязательно для заполнения",
+  "VALIDATION_PASSWORDS_ARE_NOT_THE_SAME": "Пароли не совпадают",
 
   "CONFIRMATION": "Подтверждение",
   "OK": "Да",

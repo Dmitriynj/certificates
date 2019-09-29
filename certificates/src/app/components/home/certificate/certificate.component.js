@@ -1,6 +1,6 @@
 export const certificateComponent = {
   bindings: {
-    user: '<',
+    isBoughtCertificate: '<',
     certificate: '<',
     onAddTag: '&',
     onCellCertificate: '&',
@@ -8,19 +8,20 @@ export const certificateComponent = {
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
-    static $inject = ['UserService', '$state', '$uibModal', 'CertificateService'];
+    static $inject = ['$state', '$uibModal', '$rootScope', 'CertificateService', 'stateConst', 'componentConst'];
 
-    constructor(UserService, $state, $uibModal, CertificateService) {
+    constructor($state, $uibModal, $rootScope, CertificateService, stateConst, componentConst) {
 
       this.$state = $state;
       this.$uibModal = $uibModal;
-      this.userService = UserService;
+      this.$rootScope = $rootScope;
       this.certificateService = CertificateService;
+      this.stateConst = stateConst;
+      this.componentConst = componentConst;
     }
 
     $onInit() {
-      // this.isUserHaveThisCertificate = this.isUserHaveThisCertificateFun();
-      this.isUserHaveThisCertificate = false;
+      this.user = this.$rootScope.user;
     }
 
     addTag(event) {
@@ -31,69 +32,48 @@ export const certificateComponent = {
       });
     }
 
-    updateTags(event) {
+    async updateTags(event) {
       this.certificate.tags = event.tags;
-      this.certificateService.update(this.certificate);
+      this.certificate = await this.certificateService.updateCertificate(this.certificate);
+      console.log(this.certificate);
     }
 
     edit() {
       this.$state.go(
-        'certificate-edit',
-        {certificateId: this.certificate.id});
+        this.stateConst.CERTIFICATE_EDIT.name,
+        {certificateId: this.certificate._id});
     }
 
     buy() {
       this.$uibModal.open({
-        component: 'confirmModalComponent',
+        component: this.componentConst.CONFIRM_MODAL,
         resolve: {
           bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE'
         },
-      }).result.then(result => {
-        if (!this.user.certificates) {
-          this.user.certificates = [];
-        }
-        this.user.certificates.push(this.certificate);
-        this.userService.update(this.user).then((response) => {
-          this.user = response;
-          this.isUserHaveThisCertificate = true;
-        });
+      }).result.then(async result => {
+
+        const response = await this.certificateService.buyCertificate(this.certificate);
+        this.isBoughtCertificate = true;
+
       }, reason => {});
     }
 
     cell() {
       this.$uibModal.open({
-        component: 'confirmModalComponent',
+        component: this.componentConst.CONFIRM_MODAL,
         resolve: {
           bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE'
         }
       }).result.then(result => {
-        this.user.certificates.forEach((certificate, index) => {
-          if (certificate.id === this.certificate.id) {
-            this.user.certificates.splice(index, 1);
-            this.userService.update(this.user).then((response) => {
-              this.user = response;
-              this.isUserHaveThisCertificate = false;
-              this.onCellCertificate();
-            });
-          }
-        });
+
+
+
       }, reason => {});
     }
 
-    // isUserHaveThisCertificateFun() {
-    //   if (!!this.user.certificates) {
-    //     for (let i = 0; i < this.user.certificates.length; i++) {
-    //       if (this.user.certificates[i].id === this.certificate.id) {
-    //         return true;
-    //       }
-    //     }
-    //   }
-    //   return false;
-    // }
-
     delete() {
       this.$uibModal.open({
-        component: 'confirmModalComponent',
+        component: this.componentConst.CONFIRM_MODAL,
         resolve: {
           bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE'
         }

@@ -1,30 +1,36 @@
 export const certificatesComponent = {
   bindings: {
-    certificates: '<',
+    certificatesData: '<',
+    userCertificatesData: '<',
+    user: '<',
     queryTags: '&',
   },
   template: require('./certificates.html'),
   controller: class CertificatesComponent {
-    static $inject = ['$filter', '$stateParams', '$state', 'AuthService', 'CertificateService'];
+    static $inject = ['$filter', '$stateParams', '$state', 'CertificateService', 'appConst'];
 
-    constructor($filter, $stateParams, $state, AuthService, CertificateService) {
+    constructor($filter, $stateParams, $state, CertificateService, appConst) {
 
       this.$filter = $filter;
       this.$stateParams = $stateParams;
       this.$state = $state;
-      this.authService = AuthService;
       this.certificateService = CertificateService;
+      this.appConst = appConst;
     }
 
     $onInit() {
-      this.currentPage = this.$stateParams.page;
-      this.pageSize = 9;
-      this.items = this.certificates;
-      this.queryTags = [];
+      this.items = this.certificatesData.certificates;
+      this.number = this.certificatesData.number;
+
+      this.userCertificateIds = this.userCertificatesData.certificates
+        .map(certificate => certificate._id);
+
+      this.pageSize = this.appConst.CERTIFICATES_PAGE_SIZE;
+      this.currentPage = 1;
+
+      this.filter = {};
+      this.filter.tags = [];
       this.showMy = false;
-      // this.authService.getUser().then(response => {
-      //   this.user = response;
-      // });
     }
 
     $onChanges(changes) {
@@ -33,70 +39,64 @@ export const certificatesComponent = {
       }
     }
 
-    setUpSortableOptions() {
-      this.sortableOptions = {
-        stop: (e, ui) => {
-          this.sertificatesToShow.forEach((item, index) => {
-            item.i = index;
-          });
-        }
-      };
-    }
-
     addQueryTag(event) {
-      let queryTagNames = this.queryTags.map((tag) => tag.name);
-      if (!queryTagNames.includes(event.tag.name)) {
-        this.queryTags.push(event.tag);
-        this.filterCertificates(this.search, this.queryTags);
+      if (!this.filter.tags.includes(event.tag)) {
+        this.filter.tags.push(event.tag);
+        this.filterCertificates();
       }
     }
 
     removeQueryTag(tag) {
-      let index = this.queryTags.indexOf(tag);
+      let index = this.filter.tags.indexOf(tag);
       if (index > -1) {
-        this.queryTags.splice(index, 1);
-        this.filterCertificates(this.search, this.queryTags);
+        this.filter.tags.splice(index, 1);
+        this.filterCertificates();
       }
     }
-
-    showItems(event) {
-      this.sertificatesToShow = event.items;
-      this.setUpSortableOptions();
+    
+    onInputChange() {
+      this.filter.input = this.search;
+      this.filterCertificates();
     }
 
-    filterCertificates(input, queryTags) {
-      let filtered = this.certificates;
-      if (!!input) {
-        filtered = this.$filter('certificateInputFilter')(filtered, input);
-      }
-      if (!!queryTags && !!queryTags.length) {
-        filtered = this.$filter('certificateTagsFilter')(filtered, queryTags);
-      }
-      if (this.showMy && this.user.certificates && this.user.certificates.length > 0) {
-        filtered = this.$filter('myCertificatesFilter')(filtered, this.user.certificates);
-      }
-      this.emptyMessage = filtered.length === 0;
-      this.items = filtered;
+    async onPageChange(event) {
+      this.currentPage = event.page;
+      let offset = this.calcOffset();
+      this.items = await this.certificateService.paginateCertificates(this.pageSize, offset, this.filter);
+    }
+
+    async filterCertificates() {
+      this.certificatesData = await this.certificateService.filterCertificates(this.pageSize, this.filter);
+      this.items = this.certificatesData.certificates;
+      this.number = this.certificatesData.number;
+    }
+
+    calcOffset(){
+      return (this.currentPage - 1) * this.pageSize;
     }
 
     showMyCertificates() {
       this.showMy = true;
-      this.filterCertificates(this.search, this.queryTags);
+
     }
 
     showAllCertificates() {
-      this.showMy = false;
-      this.filterCertificates(this.search, this.queryTags);
+    //   this.showMy = false;
+    //   this.filterCertificates(this.search, this.queryTags);
     }
 
     onDeleteCertificate() {
-      this.$state.reload();
+      // this.$state.reload();
     }
 
     onCellCertificate() {
-      if(this.showMy) {
-        this.filterCertificates(this.search, this.queryTags);
-      }
+      // if(this.showMy) {
+      //   this.filterCertificates(this.search, this.queryTags);
+      // }
+    }
+
+    isBoughtCertificate(certificate) {
+      return this.userCertificateIds.includes(certificate._id);
     }
   }
 };

@@ -1,0 +1,18 @@
+export const componentConst = {
+  APP: 'app',
+  COMMON: 'common',
+  APP_NAV: 'appNav',
+  CONFIRM_MODAL: 'confirmModalComponent',
+  FORM_FIELD: 'formFieldComponent',
+  LANGUAGE: 'languageComponent',
+  PAGINATION: 'paginationComponent',
+  AUTH_FORM: 'authForm',
+  LOGIN: 'login',
+  REGISTER: 'register',
+  CERTIFICATE: 'certificate',
+  CERTIFICATE_ADD: 'certificateAdd',
+  CERTIFICATE_EDIT: 'certificateEdit',
+  CERTIFICATE_FORM: 'certificateForm',
+  CERTIFICATE_TAG: 'certificateTag',
+  CERTIFICATES: 'certificates',
+};

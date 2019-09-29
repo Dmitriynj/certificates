@@ -4,13 +4,68 @@
       <h1>Registration form</h1>
     </div>
   </div>
-  <auth-form
-    user="$ctrl.user"
-    link="$ctrl.link"
-    message="{{$ctrl.message}}"
-    on-submit="$ctrl.createUser($event)"
-    button="Create user">
-  </auth-form>
+
+  <div class="row mx-md-n5 align-items-center">
+    <div class="col px-md-5">
+      <div class="p-3">
+        <form name="userForm" ng-submit="$ctrl.createUser()" novalidate>
+
+          <form-field-component
+            field-model="$ctrl.emailFieldModel"
+            on-update="$ctrl.updateEmail($event);">
+          </form-field-component>
+
+          <div class="form-group">
+            <label>{{$ctrl.passwordFieldModel.fieldNameKey | translate}}</label>
+            <input type="password"
+                   name="password"
+                   class="form-control"
+                   placeholder="{{$ctrl.passwordFieldModel.fieldNameKey | translate}}"
+                   ng-model="passwordFieldModel.fieldValue"
+                   ng-minlength="$ctrl.passwordFieldModel.minlength"
+                   ng-class="{'is-invalid': userForm.password.$invalid && !userForm.password.$pristine,
+                              'is-valid': userForm.password.$valid && userForm.password.$touched}"
+                   required>
+
+            <div ng-if="userForm.password.$touched" ng-messages="userForm.password.$error" class="invalid-feedback d-block" role="alert">
+              <div ng-message="minlength">{{'VALIDATION_MIN_LENGTH_MESSAGE' | translate}}{{$ctrl.passwordFieldModel.minlength}}</div>
+              <div ng-message="required">{{'VALIDATION_REQUIRED_MESSAGE' | translate}}</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>{{$ctrl.cPasswordFieldModel.fieldNameKey | translate}}</label>
+            <input type="password"
+                   name="cPassword"
+                   class="form-control"
+                   ng-model="$ctrl.cPasswordFieldModel.fieldValue"
+                   ui-validate="{ passwordsEquality: '$value==passwordFieldModel.fieldValue' }"
+                   ui-validate-watch="'passwordFieldModel.fieldValue'"
+                   ng-minlength="$ctrl.passwordFieldModel.minlength"
+                   required
+                   ng-class="{'is-invalid': userForm.cPassword.$invalid && !userForm.cPassword.$pristine,
+                              'is-valid': userForm.cPassword.$valid && userForm.cPassword.$touched}">
+            <div ng-if="userForm.cPassword.$touched" ng-messages="userForm.cPassword.$error" class="invalid-feedback d-block" role="alert">
+              <div ng-message="minlength">{{'VALIDATION_MIN_LENGTH_MESSAGE' | translate}}{{$ctrl.cPasswordFieldModel.minlength}}</div>
+              <div ng-message="required">{{'VALIDATION_REQUIRED_MESSAGE' | translate}}</div>
+              <div ng-message="passwordsEquality">{{'VALIDATION_PASSWORDS_ARE_NOT_THE_SAME' | translate}}</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary border" ng-disabled="userForm.$invalid">{{ 'REGISTER' |
+            translate}}
+          </button>
+          <a href="" ui-sref="$ctrl.stateConstants.AUTH_LOGIN.name">{{'LOGIN' | translate}}</a>
+        </form>
+      </div>
+    </div>
+    <div class="col px-md-5">
+      <div class="p-3">
+        <img src="/img/welcome-image.jpg" class="responsive-image" alt="">
+      </div>
+    </div>
+  </div>
+
   <div ng-if="!!$ctrl.message" class="alert alert-dismissible fade show mt-2 alert-danger"
        role="alert">
     <strong>Notification!</strong> {{ $ctrl.message }}
@@ -19,3 +74,6 @@
     </button>
   </div>
 </div>
+
+
+

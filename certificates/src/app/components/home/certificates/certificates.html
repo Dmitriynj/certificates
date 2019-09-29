@@ -4,7 +4,7 @@
 <div class="row justify-content-center align-items-center">
 
   <div class="btn-group btn-group-toggle" data-toggle="buttons"
-       ng-show="$ctrl.user.certificates && $ctrl.user.certificates.length > 0">
+       ng-show="$ctrl.userCertificateIds && $ctrl.userCertificateIds.length > 0">
     <label class="btn btn-outline-primary" ng-click="$ctrl.showAllCertificates()">
       <input type="radio" name="options" id="option1" autocomplete="off" checked>
       {{'BUTTON_ALL_CERTIFICATES' | translate}}
@@ -21,18 +21,18 @@
              ng-model="$ctrl.search"
              class="form-control"
              placeholder="{{'SEARCH_CERTIFICATES' | translate}}"
-             ng-change="$ctrl.filterCertificates($ctrl.search, $ctrl.queryTags);">
+             ng-change="$ctrl.onInputChange();">
     </div>
   </div>
 
-  <div class="col-4" ng-show="$ctrl.queryTags.length">
+  <div class="col-4" ng-show="$ctrl.filter.tags.length">
     <div class="card">
       <div class="card-body">
         <span>{{'TAGS' | translate}}:</span>
         <button class="btn btn-warning btn-sm mr-1 ml-1"
-                ng-repeat="tag in $ctrl.queryTags"
+                ng-repeat="tag in $ctrl.filter.tags"
                 ng-click="$ctrl.removeQueryTag(tag)">
-          {{tag.name}}
+          {{tag}}
         </button>
       </div>
     </div>
@@ -47,23 +47,23 @@
   </div>
 </div>
 
-<div class="card-deck mt-3" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.sertificatesToShow">
-  <certificate user="$ctrl.user"
+<div class="card-deck mt-3" ui-sortable ng-model="$ctrl.items">
+  <certificate is-bought-certificate="$ctrl.isBoughtCertificate(certificate);"
                on-add-tag="$ctrl.addQueryTag($event);"
                on-cell-certificate="$ctrl.onCellCertificate();"
                on-delete="$ctrl.onDeleteCertificate();"
                class="m-3"
                style="cursor: move;"
                certificate="certificate"
-               ng-repeat="certificate in $ctrl.sertificatesToShow">
+               ng-repeat="certificate in $ctrl.items">
   </certificate>
 </div>
 
 <pagination-component
-  items="$ctrl.items"
+  items-number="$ctrl.number"
   current-page="$ctrl.currentPage"
   page-size="$ctrl.pageSize"
-  on-show-items="$ctrl.showItems($event)">
+  on-page-change="$ctrl.onPageChange($event)">
 </pagination-component>
 
 

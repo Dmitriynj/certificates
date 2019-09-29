@@ -1,5 +1,7 @@
 {
   "CERTIFICATES": "Certificates",
+  "LOGIN": "Login",
+  "REGISTER": "Register",
 
   "BUTTON_ALL_CERTIFICATES": "All certificates",
   "BUTTON_MY_CERTIFICATES": "My certificates",
@@ -35,6 +37,9 @@
   "COST": "Cost",
   "DESCRIPTION": "Description",
   "DATE": "Date",
+  "EMAIL": "Email",
+  "PASSWORD": "Password",
+  "CONFIRM_PASSWORD": "Confirm password",
 
   "ADD": "Add",
   "ENTER_TAGS": "Enter tag name",
@@ -43,6 +48,7 @@
   "VALIDATION_MIN_LENGTH_MESSAGE": "This field is too little. Min length is ",
   "VALIDATION_IS_NOT_CORRECT_MESSAGE": "This field is not correct",
   "VALIDATION_REQUIRED_MESSAGE": "This field is required",
+  "VALIDATION_PASSWORDS_ARE_NOT_THE_SAME": "Passwords are not the same",
 
   "CONFIRMATION": "Confirmation",
   "OK": "OK",

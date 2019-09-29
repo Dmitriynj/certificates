@@ -18,34 +18,33 @@ export const auth = angular
   .service('AuthService', AuthService)
   .name;
 
-config.$inject = ['$authProvider'];
-function config($authProvider) {
-  $authProvider.signupUrl = 'http://localhost:5000/' + 'auth/register';
-  $authProvider.loginUrl = 'http://localhost:5000/' + 'auth/login';
+config.$inject = ['$authProvider', 'appConst'];
+function config($authProvider, appConst) {
+  $authProvider.signupUrl = appConst.API + 'auth/register';
+  $authProvider.loginUrl = appConst.API + 'auth/login';
 }
 
-run.$inject = ['$transitions', '$state', '$auth'];
-function run($transitions, $state, $auth) {
+run.$inject = ['$transitions', '$state', '$http', '$auth', '$rootScope', 'AuthService', 'stateConst'];
+async function run($transitions, $state, $http, $auth, $rootScope, AuthService, stateConst) {
+
+  $http.defaults.headers.common['Authorization'] = 'Bearer ' + $auth.getToken();
+
+  if($auth.isAuthenticated() && !$rootScope.user) {
+    $rootScope.user = await AuthService.getUser();
+  }
 
   $transitions.onStart({
     to: (state) => !!(state.data && state.data.requiredAuth),
   }, () => {
-    if(!$auth.isAuthenticated()) {
-      return $state.target('auth.login');
+    if (!$auth.isAuthenticated()) {
+      return $state.target(stateConst.AUTH_LOGIN.name);
     }
   });
 
-  // $transitions.onStart({
-  //   to: (state) => !!(state.data && state.data.requireAdmin),
-  // }, () => {
-  //   return AuthService.requireAdmin()
-  //     .catch(() => $state.target('certificates'));
-  // });
-
   $transitions.onStart({
-    to: 'auth.*',
+    to: stateConst.AUTH.name + '.*',
   }, () => {
     if ($auth.isAuthenticated())
-      return $state.target('app');
+      return $state.target(stateConst.APP.name);
   });
 }

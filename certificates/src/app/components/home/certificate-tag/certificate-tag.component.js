@@ -55,7 +55,7 @@ export const certificateTagComponent = {
         let targetModel = ui.item.sortable.droptargetModel;
 
         let exists = !!targetModel
-          .filter(tag => tag.name === itemModel.name)
+          .filter(tag => tag === itemModel)
           .length;
 
         /**

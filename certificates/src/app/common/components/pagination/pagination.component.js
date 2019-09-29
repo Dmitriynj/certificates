@@ -1,11 +1,11 @@
-import { pager } from './pager';
+import {pager} from './pager';
 
 export const paginationComponent = {
   bindings: {
-    items: '<',
+    itemsNumber: '<',
     currentPage: '<',
     pageSize: '<',
-    onShowItems: '&'
+    onPageChange: '&'
   },
   template: require('./pagination.html'),
   controller: class PaginationController {
@@ -17,28 +17,30 @@ export const paginationComponent = {
     $onInit() {
       this.currentPage = this.currentPage || 1;
       this.pageSize = this.pageSize || 9;
-      this.setPage(this.currentPage);
+      this.setPager(this.currentPage);
     }
 
     $onChanges(changes) {
-      if(changes.items) {
-        this.items = angular.copy(this.items);
-        this.setPage(this.currentPage);
+      if (changes.itemsNumber) {
+        this.itemsNumber = angular.copy(this.itemsNumber);
+        if(!!this.pager) {
+          this.setPage(this.pager.currentPage);
+        }
       }
-      if(changes.pageSize) {
+      if (changes.pageSize) {
         this.pageSize = angular.copy(this.pageSize);
-        this.setPage(1);
       }
     }
 
+    setPager(page) {
+      this.pager = pager(this.itemsNumber, page, this.pageSize);
+    }
+
     setPage(page) {
-      this.pager = pager(this.items.length, page, this.pageSize);
-      this.itemsToShow = this.items.slice(
-        this.pager.startIndex,
-        this.pager.endIndex + 1);
-      this.onShowItems({
+      this.setPager(page);
+      this.onPageChange({
         $event: {
-          items: this.itemsToShow
+          page: this.pager.currentPage
         },
       })
     }

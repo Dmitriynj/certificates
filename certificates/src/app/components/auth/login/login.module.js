@@ -10,19 +10,19 @@ export const login = angular
   .config(config)
   .name;
 
-config.$inject = ['$stateProvider', '$urlRouterProvider'];
-function config($stateProvider, $urlRouterProvider) {
+config.$inject = ['$stateProvider', '$urlRouterProvider', 'stateConst', 'componentConst'];
+function config($stateProvider, $urlRouterProvider, stateConst, componentConst) {
 
   $stateProvider
-    .state('auth', {
-      // redirectTo: 'auth.login',
-      url: '/auth',
+    .state(stateConst.AUTH.name, {
+      redirectTo: stateConst.AUTH_LOGIN.name,
+      url: stateConst.AUTH.url,
       template: '<div ui-view></div>',
     })
-    .state('auth.login', {
-      url: '/login',
-      component: 'login',
+    .state(stateConst.AUTH_LOGIN.name, {
+      url: stateConst.AUTH_LOGIN.url,
+      component: componentConst.LOGIN,
     });
 
-  $urlRouterProvider.otherwise('/auth/login');
+  $urlRouterProvider.otherwise(stateConst.AUTH.url + stateConst.AUTH_LOGIN.url);
 }

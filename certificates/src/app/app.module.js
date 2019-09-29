@@ -22,11 +22,10 @@ export const app = angular
     'ngTouch'
   ])
   .component('app', appComponent)
-  .constant('API', 'http://localhost:5000/')
   .config(config);
 
-config.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider'];
-function config($stateProvider, $locationProvider, $urlRouterProvider) {
+config.$inject = ['$stateProvider', '$locationProvider'];
+function config($stateProvider, $locationProvider) {
 
   $locationProvider.html5Mode(true);
 }

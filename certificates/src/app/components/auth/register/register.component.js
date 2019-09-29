@@ -1,28 +1,49 @@
 export const registerComponent = {
   template: require('./register.html'),
   controller: class RegisterComponent {
-    static $inject = ['AuthService', '$state'];
+    static $inject = ['AuthService', '$state', 'stateConst'];
 
-    constructor(AuthService, $state) {
+    constructor(AuthService, $state, stateConst) {
 
       this.authService = AuthService;
       this.$state = $state;
+      this.stateConst = stateConst;
     }
+
     $onInit() {
-      this.user = {};
-      this.link = {
-        state: 'auth.login',
-        name: 'Log in'
-      }
+
+      this.emailFieldModel = {
+        fieldNameKey: 'EMAIL',
+        fieldType: 'email',
+        required: true,
+        maxlength: 30,
+        haveCustomFun: false,
+      };
+      this.passwordFieldModel = {
+        fieldNameKey: 'PASSWORD',
+        minlength: 4
+      };
+      this.cPasswordFieldModel = {
+        fieldNameKey: 'CONFIRM_PASSWORD',
+        minlength: 4
+      };
     }
-    createUser(event) {
+
+    createUser() {
       return this.authService
-        .newRegister(event.user)
+        .newRegister({
+          email: this.emailFieldModel.fieldValue,
+          password: this.cPasswordFieldModel.fieldValue
+        })
         .then(() => {
-          this.$state.go('certificates');
+          this.$state.go(this.stateConst.AUTH_LOGIN.name);
         }, reason => {
           this.message = reason.message;
         });
+    }
+
+    updateEmail(event) {
+      this.emailFieldModel.fieldValue = event.value;
     }
   },
 };

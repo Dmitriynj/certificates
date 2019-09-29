@@ -1,94 +1,83 @@
 export class CertificateService {
-  static $inject = ['$http', '$cookies', '$localStorage', '$q', 'UserService'];
+  static $inject = ['$http', '$auth', 'appConst'];
 
-  constructor($http, $cookies, $localStorage, $q, UserService) {
+  constructor($http, $auth, appConst) {
 
     this.$http = $http;
-    this.$localStorage = $localStorage;
-    this.$q = $q;
-    this.certificates = {};
-    this.certificates.data = $localStorage.globals.certificates;
-    this.userService = UserService;
+    this.$auth = $auth;
+    this.appConst = appConst;
   }
 
-  /**
-   * Should be return this.$http.get('/data/fewCertificates.json');
-   * @returns {Promise<any>}
-   */
-  getAllCertificates() {
-    return this.$q.resolve(this.certificates);
-  }
 
-  getById(id) {
-    let defer = this.$q.defer();
-    let certificates = this.$localStorage.globals.certificates;
-    let intId = Number.parseInt(id);
-    for (let i = 0; i < certificates.length; i++) {
-      if (certificates[i].id === intId) {
-        defer.resolve(angular.copy(certificates[i]));
-      }
-    }
-    defer.reject('Certificate with the given id was not found!');
-    return defer.promise;
-  }
-
-  getByIdToChange(id) {
-    let defer = this.$q.defer();
-    let certificates = this.$localStorage.globals.certificates;
-    let intId = Number.parseInt(id);
-    for (let i = 0; i < certificates.length; i++) {
-      if (certificates[i].id === intId) {
-        defer.resolve(certificates[i]);
-      }
-    }
-    defer.reject('Certificate with the given id was not found!');
-    return defer.promise;
-  }
-
-  async update(certificate) {
-    let defer = this.$q.defer();
-    let certificateToUpdate = await this.getByIdToChange(certificate.id);
-    certificateToUpdate.title = certificate.title;
-    certificateToUpdate.description = certificate.description;
-    certificateToUpdate.cost = certificate.cost;
-    certificateToUpdate.tags = certificate.tags;
-    certificateToUpdate.date = certificate.date;
-
-    //
-    // this.$http.post('http://localhost:5000/api/certificate', {certificate: certificate});
-    //
-
-    defer.resolve();
-    return defer.promise;
-  }
-
-  delete(certificateId) {
-    return this.userService.deleteCertificateFromUsers(certificateId).then(response => {
-      let defer = this.$q.defer();
-      this.certificates.data.forEach((certificate, index) => {
-        if (certificate.id === certificateId) {
-          this.certificates.data.splice(index, 1);
-          defer.resolve();
-        }
-      });
-      defer.reject();
-      return defer.promise;
+  filterCertificates(limit, filter) {
+    return new Promise((resolve, reject) => {
+      this.$http.post(this.appConst.API + 'certificate/filter/' + limit, {filter})
+        .then(result => {
+          resolve(result.data);
+        }, error => {
+          console.log(error);
+          reject(error);
+        });
     });
   }
 
-  create(certificate) {
-    let defer = this.$q.defer();
-
-    let certificates = this.$localStorage.globals.certificates;
-    let lastCertificateId = certificates.slice(-1).pop().id;
-    certificate.id = lastCertificateId + 1;
-    certificates.push(certificate);
-
-    defer.resolve();
-    return defer.promise;
+  paginateCertificates(limit, offset, filter) {
+    return new Promise((resolve, reject) => {
+      this.$http.post(
+        this.appConst.API + 'certificate/paginate/' + limit + '/' + offset, { filter })
+        .then(result => {
+          resolve(result.data);
+        }, error => {
+          console.log(error);
+          reject(error);
+        });
+    });
   }
 
-  newCreate(certificate) {
+  updateCertificate(certificate) {
+    return new Promise((resolve, reject) => {
+      this.$http.put(this.appConst.API + 'certificate/update/' + certificate._id, certificate)
+        .then(result => {
+          resolve(result.data);
+        }, error => {
+          reject(error);
+        });
+    });
+  }
 
+  filterUserCertificates(limit, filter) {
+    return new Promise((resolve, reject) => {
+      this.$http.post(this.appConst.API + 'usercertificate/filter/' + limit, {filter})
+        .then(result => {
+          resolve(result.data);
+        }, error => {
+          console.log(error);
+          reject(error);
+        })
+    });
+  }
+
+  buyCertificate(certificate) {
+    return new Promise((resolve, reject) => {
+      this.$http.put(this.appConst.API + 'usercertificate/add', certificate)
+        .then(result => {
+          resolve(result.data);
+        }, error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+
+  cellCertificate(certificate) {
+    return new Promise((resolve, reject) => {
+      this.$http.delete(this.appConst.API + 'usercertificate/delete', certificate)
+        .then(result => {
+          resolve(result.data);
+        }, error => {
+          console.log(error);
+          reject(error);
+        });
+    });
   }
 }

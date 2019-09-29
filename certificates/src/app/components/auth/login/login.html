@@ -5,10 +5,7 @@
     </div>
   </div>
   <auth-form
-    user="$ctrl.user"
-    link="$ctrl.link"
-    message="{{$ctrl.message}}"
-    button="Login"
+    message="$ctrl.message"
     on-submit="$ctrl.login($event)">
   </auth-form>
   <div ng-if="!!$ctrl.message" class="alert alert-dismissible fade show mt-2 alert-danger"

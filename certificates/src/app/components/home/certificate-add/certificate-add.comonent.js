@@ -3,11 +3,12 @@ export const addCertificateComponent = {
   },
   template: require('./certificate-add.html'),
   controller: class AddCertificateComponent {
-    static $inject = ['$state', 'CertificateService'];
+    static $inject = ['$state', 'CertificateService', 'stateConst'];
 
-    constructor($state, CertificateService) {
+    constructor($state, CertificateService, stateConst) {
       this.certificateService = CertificateService;
       this.$state = $state;
+      this.stateConst = stateConst;
     }
 
     $onInit() {
@@ -15,7 +16,7 @@ export const addCertificateComponent = {
 
     addCertificate(event) {
       this.certificateService.create(event.certificate).then(() => {
-        this.$state.go('certificates');
+        this.$state.go(this.stateConst.CERTIFICATES.name);
       });
     }
   }

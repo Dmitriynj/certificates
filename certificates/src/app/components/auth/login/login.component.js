@@ -1,36 +1,21 @@
 export const loginComponent = {
-  bindings: {
-    message: '&'
-  },
   template: require('./login.html'),
   controller: class LoginComponent {
-    static $inject = ['AuthService', '$state'];
+    static $inject = ['AuthService', '$state', '$rootScope', 'stateConst'];
 
-    constructor(AuthService, $state) {
+    constructor(AuthService, $state, $rootScope, stateConst) {
 
       this.authService = AuthService;
       this.$state = $state;
-    }
-
-    $onInit() {
-      this.maxlength = 30;
-      this.minlength = 4;
-      this.message = null;
-      this.user = {
-        email: '',
-        password: '',
-      };
-      this.link = {
-        state: 'auth.register',
-        name: 'Registration'
-      }
+      this.$rootScope = $rootScope;
+      this.stateConst = stateConst;
     }
 
     login(event) {
         this.authService
           .newLogin(event.user)
-          .then(() => {
-            this.$state.go('certificates');
+          .then( () => {
+            this.$state.go(this.stateConst.CERTIFICATES.name);
           }, reason => {
             this.message = reason.message;
           });

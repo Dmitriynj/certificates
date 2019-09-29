@@ -6,13 +6,14 @@ export const certificateFormComponent = {
   },
   template: require('./certificate-from.html'),
   controller: class CertificateComponent {
-    static $inject = ['CertificateService', '$stateParams', '$state'];
+    static $inject = ['CertificateService', '$stateParams', '$state', 'stateConst'];
 
-    constructor(CertificateService, $stateParams, $state) {
+    constructor(CertificateService, $stateParams, $state, stateConst) {
 
       this.certificateService = CertificateService;
       this.$stateParams = $stateParams;
       this.$state = $state;
+      this.stateConst = stateConst;
     }
 
     $onInit() {
@@ -87,20 +88,20 @@ export const certificateFormComponent = {
     }
 
     cancel() {
-      this.$state.go('certificates');
+      this.$state.go(this.stateConst.CERTIFICATES.name);
     }
 
     updateTitle(event) {
-      this.certificate.title = event.fieldValue;
+      this.certificate.title = event.value;
     }
     updateDate(event) {
-      this.certificate.date = event.fieldValue;
+      this.certificate.date = event.value;
     }
     updateDescription(event) {
-      this.certificate.description = event.fieldValue;
+      this.certificate.description = event.value;
     }
     updateCost(event) {
-      this.certificate.cost = event.fieldValue;
+      this.certificate.cost = event.value;
     }
   }
 };

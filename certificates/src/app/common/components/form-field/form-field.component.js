@@ -11,21 +11,21 @@ export const formFieldComponent = {
     constructor() {
     }
 
+    $onInit() {
+    }
+
     $onChanges(changes) {
       if (changes.fieldModel) {
         this.fieldModel = angular.copy(this.fieldModel);
       }
     }
 
-    update() {
+    validate(value) {
       this.onUpdate({
         $event: {
-          fieldValue: this.fieldModel.fieldValue
+          value: value
         }
-      })
-    }
-
-    validate(value) {
+      });
       return this.fieldModel.haveCustomFun ? this.onValidate({ $value: value }) : true;
     }
   }

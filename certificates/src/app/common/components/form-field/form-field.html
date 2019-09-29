@@ -1,36 +1,26 @@
 <div class="form-group">
-  <label for="field">{{$ctrl.fieldModel.fieldNameKey | translate}}</label>
+  <label>{{$ctrl.fieldModel.fieldNameKey | translate}}</label>
   <ng-form name="subform">
-    <input value="{{$ctrl.fieldModel.fieldValue}}"
-           type="{{$ctrl.fieldModel.fieldType}}"
+    <input type="{{$ctrl.fieldModel.fieldType}}"
            class="form-control"
-           id="field"
            placeholder="{{$ctrl.fieldModel.fieldNameKey | translate}}"
-           name="inputName"
+           name="field"
            ng-model="$ctrl.fieldModel.fieldValue"
-           ng-change="$ctrl.update()"
-           ng-class="{'is-invalid': subform.inputName.$touched && subform.inputName.$invalid,
-                    'is-valid': subform.inputName.$touched && subform.inputName.$valid }"
-           ng-attr-ng-maxlength="{{$ctrl.fieldModel.maxLength || undefined}}"
-           ng-attr-ng-minlength="{{$ctrl.fieldModel.minLength || undefined}}"
+           ng-attr-ng-maxlength="{{$ctrl.fieldModel.maxlength || undefined}}"
+           ng-attr-ng-minlength="{{$ctrl.fieldModel.minlength || undefined}}"
            ng-attr-required="{{$ctrl.fieldModel.required}}"
            ng-pattern="$ctrl.fieldModel.pattern"
-           ui-validate="{userValidation: '$ctrl.validate($value)'}">
+           ui-validate="{userValidation: '$ctrl.validate($value)'}"
+           ng-class="{'is-invalid': subform.field.$invalid && !subform.field.$pristine,
+                              'is-valid': subform.field.$valid && subform.field.$touched}">
 
-    <div ng-if="subform.inputName.$error.maxlength" class="invalid-feedback">
-      {{::'VALIDATION_MAX_LENGTH_MESSAGE' | translate}}{{$ctrl.maxLength}}
-    </div>
-    <div ng-if="subform.inputName.$error.minlength" class="invalid-feedback">
-      {{'VALIDATION_MIN_LENGTH_MESSAGE' | translate}}{{$ctrl.minLength}}
-    </div>
-    <div ng-if="subform.inputName.$error.userValidation" class="invalid-feedback">
-      {{'VALIDATION_IS_NOT_CORRECT_MESSAGE' | translate}}
-    </div>
-    <div ng-if="subform.inputName.$error.required" class="invalid-feedback">
-      {{'VALIDATION_REQUIRED_MESSAGE' | translate}}
-    </div>
-    <div ng-if="subform.inputName.$error.pattern" class="invalid-feedback">
-      {{'VALIDATION_IS_NOT_CORRECT_MESSAGE' | translate}}
+    <div ng-if="subform.field.$touched" ng-messages="subform.field.$error" class="invalid-feedback d-block" role="alert">
+      <div ng-message="maxlength">{{'VALIDATION_MAX_LENGTH_MESSAGE' | translate}}{{$ctrl.fieldModel.maxlength}}</div>
+      <div ng-message="minlength">{{'VALIDATION_MIN_LENGTH_MESSAGE' | translate}}{{$ctrl.fieldModel.minlength}}</div>
+      <div ng-message="userValidation">{{$ctrl.fieldModel.validationMessageKey | translate}}</div>
+      <div ng-message="required">{{'VALIDATION_REQUIRED_MESSAGE' | translate}}</div>
+      <div ng-message="pattern">{{'VALIDATION_IS_NOT_CORRECT_MESSAGE' | translate}}</div>
+      <div ng-message="required">{{'VALIDATION_REQUIRED_MESSAGE' | translate}}</div>
     </div>
   </ng-form>
 </div>

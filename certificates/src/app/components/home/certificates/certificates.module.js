@@ -1,8 +1,6 @@
 import uiRouter from '@uirouter/angularjs';
 import {certificatesComponent} from './certificates.component';
-import {certificateTagsFilter} from './certificates.filter';
-import {certificateInputFilter} from "./certificates.filter";
-import {myCertificatesFilter} from "./certificates.filter";
+import {certificateInputFilter, certificateTagsFilter, myCertificatesFilter} from './certificates.filter';
 import {UserService} from "../../../common/services/user.service";
 import {pagination} from "../../../common/components/pagination/pagination.module";
 import 'ngstorage/ngStorage.min';
@@ -25,58 +23,41 @@ export const certificates = angular
   .service('UserService', UserService)
   .name;
 
-config.$inject = ['$stateProvider'];
-function config($stateProvider) {
+config.$inject = ['$stateProvider', 'stateConst', 'componentConst', 'appConst'];
+
+function config($stateProvider, stateConst, componentConst, appConst) {
 
   $stateProvider
-    .state('certificates', {
-      parent: 'app',
-      url: '/certificates',
-      component: 'certificates',
+    .state(stateConst.CERTIFICATES.name, {
+      parent: stateConst.APP.name,
+      url: stateConst.CERTIFICATES.url,
+      component: componentConst.CERTIFICATES,
       data: {
         requiredAuth: true,
       },
       resolve: {
-        certificates
+        certificatesData: certificatesData,
+        userCertificatesData: userCertificatesData
       }
     });
 
-  certificates.$inject = ['CertificateService'];
-  async function certificates(CertificateService) {
+  certificatesData.$inject = ['CertificateService'];
+  async function certificatesData(CertificateService) {
+    return await CertificateService.filterCertificates(appConst.CERTIFICATES_PAGE_SIZE, {});
+  }
 
-    let response = await CertificateService.getAllCertificates();
-    return response.data;
+  userCertificatesData.$inject = ['CertificateService'];
+  async function userCertificatesData(CertificateService) {
+    return await CertificateService.filterUserCertificates(appConst.CERTIFICATES_PAGE_SIZE, {});
   }
 }
 
-run.$inject = ['uiSortableConfig', '$localStorage', '$http'];
-function run(uiSortableConfig, $localStorage, $http) {
+run.$inject = ['uiSortableConfig'];
+function run(uiSortableConfig) {
   /**
    * for angular-ui-sortable module only
    * @type {string}
    */
   uiSortableConfig.jQueryPath = 'https://code.jquery.com/jquery-3.4.1.min.js';
   uiSortableConfig.jQueryUiPath = 'https://code.jquery.com/ui/1.11.4/jquery-ui.js';
-
-  $http.get('/data/certificates.json').then((response) => {
-    $localStorage.globals = {
-      certificates: response.data,
-      users: [
-        {
-          id: 1,
-          email: 'admin@epam.com',
-          password: 'YWRtaW4=',
-          isAdmin: true
-        },
-        {
-          id: 2,
-          email: 'user@epam.com',
-          password: 'dXNlcg==',
-          isAdmin: false
-        }
-      ],
-      lang: 'ru'
-    };
-  }, (error) => {});
-
 }

@@ -1,34 +1,40 @@
-'use strict';
-
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const certificateRoute = require('./routes/certificate.route');
+const authRoute = require('./routes/auth.route');
+const userCertificateRoute = require('./routes/user.certificate.route');
+const userRoute = require('./routes/user.route');
+const db = require('./config/db');
 
-const auth = require('./controllers/auth');
-const certificate = require('./controllers/certificate');
-const checkAuthenticated = require('./services/checkAthenticated');
-const cors = require('./services/cors');
+const app = express();
 
 //Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors);
+app.use(cors());
 
-//Requests
-app.post('/api/certificate', checkAuthenticated, certificate.post);
-app.get('/api/certificate', certificate.get);
-
-app.post('/auth/register', auth.register);
-app.post('/auth/login', auth.login);
+app.use('/auth', authRoute);
+app.use('/certificate', certificateRoute);
+app.use('/usercertificate', userCertificateRoute);
+app.use('/user', userRoute);
 
 //Connection
-mongoose.connect('mongodb://localhost:27017/test',  { useNewUrlParser: true }, (error, client) => {
-    if (!error) {
-        console.log('we are connected to mango');
-    }
-});
+mongoose.set('useFindAndModify', false);
+mongoose.connect(
+    db.url,
+    {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+    },
+    (error, client) => {
+        if (!error) {
+            console.log('we are connected to mango');
+        }
+    });
 
-var server = app.listen(5000, () => {
+const server = app.listen(5000, () => {
     console.log('listening on port ' + server.address().port);
 });
 

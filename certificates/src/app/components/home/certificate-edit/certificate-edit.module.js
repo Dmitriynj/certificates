@@ -6,14 +6,14 @@ export const certificateEdit = angular
   .config(config)
   .name;
 
-config.$inject = ['$stateProvider'];
-  function config($stateProvider) {
+config.$inject = ['$stateProvider', 'stateConst', 'componentConst'];
+  function config($stateProvider, stateConst, componentConst) {
 
   $stateProvider
-    .state('certificate-edit', {
-      parent: 'app',
-      url: '/certificate/:certificateId/edit',
-      component: 'certificateEdit',
+    .state(stateConst.CERTIFICATE_EDIT.name, {
+      parent: stateConst.APP.name,
+      url: stateConst.CERTIFICATE_EDIT.url,
+      component: componentConst.CERTIFICATE_EDIT,
       parameter: {
         certificateId: 0
       },

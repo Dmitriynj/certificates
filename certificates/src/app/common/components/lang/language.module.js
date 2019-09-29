@@ -14,8 +14,14 @@ export const lang = angular
   .name;
 
 
-config.$inject = ['$translateProvider'];
-function config($translateProvider) {
+config.$inject = ['$translateProvider', '$localStorageProvider'];
+function config($translateProvider, $localStorageProvider) {
+  let lang = $localStorageProvider.get('lang');
+  if(!lang) {
+    $localStorageProvider.set('lang', 'en');
+    lang = 'en';
+  }
+
   $translateProvider
     .useStaticFilesLoader({
       prefix: '/locales/locale-',
@@ -23,5 +29,5 @@ function config($translateProvider) {
     })
     // remove the warning from console log by putting the sanitize strategy
     .useSanitizeValueStrategy('sanitizeParameters')
-    .preferredLanguage('en');
+    .preferredLanguage(lang);
 }

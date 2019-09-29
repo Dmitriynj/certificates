@@ -9,12 +9,12 @@ export const register = angular
   .config(config)
   .name;
 
-config.$inject = ['$stateProvider'];
-function config($stateProvider) {
+config.$inject = ['$stateProvider', 'stateConst', 'componentConst'];
+function config($stateProvider, stateConst, componentConst) {
 
   $stateProvider
-    .state('auth.register', {
-      url: '/register',
-      component: 'register',
+    .state(stateConst.AUTH_REGISTRATION.name, {
+      url: stateConst.AUTH_REGISTRATION.url,
+      component: componentConst.REGISTER,
     });
 }
