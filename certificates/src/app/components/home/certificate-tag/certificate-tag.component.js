@@ -27,51 +27,33 @@ export const certificateTagComponent = {
     }
 
     onStartSortable(event, ui) {
-      /**
-       * Copy array if ctrl pressed
-       */
-      if(event.ctrlKey) {
-        this.savedTagsArray = this.tags.slice();
-      } else {
-        this.savedTagsArray = undefined;
-      }
+      this.savedTagsArray = event.ctrlKey ? this.tags.slice() : undefined;
     }
 
     onUpdateSortable(event, ui) {
-      /**
-       * update tags in dropTargetModel
-       */
-      if(ui.item.sortable.received) {
+      if (ui.item.sortable.received) {
         this.updateTags();
       }
 
-      if (// ensure we are in the first update() callback
-        !ui.item.sortable.received &&
-        // check that its an actual moving between the two lists
+      if (!ui.item.sortable.received &&
         ui.item.sortable.source[0] !== ui.item.sortable.droptarget[0]) {
 
-        let originNgModel = ui.item.sortable.sourceModel;
-        let itemModel = originNgModel[ui.item.sortable.index];
-        let targetModel = ui.item.sortable.droptargetModel;
+        const originNgModel = ui.item.sortable.sourceModel;
+        const itemModel = originNgModel[ui.item.sortable.index];
+        const targetModel = ui.item.sortable.droptargetModel;
 
-        let exists = !!targetModel
+        const cancel = !!targetModel
           .filter(tag => tag === itemModel)
           .length;
 
-        /**
-         * cancel() if have duplicate element
-         */
-        if (exists) {
+        if (cancel) {
           ui.item.sortable.cancel();
         }
       }
     }
 
     onStopSortable(event, ui) {
-      /**
-       * update tags in dropSourceModel
-       */
-      if(!!this.savedTagsArray) {
+      if (!!this.savedTagsArray) {
         this.tags = this.savedTagsArray;
       }
       this.updateTags();

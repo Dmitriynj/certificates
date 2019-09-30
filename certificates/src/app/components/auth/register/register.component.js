@@ -45,5 +45,9 @@ export const registerComponent = {
     updateEmail(event) {
       this.emailFieldModel.fieldValue = event.value;
     }
+
+    goToLogin() {
+      this.$state.go(this.stateConst.AUTH_LOGIN.name);
+    }
   },
 };

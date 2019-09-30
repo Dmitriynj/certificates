@@ -20,16 +20,16 @@ export const certificatesComponent = {
 
     $onInit() {
       this.items = this.certificatesData.certificates;
-      this.number = this.certificatesData.number;
-
       this.userCertificateIds = this.userCertificatesData.certificates
         .map(certificate => certificate._id);
 
-      this.pageSize = this.appConst.CERTIFICATES_PAGE_SIZE;
-      this.currentPage = 1;
+      this.pagerProps = {
+        number: this.certificatesData.number,
+        pageSize: this.appConst.CERTIFICATES_PAGE_SIZE,
+        currentPage: 1,
+      };
 
-      this.filter = {};
-      this.filter.tags = [];
+      this.filter = { tags: [] };
       this.showMy = false;
     }
 
@@ -42,6 +42,7 @@ export const certificatesComponent = {
     addQueryTag(event) {
       if (!this.filter.tags.includes(event.tag)) {
         this.filter.tags.push(event.tag);
+        this.pagerProps.currentPage = 1;
         this.filterCertificates();
       }
     }
@@ -50,34 +51,40 @@ export const certificatesComponent = {
       let index = this.filter.tags.indexOf(tag);
       if (index > -1) {
         this.filter.tags.splice(index, 1);
+        this.pagerProps.currentPage = 1;
         this.filterCertificates();
       }
     }
     
     onInputChange() {
       this.filter.input = this.search;
+      this.pagerProps.currentPage = 1;
       this.filterCertificates();
     }
 
-    async onPageChange(event) {
-      this.currentPage = event.page;
-      let offset = this.calcOffset();
-      this.items = await this.certificateService.paginateCertificates(this.pageSize, offset, this.filter);
+    onPageChange(event) {
+      this.pagerProps.currentPage = event.page;
+      this.filterCertificates();
     }
 
     async filterCertificates() {
-      this.certificatesData = await this.certificateService.filterCertificates(this.pageSize, this.filter);
-      this.items = this.certificatesData.certificates;
-      this.number = this.certificatesData.number;
-    }
+      this.certificatesData = await this.certificateService.filterCertificates(
+          this.pagerProps.pageSize,
+          this.pagerProps.currentPage,
+          this.filter);
 
-    calcOffset(){
-      return (this.currentPage - 1) * this.pageSize;
+      this.items = this.certificatesData.certificates;
+      this.pagerProps.number = this.certificatesData.number;
+
+      this.pagerProps = {
+        number: this.pagerProps.number,
+        pageSize: this.pagerProps.pageSize,
+        currentPage: this.pagerProps.currentPage
+      };
     }
 
     showMyCertificates() {
       this.showMy = true;
-
     }
 
     showAllCertificates() {

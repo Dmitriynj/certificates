@@ -2,7 +2,6 @@ import loader from 'angular-loading-bar';
 import { appNav } from './components/app-nav/app-nav.module';
 import { commonComponent } from './common.component';
 import uiRouter from '@uirouter/angularjs';
-import { UserService } from './services/user.service';
 import {pagination} from "./components/pagination/pagination.module";
 import { lang } from "./components/lang/language.module";
 import { formField } from "./components/form-field/form-field.module";
@@ -26,14 +25,15 @@ export const common = angular
   .component('common', commonComponent)
   .config(config)
   .run(run)
-  .service('UserService', UserService)
   .constant('stateConst', stateConst)
   .constant('componentConst', componentConst)
   .constant('appConst', appConst)
   .name;
 
-config.$inject = ['$stateProvider', 'stateConst', 'componentConst'];
-function config($stateProvider, stateConst, componentConst) {
+config.$inject = ['$stateProvider', 'cfpLoadingBarProvider', 'stateConst', 'componentConst'];
+function config($stateProvider, cfpLoadingBarProvider, stateConst, componentConst) {
+
+  cfpLoadingBarProvider.latencyThreshold = 10;
 
   $stateProvider
     .state(stateConst.APP.name, {
@@ -46,11 +46,8 @@ function config($stateProvider, stateConst, componentConst) {
     })
 }
 
-run.$inject = ['$transitions', 'cfpLoadingBar', '$rootScope', 'AuthService'];
-async function run($transitions, cfpLoadingBar, $rootScope, AuthService) {
-
-  // $rootScope.globals = {};
-  // $rootScope.globals.user = await AuthService.getUser();
+run.$inject = ['$transitions', 'cfpLoadingBar'];
+async function run($transitions, cfpLoadingBar) {
 
   $transitions.onStart({}, cfpLoadingBar.start);
   $transitions.onSuccess({}, cfpLoadingBar.complete);

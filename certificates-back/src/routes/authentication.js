@@ -2,11 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const bCrypt = require('bcrypt');
-const User = require('../models/user').user;
+const User = require('../models/user');
 const jwt = require('jwt-simple');
 const moment = require('moment');
-const saltRounds = 12;
 const secret = require('../config/token').secret;
+const HttpStatus = require('http-status-codes');
+const saltRounds = 12;
 
 function createToken(user) {
     let payload = {
@@ -21,7 +22,7 @@ function createToken(user) {
 router.post('/register', (request, response) => {
    User.findOne({email: request.body.email}, (error, existingUser) => {
         if (existingUser) {
-            return response.status(409).send({
+            return response.status(HttpStatus.CONFLICT).send({
                 message: 'Email is already registered!'
             });
         }
@@ -33,11 +34,11 @@ router.post('/register', (request, response) => {
             user.password = hash;
             user.save((error, result) => {
                 if (error) {
-                    response.status(500).send({
+                    response.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
                         message: error.message
                     });
                 }
-                response.status(200).send();
+                response.status(HttpStatus.OK).send();
             });
         });
     });
@@ -48,7 +49,7 @@ router.post('/login', (request, response) => {
         email: request.body.email
     }, async (error, user) => {
         if (!user) {
-            return response.status(401).send({
+            return response.status(HttpStatus.UNAUTHORIZED).send({
                 message: 'User does not exists!'
             });
         }
@@ -60,7 +61,7 @@ router.post('/login', (request, response) => {
                 token: createToken(user._doc)
             });
         } else {
-            return response.status(401).send({
+            return response.status(HttpStatus.UNAUTHORIZED).send({
                 message: 'Invalid password'
             });
         }

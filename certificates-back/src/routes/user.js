@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user').user;
+const User = require('../models/user');
 const HttpStatus = require('http-status-codes');
-const handleError = require('../util/handle.server.error');
-const checkAuthenticated = require('../util/check.athenticated');
+const handleError = require('../util/handle-error');
+const checkAuthenticated = require('../middleware/check-athenticated');
 
 router.use(checkAuthenticated);
 

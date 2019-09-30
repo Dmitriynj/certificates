@@ -55,7 +55,7 @@
           <button type="submit" class="btn btn-primary border" ng-disabled="userForm.$invalid">{{ 'REGISTER' |
             translate}}
           </button>
-          <a href="" ui-sref="$ctrl.stateConstants.AUTH_LOGIN.name">{{'LOGIN' | translate}}</a>
+          <a href="" ng-click="$ctrl.goToLogin();">{{'LOGIN' | translate}}</a>
         </form>
       </div>
     </div>

@@ -1,7 +1,5 @@
 import uiRouter from '@uirouter/angularjs';
 import {certificatesComponent} from './certificates.component';
-import {certificateInputFilter, certificateTagsFilter, myCertificatesFilter} from './certificates.filter';
-import {UserService} from "../../../common/services/user.service";
 import {pagination} from "../../../common/components/pagination/pagination.module";
 import 'ngstorage/ngStorage.min';
 import 'angular-ui-sortable/dist/sortable.min';
@@ -15,12 +13,8 @@ export const certificates = angular
     'ui.sortable'
   ])
   .component('certificates', certificatesComponent)
-  .filter('certificateTagsFilter', certificateTagsFilter)
-  .filter('certificateInputFilter', certificateInputFilter)
-  .filter('myCertificatesFilter', myCertificatesFilter)
   .config(config)
   .run(run)
-  .service('UserService', UserService)
   .name;
 
 config.$inject = ['$stateProvider', 'stateConst', 'componentConst', 'appConst'];

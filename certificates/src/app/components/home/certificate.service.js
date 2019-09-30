@@ -9,9 +9,9 @@ export class CertificateService {
   }
 
 
-  filterCertificates(limit, filter) {
+  filterCertificates(limit, page, filter) {
     return new Promise((resolve, reject) => {
-      this.$http.post(this.appConst.API + 'certificate/filter/' + limit, {filter})
+      this.$http.post(this.appConst.API + 'certificate/filter/' + limit + '/' + page, {filter})
         .then(result => {
           resolve(result.data);
         }, error => {
@@ -36,7 +36,7 @@ export class CertificateService {
 
   updateCertificate(certificate) {
     return new Promise((resolve, reject) => {
-      this.$http.put(this.appConst.API + 'certificate/update/' + certificate._id, certificate)
+      this.$http.patch(this.appConst.API + 'certificate/' + certificate._id, certificate)
         .then(result => {
           resolve(result.data);
         }, error => {

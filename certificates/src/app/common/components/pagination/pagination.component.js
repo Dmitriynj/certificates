@@ -2,9 +2,7 @@ import {pager} from './pager';
 
 export const paginationComponent = {
   bindings: {
-    itemsNumber: '<',
-    currentPage: '<',
-    pageSize: '<',
+    pagerProps: '<',
     onPageChange: '&'
   },
   template: require('./pagination.html'),
@@ -14,33 +12,21 @@ export const paginationComponent = {
     constructor() {
     }
 
-    $onInit() {
-      this.currentPage = this.currentPage || 1;
-      this.pageSize = this.pageSize || 9;
-      this.setPager(this.currentPage);
-    }
-
     $onChanges(changes) {
-      if (changes.itemsNumber) {
-        this.itemsNumber = angular.copy(this.itemsNumber);
-        if(!!this.pager) {
-          this.setPage(this.pager.currentPage);
-        }
-      }
-      if (changes.pageSize) {
-        this.pageSize = angular.copy(this.pageSize);
+      if (changes.pagerProps) {
+        this.pagerProps = angular.copy(this.pagerProps);
+        this.setPager();
       }
     }
 
-    setPager(page) {
-      this.pager = pager(this.itemsNumber, page, this.pageSize);
+    setPager() {
+      this.pager = pager(this.pagerProps.number, this.pagerProps.currentPage, this.pagerProps.pageSize);
     }
 
     setPage(page) {
-      this.setPager(page);
       this.onPageChange({
         $event: {
-          page: this.pager.currentPage
+          page: page
         },
       })
     }

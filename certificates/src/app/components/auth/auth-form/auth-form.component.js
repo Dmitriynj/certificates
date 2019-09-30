@@ -6,9 +6,10 @@ export const formComponent = {
   template: require('./auth-form.html'),
   transclude: true,
   controller: class AuthComponent {
-    static $inject = ['stateConst'];
+    static $inject = ['$state', 'stateConst'];
 
-    constructor(stateConst) {
+    constructor($state, stateConst) {
+      this.$state = $state;
       this.stateConst = stateConst;
     }
 
@@ -53,6 +54,10 @@ export const formComponent = {
 
     updatePassword(event) {
       this.user.password = event.value;
+    }
+
+    goToRegister() {
+      this.$state.go(this.stateConst.AUTH_REGISTRATION.name);
     }
   }
 };

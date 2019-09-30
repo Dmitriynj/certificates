@@ -17,7 +17,7 @@ export const stateConst = {
   },
   AUTH_REGISTRATION: {
     name: 'auth.register',
-    url: 'register',
+    url: '/register',
   },
   CERTIFICATE_EDIT: {
     name: 'certificate-edit',

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userCertificate = mongoose.model('user_certificate', mongoose.Schema({
+const userCertificates = mongoose.model('user_certificate', mongoose.Schema({
     _id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
@@ -18,7 +18,7 @@ const userCertificate = mongoose.model('user_certificate', mongoose.Schema({
 }));
 
 module.exports = {
-  userCertificate: userCertificate
+  userCertificate: userCertificates
 };
 
 
