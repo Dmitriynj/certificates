@@ -1,3 +1,5 @@
+const mongoose= require('mongoose');
+
 module.exports = (filterProps, userId) => {
     let filter = {};
     if (filterProps && filterProps.input) {
@@ -7,7 +9,7 @@ module.exports = (filterProps, userId) => {
         filter.tags = {$all: [...filterProps.tags]};
     }
     if(filterProps && filterProps.my) {
-        filter.owners = {$in: userId}
+        filter.owners = mongoose.Types.ObjectId(userId);
     }
     return filter;
 };

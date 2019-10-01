@@ -1,9 +1,6 @@
 export const certificatesComponent = {
   bindings: {
     certificatesData: '<',
-    userCertificatesData: '<',
-    user: '<',
-    queryTags: '&',
   },
   template: require('./certificates.html'),
   controller: class CertificatesComponent {
@@ -20,8 +17,7 @@ export const certificatesComponent = {
 
     $onInit() {
       this.items = this.certificatesData.certificates;
-      // this.userCertificateIds = this.userCertificatesData.certificates
-      //   .map(certificate => certificate._id);
+      this.haveOwnCertificates = this.certificatesData.haveCertificates;
 
       this.pagerProps = {
         number: this.certificatesData.number,
@@ -34,10 +30,15 @@ export const certificatesComponent = {
       };
     }
 
-    $onChanges(changes) {
-      if (changes.user) {
-        this.user = angular.copy(this.user);
-      }
+    onPageChange(event) {
+      this.pagerProps.currentPage = event.page;
+      this.filterCertificates();
+    }
+
+    onInputChange() {
+      this.filter.input = this.search;
+      this.pagerProps.currentPage = this.appConst.START_PAGE;
+      this.filterCertificates();
     }
 
     addQueryTag(event) {
@@ -49,30 +50,29 @@ export const certificatesComponent = {
     }
 
     removeQueryTag(tag) {
-      let index = this.filter.tags.indexOf(tag);
+      const index = this.filter.tags.indexOf(tag);
       if (index > -1) {
         this.filter.tags.splice(index, 1);
         this.pagerProps.currentPage = this.appConst.START_PAGE;
         this.filterCertificates();
       }
     }
-    
-    onInputChange() {
-      this.filter.input = this.search;
-      this.pagerProps.currentPage = this.appConst.START_PAGE;
+
+    showAllCertificates() {
+      this.filter.my = false;
       this.filterCertificates();
     }
 
-    onPageChange(event) {
-      this.pagerProps.currentPage = event.page;
+    showMyCertificates() {
+      this.filter.my = true;
       this.filterCertificates();
     }
 
     async filterCertificates() {
       this.certificatesData = await this.certificateService.filterCertificates(
-          this.pagerProps.pageSize,
-          this.pagerProps.currentPage,
-          this.filter);
+        this.pagerProps.pageSize,
+        this.pagerProps.currentPage,
+        this.filter);
 
       this.items = this.certificatesData.certificates;
       this.pagerProps.number = this.certificatesData.number;
@@ -84,28 +84,12 @@ export const certificatesComponent = {
       };
     }
 
-    showMyCertificates() {
-      this.showMy = true;
-    }
-
-    showAllCertificates() {
-    //   this.showMy = false;
-    //   this.filterCertificates(this.search, this.queryTags);
-    }
-
-    onDeleteCertificate() {
-      // this.$state.reload();
-    }
-
-    onCellCertificate() {
-      // if(this.showMy) {
-      //   this.filterCertificates(this.search, this.queryTags);
-      // }
-    }
-
-    isBoughtCertificate(certificate) {
-      // return this.userCertificateIds.includes(certificate._id);
-      return false;
+    onCertificateProductChange(event) {
+      this.haveOwnCertificates = event.haveOwnCertificates;
+      if(!this.haveOwnCertificates && this.filter.my) {
+        this.filter.my = false;
+        this.filterCertificates();
+      }
     }
   }
 };

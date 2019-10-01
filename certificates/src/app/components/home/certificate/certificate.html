@@ -13,21 +13,21 @@
     </p>
 
     <div class="d-flex bd-highlight mb-3">
-      <a href="#" ng-click="$ctrl.edit()"
-         class="btn btn-primary btn-sm mr-1 p-2 bd-highlight"
-         ng-if="$ctrl.user && $ctrl.user.role === 'ADMIN'">{{'BUTTON_EDIT' | translate}}</a>
+      <div ng-if="$ctrl.user && $ctrl.user.role === 'ADMIN'">
+        <a href="#" ng-click="$ctrl.delete()"
+           class="btn btn-dark btn-sm ml-auto p-2 bd-highlight">{{'BUTTON_DELETE' | translate}}</a>
+
+        <a href="#" ng-click="$ctrl.edit()"
+           class="btn btn-primary btn-sm mr-1 p-2 bd-highlight">{{'BUTTON_EDIT' | translate}}</a>
+      </div>
 
       <a href="#" ng-click="$ctrl.buy()"
          class="btn btn-primary btn-sm mr-1 p-2 bd-highlight"
-         ng-if="$ctrl.user && !$ctrl.isBoughtCertificate">{{'BUTTON_BUY' | translate}}</a>
+         ng-if="$ctrl.user && !$ctrl.certificate.isOwned">{{'BUTTON_BUY' | translate}}</a>
 
       <a href="#" ng-click="$ctrl.cell()"
          class="btn btn-danger btn-sm p-2 bd-highlight"
-         ng-if="$ctrl.user && $ctrl.isBoughtCertificate">{{'BUTTON_CELL' | translate}}</a>
-
-      <a href="#" ng-click="$ctrl.delete()"
-         class="btn btn-dark btn-sm ml-auto p-2 bd-highlight"
-         ng-if="$ctrl.user && $ctrl.user.role === 'ADMIN'">{{'BUTTON_DELETE' | translate}}</a>
+         ng-if="$ctrl.user && $ctrl.certificate.isOwned">{{'BUTTON_CELL' | translate}}</a>
     </div>
   </div>
 </div>

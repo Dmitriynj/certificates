@@ -29,6 +29,7 @@
   "CELL_CONFIRM_MESSAGE": "Are you really want to cell certificate?",
   "DELETE_CONFIRM_MESSAGE": "Are you really want to delete certificate?",
   "LEAVE_CONFIRM_MESSAGE": "Are you really want to leave?",
+  "EMPTY_QUERY_MESSAGE": "None certificates were found by your query!",
 
   "EDIT_CERTIFICATE": "Edit certificate",
   "ADD_CERTIFICATE": "Add certificate",

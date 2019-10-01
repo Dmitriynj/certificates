@@ -1,10 +1,8 @@
 export const certificateComponent = {
   bindings: {
-    isBoughtCertificate: '<',
     certificate: '<',
     onAddTag: '&',
-    onCellCertificate: '&',
-    onDelete: '&',
+    onCertificateProductChange: '&',
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
@@ -39,49 +37,40 @@ export const certificateComponent = {
     }
 
     edit() {
-      this.$state.go(
-        this.stateConst.CERTIFICATE_EDIT.name,
-        {certificateId: this.certificate._id});
+      this.$state.go(this.stateConst.CERTIFICATE_EDIT.name, {certificateId: this.certificate._id});
     }
 
     buy() {
       this.$uibModal.open({
         component: this.componentConst.CONFIRM_MODAL,
-        resolve: {
-          bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE'
-        },
+        resolve: { bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE' },
       }).result.then(async result => {
-
-        const response = await this.certificateService.buyCertificate(this.certificate);
-        this.isBoughtCertificate = true;
-
-      }, reason => {});
+        const response = await this.certificateService.buyCertificate(this.certificate._id);
+        this.certificate.isOwned = true;
+        this.onCertificateProductChange({ $event: { haveOwnCertificates : response.haveCertificates} });
+      });
     }
 
     cell() {
       this.$uibModal.open({
         component: this.componentConst.CONFIRM_MODAL,
-        resolve: {
-          bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE'
-        }
-      }).result.then(result => {
-
-
-
-      }, reason => {});
+        resolve: { bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE' }
+      }).result.then(async result => {
+        const response = await this.certificateService.cellCertificate(this.certificate._id);
+        this.certificate.isOwned = false;
+        this.onCertificateProductChange({ $event: { haveOwnCertificates: response.haveCertificates } });
+      });
     }
 
     delete() {
       this.$uibModal.open({
         component: this.componentConst.CONFIRM_MODAL,
-        resolve: {
-          bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE'
-        }
+        resolve: { bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE' }
       }).result.then(result => {
-        this.certificateService.delete(this.certificate.id).then(() => {
-          this.onDelete();
-        });
-      }, reason => {});
+        // this.certificateService.delete(this.certificate.id).then(() => {
+        //   this.onDelete();
+        // });
+      });
     }
   }
 };

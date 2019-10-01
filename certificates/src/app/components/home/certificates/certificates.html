@@ -4,7 +4,7 @@
 <div class="row justify-content-center align-items-center">
 
   <div class="btn-group btn-group-toggle" data-toggle="buttons"
-       ng-show="$ctrl.userCertificateIds && $ctrl.userCertificateIds.length > 0">
+       ng-show="$ctrl.haveOwnCertificates">
     <label class="btn btn-outline-primary" ng-click="$ctrl.showAllCertificates()">
       <input type="radio" name="options" id="option1" autocomplete="off" checked>
       {{'BUTTON_ALL_CERTIFICATES' | translate}}
@@ -39,22 +39,21 @@
   </div>
 </div>
 
-<div class="row justify-content-center align-items-center mt-5" ng-show="$ctrl.emptyMessage">
+<div class="row justify-content-center align-items-center mt-5" ng-show="!$ctrl.items || $ctrl.items.length === 0">
   <div class="col">
     <div class="alert alert-warning w-75 mx-auto" role="alert">
-      None certificates were found by your query!
+      {{'EMPTY_QUERY_MESSAGE' | translate}}
     </div>
   </div>
 </div>
 
 <div class="card-deck mt-3" ui-sortable ng-model="$ctrl.items">
-  <certificate is-bought-certificate="$ctrl.isBoughtCertificate(certificate);"
+  <certificate certificate="certificate"
                on-add-tag="$ctrl.addQueryTag($event);"
-               on-cell-certificate="$ctrl.onCellCertificate();"
-               on-delete="$ctrl.onDeleteCertificate();"
+               on-buy-certificate="$ctrl.onCertificateProductChange($event);"
+               on-certificate-product-change="$ctrl.onCertificateProductChange($event);"
                class="m-3"
                style="cursor: move;"
-               certificate="certificate"
                ng-repeat="certificate in $ctrl.items">
   </certificate>
 </div>

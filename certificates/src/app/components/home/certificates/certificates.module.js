@@ -30,20 +30,17 @@ function config($stateProvider, stateConst, componentConst, appConst) {
         requiredAuth: true,
       },
       resolve: {
-        // certificatesData: certificatesData,
-        // userCertificatesData: userCertificatesData
+        certificatesData: certificatesData,
       }
     });
 
   certificatesData.$inject = ['CertificateService'];
   async function certificatesData(CertificateService) {
-    return await CertificateService.filterCertificates(appConst.CERTIFICATES_PAGE_SIZE, appConst.START_PAGE, {});
+    return await CertificateService.filterCertificates(
+      appConst.CERTIFICATES_PAGE_SIZE,
+      appConst.START_PAGE,
+      {});
   }
-
-  // userCertificatesData.$inject = ['CertificateService'];
-  // async function userCertificatesData(CertificateService) {
-  //   return await CertificateService.filterUserCertificates(appConst.CERTIFICATES_PAGE_SIZE, appConst.START_PAGE, {});
-  // }
 }
 
 run.$inject = ['uiSortableConfig'];

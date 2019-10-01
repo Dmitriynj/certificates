@@ -49,15 +49,47 @@ router.patch('/:id', (request, response) => {
 
 router.post('/buy/:id', async (request, response) => {
     const certificate = await Certificate.findById(request.params.id);
-    const user = await User.findById(request.userId);
 
-    console.log(user);
+    if (certificate.owners.includes(request.userId)) {
+        handleError('You already have this certificate!', response);
+    } else {
 
-    certificate.owners.push(user);
+        certificate.owners.push(request.userId);
+        await certificate.save()
+            .catch(error => handleError(error, response));
 
-    certificate.save()
-        .then(result => response.status(HttpStatus.OK).json(result))
-        .catch(error => handleError(error, response));
+        Certificate
+            .findOne({owners: {$in: request.userId}})
+            .select('-title -description -date -cost -tags -owners')
+            .exec()
+            .then(result => response.status(HttpStatus.OK).json({
+                haveCertificates: !!result
+            }))
+            .catch(error => handleError(error, response));
+    }
+});
+
+router.delete('/cell/:id', async (request, response) => {
+    const certificate = await Certificate.findById(request.params.id);
+
+    if (!certificate.owners.includes(request.userId)) {
+        handleError('Nothing to cell!', response);
+    } else {
+
+        const index = certificate.owners.indexOf(request.userId);
+        certificate.owners.splice(index, 1);
+        await certificate.save()
+            .catch(error => handleError(error, response));
+
+        Certificate
+            .findOne({owners: {$in: request.userId}})
+            .select('-title -description -date -cost -tags -owners')
+            .exec()
+            .then(result => response.status(HttpStatus.OK).json({
+                haveCertificates: !!result
+            }))
+            .catch(error => handleError(error, response));
+    }
 });
 
 router.post('/filter/:limit/:page', async (request, response) => {
@@ -69,12 +101,18 @@ router.post('/filter/:limit/:page', async (request, response) => {
         .exec()
         .catch(error => handleError(error, response));
 
+    const anyUserCertificate = await Certificate
+        .findOne({owners: {$in: request.userId}})
+        .select('-title -description -date -cost -tags -owners')
+        .exec()
+        .catch(error => handleError(error, response));
+
     const offset = (page - 1) * limit;
     const aggregateQuery = [
-        {$match: filter,},
+        {$match: filter},
         {$sort: {date: -1}},
-        {$limit: limit},
         {$skip: offset},
+        {$limit: limit},
         {
             $addFields: {
                 isOwned: {
@@ -97,17 +135,15 @@ router.post('/filter/:limit/:page', async (request, response) => {
             }
         }
     ];
-    const certificates = await Certificate
+    Certificate
         .aggregate(aggregateQuery)
         .exec()
+        .then(certificates => response.status(HttpStatus.OK).send({
+            haveCertificates: !!anyUserCertificate,
+            number,
+            certificates
+        }))
         .catch(error => handleError(error, response));
-
-    console.log(certificates);
-    response.status(HttpStatus.OK).send({
-        number,
-        certificates
-    });
-
 });
 
 module.exports = router;

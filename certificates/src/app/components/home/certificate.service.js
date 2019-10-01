@@ -57,9 +57,9 @@ export class CertificateService {
     });
   }
 
-  buyCertificate(certificate) {
+  buyCertificate(certificateId) {
     return new Promise((resolve, reject) => {
-      this.$http.post(this.appConst.API + 'usercertificate', certificate)
+      this.$http.post(this.appConst.API + 'certificate/buy/' + certificateId)
         .then(result => {
           resolve(result.data);
         }, error => {
@@ -69,9 +69,9 @@ export class CertificateService {
     });
   }
 
-  cellCertificate(certificate) {
+  cellCertificate(certificateId) {
     return new Promise((resolve, reject) => {
-      this.$http.delete(this.appConst.API + 'usercertificate', certificate)
+      this.$http.delete(this.appConst.API + 'certificate/cell/' + certificateId)
         .then(result => {
           resolve(result.data);
         }, error => {
