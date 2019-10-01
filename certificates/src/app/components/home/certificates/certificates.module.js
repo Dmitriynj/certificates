@@ -30,7 +30,7 @@ function config($stateProvider, stateConst, componentConst, appConst) {
         requiredAuth: true,
       },
       resolve: {
-        certificatesData: certificatesData,
+        // certificatesData: certificatesData,
         // userCertificatesData: userCertificatesData
       }
     });

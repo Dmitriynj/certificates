@@ -35,7 +35,7 @@ app.use((error, request, response, next) => {
 });
 
 mongoose.set('useFindAndModify', false);
-mongoose.connect(db.url, {useUnifiedTopology: true, useNewUrlParser: true}, (error, client) => {
+mongoose.connect(db.url, {useUnifiedTopology: true, useCreateIndex: true, useNewUrlParser: true}, (error, client) => {
     if (!error) {
         console.log('we are connected to mango');
     }

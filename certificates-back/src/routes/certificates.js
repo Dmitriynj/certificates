@@ -13,11 +13,7 @@ router.use(checkAuthenticated);
 router.post('/', (request, response) => {
     const certificate = new Certificate({
         _id: new mongoose.Types.ObjectId(),
-        title: request.body.title,
-        description: request.body.description,
-        date: request.body.date,
-        cost: request.body.cost,
-        tags: request.body.tags,
+        ...request.body,
         owners: []
     });
     certificate.save()
@@ -51,15 +47,17 @@ router.patch('/:id', (request, response) => {
     }).catch(error => handleError(error, response));
 });
 
-router.patch('/buy/:id', async (request, response) => {
+router.post('/buy/:id', async (request, response) => {
     const certificate = await Certificate.findById(request.params.id);
     const user = await User.findById(request.userId);
 
+    console.log(user);
+
     certificate.owners.push(user);
 
-    Certificate.findOneAndUpdate({_id: request.params.id}, request.body, {new: true}, (result) => {
-        response.status(HttpStatus.OK).json(result);
-    }).catch(error => handleError(error, response));
+    certificate.save()
+        .then(result => response.status(HttpStatus.OK).json(result))
+        .catch(error => handleError(error, response));
 });
 
 router.post('/filter/:limit/:page', async (request, response) => {
@@ -72,11 +70,35 @@ router.post('/filter/:limit/:page', async (request, response) => {
         .catch(error => handleError(error, response));
 
     const offset = (page - 1) * limit;
-    const certificates = await Certificate.find(filter)
-        .select('-owners')
-        .skip(offset)
-        .limit(limit)
-        .sort({ date: -1 })
+    const aggregateQuery = [
+        {$match: filter,},
+        {$sort: {date: -1}},
+        {$limit: limit},
+        {$skip: offset},
+        {
+            $addFields: {
+                isOwned: {
+                    $in: [
+                        mongoose.Types.ObjectId(request.userId),
+                        {$ifNull: ['$owners', []]}
+                    ]
+                }
+            }
+        },
+        {
+            $project: {
+                owners: '$$REMOVE',
+                title: true,
+                description: true,
+                date: true,
+                cost: true,
+                tags: true,
+                isOwned: true
+            }
+        }
+    ];
+    const certificates = await Certificate
+        .aggregate(aggregateQuery)
         .exec()
         .catch(error => handleError(error, response));
 
@@ -85,6 +107,7 @@ router.post('/filter/:limit/:page', async (request, response) => {
         number,
         certificates
     });
+
 });
 
 module.exports = router;

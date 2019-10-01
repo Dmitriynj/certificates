@@ -67,10 +67,10 @@ export const certificateTagComponent = {
       });
     }
 
-    addTag(index) {
+    addTag(tag) {
       this.onAddTag({
         $event: {
-          tag: this.tags[index],
+          tag,
         }
       });
     }

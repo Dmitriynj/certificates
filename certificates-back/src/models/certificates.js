@@ -6,7 +6,7 @@ const certificateSchema = mongoose.Schema({
     date: {type: Date, required: true},
     description: {type: String, required: true},
     cost: {type: Number, required: true},
-    tags: [String],
+    tags: [{ type: String,  unique: true }],
     owners: [
         {
             type: mongoose.Schema.Types.ObjectId,

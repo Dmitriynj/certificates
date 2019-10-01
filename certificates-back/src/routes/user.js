@@ -10,7 +10,7 @@ router.use(checkAuthenticated);
 
 router.post('/getcurrent', async (request, response) => {
     User.findOne({_id: request.userId}, (error, existingUser) => {
-        if(error) {
+        if (error) {
             return response.status(HttpStatus.NOT_FOUND).send({
                 message: 'User was not found'
             });
@@ -18,17 +18,6 @@ router.post('/getcurrent', async (request, response) => {
         existingUser.password = undefined;
         response.send(existingUser);
     });
-});
-
-router.post('/buyCertificate/:certificateId', async (request, response) => {
-    const certificate = await Certificate.findById(request.params.certificateId);
-    const user = await User.findById(request.userId);
-
-    certificate.owners.push(user);
-
-    certificate.save()
-        .then(response.status(HttpStatus.OK).send())
-        .catch(error => handleError(error, response));
 });
 
 module.exports = router;
