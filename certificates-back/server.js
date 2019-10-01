@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const certificateRoute = require('./src/routes/certificates');
 const authRoute = require('./src/routes/authentication');
-const userCertificateRoute = require('./src/routes/user-certificates');
 const userRoute = require('./src/routes/user');
 const db = require('./src/config/db');
 const morgan = require('morgan');
@@ -20,7 +19,6 @@ app.use(cors());
 
 app.use('/auth', authRoute);
 app.use('/certificate', certificateRoute);
-app.use('/usercertificate', userCertificateRoute);
 app.use('/user', userRoute);
 
 app.use((request, response, next) => {

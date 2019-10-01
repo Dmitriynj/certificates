@@ -20,7 +20,7 @@ export const paginationComponent = {
     }
 
     setPager() {
-      this.pager = pager(this.pagerProps.number, this.pagerProps.currentPage, this.pagerProps.pageSize);
+      this.pager = pager(this.pagerProps);
     }
 
     setPage(page) {

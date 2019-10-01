@@ -1,4 +1,8 @@
-export function pager(totalItems, currentPage, pageSize) {
+export function pager(pagerProps) {
+
+  let totalItems = pagerProps.number;
+  let currentPage = pagerProps.currentPage;
+  let pageSize = pagerProps.pageSize;
 
   // calculate total pages
   let totalPages = Math.ceil(totalItems / pageSize);

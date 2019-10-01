@@ -7,6 +7,7 @@ const jwt = require('jwt-simple');
 const moment = require('moment');
 const secret = require('../config/token').secret;
 const HttpStatus = require('http-status-codes');
+const handleError = require('../util/handle-error');
 const saltRounds = 12;
 
 function createToken(user) {
@@ -32,14 +33,8 @@ router.post('/register', (request, response) => {
         user.role = 'USER';
         bCrypt.hash(user.password, saltRounds, function (error, hash) {
             user.password = hash;
-            user.save((error, result) => {
-                if (error) {
-                    response.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-                        message: error.message
-                    });
-                }
-                response.status(HttpStatus.OK).send();
-            });
+            user.save(result => response.status(HttpStatus.OK).send())
+                .catch(error => handleError(error, response));
         });
     });
 });

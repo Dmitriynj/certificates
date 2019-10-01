@@ -45,9 +45,9 @@ export class CertificateService {
     });
   }
 
-  filterUserCertificates(limit, filter) {
+  filterUserCertificates(limit, page, filter) {
     return new Promise((resolve, reject) => {
-      this.$http.post(this.appConst.API + 'usercertificate/filter/' + limit, {filter})
+      this.$http.post(this.appConst.API + 'usercertificate/filter/' + limit + '/' + page, {filter})
         .then(result => {
           resolve(result.data);
         }, error => {
@@ -59,7 +59,7 @@ export class CertificateService {
 
   buyCertificate(certificate) {
     return new Promise((resolve, reject) => {
-      this.$http.put(this.appConst.API + 'usercertificate/add', certificate)
+      this.$http.post(this.appConst.API + 'usercertificate', certificate)
         .then(result => {
           resolve(result.data);
         }, error => {
@@ -71,7 +71,7 @@ export class CertificateService {
 
   cellCertificate(certificate) {
     return new Promise((resolve, reject) => {
-      this.$http.delete(this.appConst.API + 'usercertificate/delete', certificate)
+      this.$http.delete(this.appConst.API + 'usercertificate', certificate)
         .then(result => {
           resolve(result.data);
         }, error => {

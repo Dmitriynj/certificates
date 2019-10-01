@@ -31,19 +31,19 @@ function config($stateProvider, stateConst, componentConst, appConst) {
       },
       resolve: {
         certificatesData: certificatesData,
-        userCertificatesData: userCertificatesData
+        // userCertificatesData: userCertificatesData
       }
     });
 
   certificatesData.$inject = ['CertificateService'];
   async function certificatesData(CertificateService) {
-    return await CertificateService.filterCertificates(appConst.CERTIFICATES_PAGE_SIZE, {});
+    return await CertificateService.filterCertificates(appConst.CERTIFICATES_PAGE_SIZE, appConst.START_PAGE, {});
   }
 
-  userCertificatesData.$inject = ['CertificateService'];
-  async function userCertificatesData(CertificateService) {
-    return await CertificateService.filterUserCertificates(appConst.CERTIFICATES_PAGE_SIZE, {});
-  }
+  // userCertificatesData.$inject = ['CertificateService'];
+  // async function userCertificatesData(CertificateService) {
+  //   return await CertificateService.filterUserCertificates(appConst.CERTIFICATES_PAGE_SIZE, appConst.START_PAGE, {});
+  // }
 }
 
 run.$inject = ['uiSortableConfig'];

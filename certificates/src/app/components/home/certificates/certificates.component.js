@@ -20,17 +20,18 @@ export const certificatesComponent = {
 
     $onInit() {
       this.items = this.certificatesData.certificates;
-      this.userCertificateIds = this.userCertificatesData.certificates
-        .map(certificate => certificate._id);
+      // this.userCertificateIds = this.userCertificatesData.certificates
+      //   .map(certificate => certificate._id);
 
       this.pagerProps = {
         number: this.certificatesData.number,
         pageSize: this.appConst.CERTIFICATES_PAGE_SIZE,
-        currentPage: 1,
+        currentPage: this.appConst.START_PAGE,
       };
 
-      this.filter = { tags: [] };
-      this.showMy = false;
+      this.filter = {
+        tags: []
+      };
     }
 
     $onChanges(changes) {
@@ -42,7 +43,7 @@ export const certificatesComponent = {
     addQueryTag(event) {
       if (!this.filter.tags.includes(event.tag)) {
         this.filter.tags.push(event.tag);
-        this.pagerProps.currentPage = 1;
+        this.pagerProps.currentPage = this.appConst.START_PAGE;
         this.filterCertificates();
       }
     }
@@ -51,14 +52,14 @@ export const certificatesComponent = {
       let index = this.filter.tags.indexOf(tag);
       if (index > -1) {
         this.filter.tags.splice(index, 1);
-        this.pagerProps.currentPage = 1;
+        this.pagerProps.currentPage = this.appConst.START_PAGE;
         this.filterCertificates();
       }
     }
     
     onInputChange() {
       this.filter.input = this.search;
-      this.pagerProps.currentPage = 1;
+      this.pagerProps.currentPage = this.appConst.START_PAGE;
       this.filterCertificates();
     }
 
@@ -103,7 +104,8 @@ export const certificatesComponent = {
     }
 
     isBoughtCertificate(certificate) {
-      return this.userCertificateIds.includes(certificate._id);
+      // return this.userCertificateIds.includes(certificate._id);
+      return false;
     }
   }
 };

@@ -11,5 +11,11 @@ const userSchema = mongoose.Schema({
     },
 });
 
+userSchema.virtual('certificates', {
+    ref: 'certificate',
+    localField: '_id',
+    foreignField: 'owners'
+});
+
 module.exports = mongoose.model('user', userSchema);
 
