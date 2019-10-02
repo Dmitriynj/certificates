@@ -1,19 +1,18 @@
 export const loginComponent = {
   template: require('./login.html'),
   controller: class LoginComponent {
-    static $inject = ['AuthService', '$state', '$rootScope', 'stateConst'];
+    static $inject = ['AuthService', '$state', 'stateConst'];
 
-    constructor(AuthService, $state, $rootScope, stateConst) {
+    constructor(AuthService, $state, stateConst) {
 
       this.authService = AuthService;
       this.$state = $state;
-      this.$rootScope = $rootScope;
       this.stateConst = stateConst;
     }
 
     login(event) {
         this.authService
-          .newLogin(event.user)
+          .login(event.user)
           .then( () => {
             this.$state.go(this.stateConst.CERTIFICATES.name);
           }, reason => {

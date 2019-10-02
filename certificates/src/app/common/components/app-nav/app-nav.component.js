@@ -5,19 +5,19 @@ export const navComponent = {
   },
   template: require('./app-nav.html'),
   controller: class AppNavComponent {
-    static $inject = ['AuthService', '$state', '$uibModal', '$rootScope', 'stateConst', 'componentConst'];
+    static $inject = ['$state', '$uibModal', 'AuthService', 'stateConst', 'componentConst'];
 
-    constructor(AuthService, $state, $uibModal, $rootScope, stateConst, componentConst) {
+    constructor($state, $uibModal, AuthService, stateConst, componentConst) {
 
-      this.authService = AuthService;
       this.$state = $state;
       this.$uibModal = $uibModal;
-      this.$rootScope = $rootScope;
+      this.authService = AuthService;
       this.stateConst = stateConst;
       this.componentConst = componentConst;
     }
 
     $onInit() {
+      this.user = this.authService.getUser();
     }
 
     logout() {
@@ -27,9 +27,9 @@ export const navComponent = {
           bodyMessageKey: () => 'LEAVE_CONFIRM_MESSAGE'
         }
       }).result.then(result => {
-        this.authService.newLogout();
-        this.$state.go(this.stateConst.AUTH_LOGIN.name);
-      });
+        this.authService.logout()
+          .then(this.$state.go(this.stateConst.AUTH_LOGIN.name));
+      }, error => {});
     }
 
     goToAddCertificate() {

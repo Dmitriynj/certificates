@@ -31,7 +31,7 @@ export const registerComponent = {
 
     createUser() {
       return this.authService
-        .newRegister({
+        .register({
           email: this.emailFieldModel.fieldValue,
           password: this.cPasswordFieldModel.fieldValue
         })

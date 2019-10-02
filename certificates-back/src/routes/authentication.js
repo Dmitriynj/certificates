@@ -8,11 +8,13 @@ const moment = require('moment');
 const secret = require('../config/token').secret;
 const HttpStatus = require('http-status-codes');
 const handleError = require('../util/handle-error');
+const checkAuthenticated = require('../middleware/check-athenticated');
 const saltRounds = 12;
 
 function createToken(user) {
     let payload = {
         sub: user._id,
+        userRole: user.role,
         iat: moment().unix(),
         exp: moment().add(14, 'days').unix()
     };
@@ -21,7 +23,7 @@ function createToken(user) {
 }
 
 router.post('/register', (request, response) => {
-   User.findOne({email: request.body.email}, (error, existingUser) => {
+    User.findOne({email: request.body.email}, (error, existingUser) => {
         if (existingUser) {
             return response.status(HttpStatus.CONFLICT).send({
                 message: 'Email is already registered!'
@@ -49,7 +51,7 @@ router.post('/login', (request, response) => {
             });
         }
         let match = await bCrypt.compare(request.body.password, user.password);
-        if(match) {
+        if (match) {
             let {password, ...userWithoutPass} = user._doc;
             return response.send({
                 user: userWithoutPass,
@@ -61,6 +63,15 @@ router.post('/login', (request, response) => {
             });
         }
     });
+});
+
+router.post('/requireAuthentication', checkAuthenticated, (request, response) => {
+    User.findById(request.userId)
+        .then((user) => {
+            user.password = undefined;
+            response.status(HttpStatus.OK).json(user);
+        })
+        .catch(error => handleError(error, response));
 });
 
 module.exports = router;

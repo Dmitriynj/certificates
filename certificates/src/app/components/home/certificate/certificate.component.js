@@ -6,20 +6,26 @@ export const certificateComponent = {
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
-    static $inject = ['$state', '$uibModal', '$rootScope', 'CertificateService', 'stateConst', 'componentConst'];
+    static $inject = ['$state', '$uibModal', 'AuthService', 'CertificateService', 'stateConst', 'componentConst'];
 
-    constructor($state, $uibModal, $rootScope, CertificateService, stateConst, componentConst) {
+    constructor($state, $uibModal, AuthService, CertificateService, stateConst, componentConst) {
 
       this.$state = $state;
       this.$uibModal = $uibModal;
-      this.$rootScope = $rootScope;
+      this.authService = AuthService;
       this.certificateService = CertificateService;
       this.stateConst = stateConst;
       this.componentConst = componentConst;
     }
 
     $onInit() {
-      this.user = this.$rootScope.user;
+      this.user = this.authService.getUser();
+    }
+
+    $onChanges(changes) {
+      if (changes.certificate) {
+        this.certificate = angular.copy(this.certificate);
+      }
     }
 
     addTag(event) {
@@ -43,33 +49,41 @@ export const certificateComponent = {
     buy() {
       this.$uibModal.open({
         component: this.componentConst.CONFIRM_MODAL,
-        resolve: { bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE' },
+        resolve: {bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE'},
       }).result.then(async result => {
         const response = await this.certificateService.buyCertificate(this.certificate._id);
         this.certificate.isOwned = true;
-        this.onCertificateProductChange({ $event: { haveOwnCertificates : response.haveCertificates} });
+        this.onCertificateProductChange({
+          $event: {haveOwnCertificates: response.haveCertificates}
+        });
+      }, error => {
       });
     }
 
     cell() {
       this.$uibModal.open({
         component: this.componentConst.CONFIRM_MODAL,
-        resolve: { bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE' }
+        resolve: {bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE'}
       }).result.then(async result => {
         const response = await this.certificateService.cellCertificate(this.certificate._id);
         this.certificate.isOwned = false;
-        this.onCertificateProductChange({ $event: { haveOwnCertificates: response.haveCertificates } });
+        this.onCertificateProductChange(
+          {
+            $event: {haveOwnCertificates: response.haveCertificates}
+          });
+      }, error => {
       });
     }
 
     delete() {
       this.$uibModal.open({
         component: this.componentConst.CONFIRM_MODAL,
-        resolve: { bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE' }
+        resolve: {bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE'}
       }).result.then(result => {
         // this.certificateService.delete(this.certificate.id).then(() => {
         //   this.onDelete();
         // });
+      }, error => {
       });
     }
   }

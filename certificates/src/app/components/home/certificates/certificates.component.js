@@ -84,9 +84,15 @@ export const certificatesComponent = {
       };
     }
 
-    onCertificateProductChange(event) {
+    onCertificateProductChange(event, certificate) {
       this.haveOwnCertificates = event.haveOwnCertificates;
-      if(!this.haveOwnCertificates && this.filter.my) {
+      if (this.filter.my) {
+        const index = this.items.indexOf(certificate);
+        if (index > -1) {
+          this.items.splice(index, 1);
+        }
+      }
+      if (!this.haveOwnCertificates && this.filter.my) {
         this.filter.my = false;
         this.filterCertificates();
       }

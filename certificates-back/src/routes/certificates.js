@@ -2,11 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const Certificate = require('../models/certificates');
-const User = require('../models/user');
 const HttpStatus = require('http-status-codes');
 const handleError = require('../util/handle-error');
 const checkAuthenticated = require('../middleware/check-athenticated');
 const buildFilter = require('../util/filter-builder');
+const permit = require('../middleware/permission');
 
 router.use(checkAuthenticated);
 
@@ -69,7 +69,7 @@ router.post('/buy/:id', async (request, response) => {
     }
 });
 
-router.delete('/cell/:id', async (request, response) => {
+router.delete('/cell/:id', permit("ADMIN"), async (request, response) => {
     const certificate = await Certificate.findById(request.params.id);
 
     if (!certificate.owners.includes(request.userId)) {
@@ -131,7 +131,7 @@ router.post('/filter/:limit/:page', async (request, response) => {
                 date: true,
                 cost: true,
                 tags: true,
-                isOwned: true
+                isOwned: true,
             }
         }
     ];

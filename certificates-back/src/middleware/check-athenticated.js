@@ -1,10 +1,13 @@
 const jwt = require('jwt-simple');
 const moment = require('moment');
 const secret = require('../config/token').secret;
+const HttpStatus = require('http-status-codes');
 
 module.exports = (request, response, next) => {
     if(!request.header('Authorization')) {
-        return response.status(401).send({
+        console.log('Please make sure that your request ' +
+            'has an Authorization header');
+        return response.status(HttpStatus.UNAUTHORIZED).send({
             message: 'Please make sure that your request ' +
                 'has an Authorization header',
         });
@@ -13,10 +16,13 @@ module.exports = (request, response, next) => {
     let token = request.header('Authorization').split(' ')[1];
     let payload = jwt.decode(token, secret);
     if(payload.exp <= moment.unix()) {
-        return response.status(401).send({
+        console.log('Token has expired');
+        return response.status(HttpStatus.UNAUTHORIZED).send({
             message: 'Token has expired'
         });
     }
     request.userId = payload.sub;
+    request.userRole = payload.userRole;
+
     next();
 };
