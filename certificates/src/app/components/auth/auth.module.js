@@ -25,32 +25,24 @@ function config($authProvider, appConst) {
   $authProvider.loginUrl = appConst.API + 'auth/login';
 }
 
-run.$inject = ['$transitions', '$state', '$http', '$auth', 'AuthService', 'stateConst'];
+run.$inject = ['$transitions', '$state', '$http', '$timeout', '$auth', 'AuthService', 'stateConst'];
 
-function run($transitions, $state, $http, $auth, AuthService, stateConst) {
+function run($transitions, $state, $http, $timeout, $auth, AuthService, stateConst) {
 
   $http.defaults.headers.common['Authorization'] = 'Bearer ' + $auth.getToken();
 
   $transitions.onStart({
-    to: () => 'auth.*',
-  }, () => {
-    if ($auth.isAuthenticated()) {
-      $state.go(stateConst.CERTIFICATES.name);
-    }
-  });
-
-  $transitions.onStart({
     to: (state) => !!(state.data && state.data.requiredAuth),
-  }, (transition) => {
+  }, () => {
     return AuthService.requireAuthentication()
       .catch(() => $state.target(stateConst.AUTH_LOGIN.name));
   });
 
   $transitions.onStart({
-    to: (state) => !!(state.data && state.data.requirePermission),
-  }, (transition) => {
-    if (!$auth.isAuthenticated()) {
-      $state.got(transition.from().name);
+    to: stateConst.AUTH.name + '.*',
+  },  () => {
+    if ($auth.isAuthenticated()) {
+      return $state.target(stateConst.CERTIFICATES.name);
     }
   });
 }

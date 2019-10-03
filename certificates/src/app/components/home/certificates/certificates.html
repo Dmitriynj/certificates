@@ -1,5 +1,6 @@
 <div class="row mb-3">
   <h2 class="mx-auto">{{'CERTIFICATES' | translate}}</h2>
+  <span>{{$ctrl.items[1].index}}</span>
 </div>
 <div class="row justify-content-center align-items-center">
 
@@ -47,7 +48,7 @@
   </div>
 </div>
 
-<div class="card-deck mt-3" ui-sortable ng-model="$ctrl.items">
+<div class="card-deck mt-3" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.items">
   <certificate certificate="certificate"
                on-add-tag="$ctrl.addQueryTag($event);"
                on-buy-certificate="$ctrl.onCertificateProductChange($event);"

@@ -16,7 +16,8 @@ export const certificatesComponent = {
     }
 
     $onInit() {
-      this.items = this.certificatesData.certificates;
+      this.orderIndexes = this.certificatesData.orderIndexes;
+      this.items = this.certificatesData.orderIndexes.map(item => item.certificate);
       this.haveOwnCertificates = this.certificatesData.haveCertificates;
 
       this.pagerProps = {
@@ -27,6 +28,12 @@ export const certificatesComponent = {
 
       this.filter = {
         tags: []
+      };
+
+      this.sortableOptions = {
+        stop: (event, ui) => {
+          this.onStopSortable(event, ui);
+        },
       };
     }
 
@@ -60,11 +67,13 @@ export const certificatesComponent = {
 
     showAllCertificates() {
       this.filter.my = false;
+      this.pagerProps.currentPage = this.appConst.START_PAGE;
       this.filterCertificates();
     }
 
     showMyCertificates() {
       this.filter.my = true;
+      this.pagerProps.currentPage = this.appConst.START_PAGE;
       this.filterCertificates();
     }
 
@@ -74,7 +83,8 @@ export const certificatesComponent = {
         this.pagerProps.currentPage,
         this.filter);
 
-      this.items = this.certificatesData.certificates;
+      this.orderIndexes = this.certificatesData.orderIndexes;
+      this.items = this.certificatesData.orderIndexes.map(item => item.certificate);
       this.pagerProps.number = this.certificatesData.number;
 
       this.pagerProps = {
@@ -96,6 +106,23 @@ export const certificatesComponent = {
         this.filter.my = false;
         this.filterCertificates();
       }
+    }
+
+    onStopSortable(event, ui) {
+      const orderIndexesToUpdate = [];
+      for(let i=0; i<this.orderIndexes.length; i++) {
+        if(this.orderIndexes[i].certificate._id !== this.items[i]._id) {
+          orderIndexesToUpdate.push({
+            _id: this.orderIndexes[i]._id,
+            certificateId: this.items[i]._id
+          });
+        }
+      }
+
+      this.certificateService.updateOrder(
+        this.pagerProps.pageSize,
+        this.pagerProps.page,
+        orderIndexesToUpdate);
     }
   }
 };

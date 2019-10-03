@@ -8,10 +8,9 @@ export class CertificateService {
     this.appConst = appConst;
   }
 
-
   filterCertificates(limit, page, filter) {
     return new Promise((resolve, reject) => {
-      this.$http.post(this.appConst.API + 'certificate/filter/' + limit + '/' + page, {filter})
+      this.$http.post(this.appConst.API + 'certificate/ordered/' + limit + '/' + page, {filter})
         .then(result => {
           resolve(result.data);
         }, error => {
@@ -72,6 +71,18 @@ export class CertificateService {
   cellCertificate(certificateId) {
     return new Promise((resolve, reject) => {
       this.$http.delete(this.appConst.API + 'certificate/cell/' + certificateId)
+        .then(result => {
+          resolve(result.data);
+        }, error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+
+  updateOrder(limit, page, orderIndexes) {
+    return new Promise((resolve, reject) => {
+      this.$http.post(this.appConst.API + 'certificate/updateOrder/' + limit + '/' + page, {orderIndexes})
         .then(result => {
           resolve(result.data);
         }, error => {

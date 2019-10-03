@@ -44,8 +44,11 @@ export class AuthService {
   requireAuthentication() {
     return new Promise((resolve, reject) => {
       this.$http.post(this.appConst.API + 'auth/requireAuthentication')
-        .then(result => this.storeAuthData(result.data))
-        .then(resolve);
+        .then(result => {
+          this.storeAuthData(result.data);
+          resolve();
+        })
+        .catch(() => reject());
     });
   }
 
