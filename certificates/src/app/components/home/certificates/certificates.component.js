@@ -108,18 +108,19 @@ export const certificatesComponent = {
       }
     }
 
-    onStopSortable(event, ui) {
+    async onStopSortable(event, ui) {
       const orderIndexesToUpdate = [];
-      for(let i=0; i<this.orderIndexes.length; i++) {
-        if(this.orderIndexes[i].certificate._id !== this.items[i]._id) {
+      for (let i = 0; i < this.orderIndexes.length; i++) {
+        if (this.orderIndexes[i].certificate._id !== this.items[i]._id) {
           orderIndexesToUpdate.push({
             _id: this.orderIndexes[i]._id,
             certificateId: this.items[i]._id
           });
+          // this.orderIndexes[i].certificate = this.items[i];
         }
       }
 
-      this.certificateService.updateOrder(
+      await this.certificateService.updateOrder(
         this.pagerProps.pageSize,
         this.pagerProps.page,
         orderIndexesToUpdate);

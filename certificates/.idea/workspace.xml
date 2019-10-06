@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53024702-428b-4b92-9b25-58addf97ab23" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../certificates-back/src/models/order-index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../certificates-back/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../certificates-back/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../certificates-back/src/routes/certificates.js" beforeDir="false" afterPath="$PROJECT_DIR$/../certificates-back/src/routes/certificates.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../certificates-back/src/util/filter-builder.js" beforeDir="false" afterPath="$PROJECT_DIR$/../certificates-back/src/util/filter-builder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/auth/auth.module.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/auth/auth.module.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/auth/auth.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/auth/auth.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/home/certificate.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/home/certificate.service.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/home/certificates/certificates.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/home/certificates/certificates.component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/home/certificates/certificates.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/home/certificates/certificates.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,10 +21,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/components/home/certificates/certificates.component.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1744">
-              <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+            <state relative-caret-position="128">
+              <caret line="113" column="26" lean-forward="true" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="26" />
               <folding>
-                <marker date="1570135022606" expanded="true" signature="1911:2222" ph="..." />
+                <marker date="1570177281738" expanded="true" signature="1911:2222" ph="..." />
               </folding>
             </state>
           </provider>
@@ -39,7 +33,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/components/home/certificates/certificates.module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
+            <state relative-caret-position="106">
               <caret line="29" column="20" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="20" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
@@ -49,19 +43,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/components/home/certificate.service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="78" column="11" lean-forward="true" selection-start-line="78" selection-start-column="11" selection-end-line="78" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/components/home/certificates/certificates.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="18" column="21" lean-forward="true" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+            <state relative-caret-position="288">
+              <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
               <folding>
                 <element signature="n#style#0;n#certificate#0;n#div#3;n#!!top" expanded="true" />
               </folding>
@@ -72,8 +57,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/components/auth/auth.module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            <state relative-caret-position="160">
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -93,7 +78,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/components/auth/auth.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
+            <state relative-caret-position="752">
               <caret line="47" column="26" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
             </state>
           </provider>
@@ -102,7 +87,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/components/home/certificate/certificate.component.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-78">
+            <state relative-caret-position="624">
               <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
             </state>
           </provider>
@@ -135,7 +120,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>loader</find>
       <find>demo</find>
       <find>appendTo</find>
       <find>ng-rea</find>
@@ -165,6 +149,7 @@
       <find>logout</find>
       <find>onCertificateProductChange</find>
       <find>otherwise</find>
+      <find>updateOrder</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Dmitriy\Desktop\git\certificates\src\app\components\home\certificates</dir>
@@ -232,7 +217,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="697" />
     <option name="height" value="735" />
@@ -243,7 +228,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -455,13 +439,14 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../angular-1-5-components-app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../certificates-back" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -544,16 +529,16 @@
       <workItem from="1569918397016" duration="19460000" />
       <workItem from="1570020631261" duration="8707000" />
       <workItem from="1570096844416" duration="957000" />
-      <workItem from="1570112576196" duration="14574000" />
+      <workItem from="1570112576196" duration="15418000" />
+      <workItem from="1570176764933" duration="1132000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="459501000" />
+    <option name="totallyTimeSpent" value="461477000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4991274" visible="true" weight="0.2157738" />
       <window_info id="Structure" order="1" sideWeight="0.5008726" side_tool="true" weight="0.18303572" />
@@ -569,7 +554,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.48608837" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5066964" side_tool="true" weight="0.58101475" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49330357" visible="true" weight="0.049099836" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49330357" visible="true" weight="0.29787233" />
       <window_info anchor="bottom" id="TypeScript" order="11" weight="0.3289689" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -907,13 +892,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/components/auth/login/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/common/constants/state.constant.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -921,26 +899,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/components/home/certificates/certificates.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+          <folding>
+            <element signature="n#style#0;n#certificate#0;n#div#3;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/auth/auth.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        <state relative-caret-position="160">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/components/auth/login/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/auth/auth.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
+        <state relative-caret-position="752">
           <caret line="47" column="26" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/home/certificate/certificate.component.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-78">
+        <state relative-caret-position="624">
           <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
         </state>
       </provider>
@@ -964,9 +959,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/components/home/certificate.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="82" column="2" selection-start-line="82" selection-start-column="2" selection-end-line="82" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/home/certificates/certificates.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
+        <state relative-caret-position="106">
           <caret line="29" column="20" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="20" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
@@ -974,29 +976,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/components/home/certificates/certificates.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="18" column="21" lean-forward="true" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-          <folding>
-            <element signature="n#style#0;n#certificate#0;n#div#3;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/components/home/certificate.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="78" column="11" lean-forward="true" selection-start-line="78" selection-start-column="11" selection-end-line="78" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/home/certificates/certificates.component.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1744">
-          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+        <state relative-caret-position="128">
+          <caret line="113" column="26" lean-forward="true" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="26" />
           <folding>
-            <marker date="1570135022606" expanded="true" signature="1911:2222" ph="..." />
+            <marker date="1570177281738" expanded="true" signature="1911:2222" ph="..." />
           </folding>
         </state>
       </provider>

@@ -95,6 +95,9 @@ router.delete('/cell/:id', permit("ADMIN"), async (request, response) => {
     }
 });
 
+/**
+ * Initial fun to init values
+ */
 router.post('/order', async (request, response) => {
     const user = await User.findById(request.userId)
         .catch(error => handleError(error, response));
