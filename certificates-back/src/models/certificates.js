@@ -7,13 +7,6 @@ const certificateSchema = mongoose.Schema({
     description: {type: String, required: true},
     cost: {type: Number, required: true},
     tags: [{ type: String,  unique: true }],
-    owners: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'user'
-        }
-    ]
 });
 
 module.exports = mongoose.model('certificate', certificateSchema);

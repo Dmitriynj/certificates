@@ -20,19 +20,6 @@ export class CertificateService {
     });
   }
 
-  paginateCertificates(limit, offset, filter) {
-    return new Promise((resolve, reject) => {
-      this.$http.post(
-        this.appConst.API + 'certificate/paginate/' + limit + '/' + offset, { filter })
-        .then(result => {
-          resolve(result.data);
-        }, error => {
-          console.log(error);
-          reject(error);
-        });
-    });
-  }
-
   updateCertificate(certificate) {
     return new Promise((resolve, reject) => {
       this.$http.patch(this.appConst.API + 'certificate/' + certificate._id, certificate)
@@ -44,21 +31,9 @@ export class CertificateService {
     });
   }
 
-  filterUserCertificates(limit, page, filter) {
-    return new Promise((resolve, reject) => {
-      this.$http.post(this.appConst.API + 'usercertificate/filter/' + limit + '/' + page, {filter})
-        .then(result => {
-          resolve(result.data);
-        }, error => {
-          console.log(error);
-          reject(error);
-        })
-    });
-  }
-
   buyCertificate(certificateId) {
     return new Promise((resolve, reject) => {
-      this.$http.post(this.appConst.API + 'certificate/buy/' + certificateId)
+      this.$http.post(this.appConst.API + 'order/' + certificateId)
         .then(result => {
           resolve(result.data);
         }, error => {
@@ -70,7 +45,7 @@ export class CertificateService {
 
   cellCertificate(certificateId) {
     return new Promise((resolve, reject) => {
-      this.$http.delete(this.appConst.API + 'certificate/cell/' + certificateId)
+      this.$http.delete(this.appConst.API + 'order/' + certificateId)
         .then(result => {
           resolve(result.data);
         }, error => {
@@ -80,9 +55,21 @@ export class CertificateService {
     });
   }
 
-  updateOrder(limit, page, orderIndexes) {
+  updateOrder(limit, page, orderedItems) {
     return new Promise((resolve, reject) => {
-      this.$http.post(this.appConst.API + 'certificate/updateOrder/' + limit + '/' + page, {orderIndexes})
+      this.$http.post(this.appConst.API + 'certificate/updateOrder/' + limit + '/' + page, {orderedItems})
+        .then(result => {
+          resolve(result.data);
+        }, error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+
+  delete(certificateId) {
+    return new Promise((resolve, reject) => {
+      this.$http.delete(this.appConst.API + 'certificate/' + certificateId)
         .then(result => {
           resolve(result.data);
         }, error => {

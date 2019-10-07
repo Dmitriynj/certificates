@@ -30,12 +30,12 @@ function config($stateProvider, stateConst, componentConst, appConst) {
         requiredAuth: true,
       },
       resolve: {
-        certificatesData: certificatesData,
+        cData: cData,
       }
     });
 
-  certificatesData.$inject = ['CertificateService'];
-  async function certificatesData(CertificateService) {
+  cData.$inject = ['CertificateService'];
+  async function cData(CertificateService) {
     return await CertificateService.filterCertificates(
       appConst.CERTIFICATES_PAGE_SIZE,
       appConst.START_PAGE,

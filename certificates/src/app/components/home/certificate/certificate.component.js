@@ -2,7 +2,7 @@ export const certificateComponent = {
   bindings: {
     certificate: '<',
     onAddTag: '&',
-    onCertificateProductChange: '&',
+    onCertificateChange: '&',
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
@@ -51,11 +51,8 @@ export const certificateComponent = {
         component: this.componentConst.CONFIRM_MODAL,
         resolve: {bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE'},
       }).result.then(async result => {
-        const response = await this.certificateService.buyCertificate(this.certificate._id);
-        this.certificate.isOwned = true;
-        this.onCertificateProductChange({
-          $event: {haveOwnCertificates: response.haveCertificates}
-        });
+        await this.certificateService.buyCertificate(this.certificate._id);
+        this.onCertificateChange();
       }, error => {
       });
     }
@@ -65,12 +62,8 @@ export const certificateComponent = {
         component: this.componentConst.CONFIRM_MODAL,
         resolve: {bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE'}
       }).result.then(async result => {
-        const response = await this.certificateService.cellCertificate(this.certificate._id);
-        this.certificate.isOwned = false;
-        this.onCertificateProductChange(
-          {
-            $event: {haveOwnCertificates: response.haveCertificates}
-          });
+        await this.certificateService.cellCertificate(this.certificate._id);
+        this.onCertificateChange();
       }, error => {
       });
     }
@@ -79,10 +72,9 @@ export const certificateComponent = {
       this.$uibModal.open({
         component: this.componentConst.CONFIRM_MODAL,
         resolve: {bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE'}
-      }).result.then(result => {
-        // this.certificateService.delete(this.certificate.id).then(() => {
-        //   this.onDelete();
-        // });
+      }).result.then(async result => {
+        await this.certificateService.delete(this.certificate._id);
+        this.onCertificateChange();
       }, error => {
       });
     }

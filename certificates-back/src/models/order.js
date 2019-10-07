@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-const orderIndexSchema = mongoose.Schema({
+const orderSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    index: Number,
     certificate:  {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -15,4 +14,4 @@ const orderIndexSchema = mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('order-index', orderIndexSchema);
+module.exports = mongoose.model('order', orderSchema);

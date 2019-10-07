@@ -1,6 +1,6 @@
 export const certificatesComponent = {
   bindings: {
-    certificatesData: '<',
+    cData: '<',
   },
   template: require('./certificates.html'),
   controller: class CertificatesComponent {
@@ -16,12 +16,13 @@ export const certificatesComponent = {
     }
 
     $onInit() {
-      this.orderIndexes = this.certificatesData.orderIndexes;
-      this.items = this.certificatesData.orderIndexes.map(item => item.certificate);
-      this.haveOwnCertificates = this.certificatesData.haveCertificates;
+      this.orderedItems = this.cData.orderedItems;
+      this.items = this.cData.orderedItems.map(item => item.certificate);
+      this.haveOwnCertificates = this.cData.haveCertificates;
+      this.number = this.cData.number;
 
       this.pagerProps = {
-        number: this.certificatesData.number,
+        number: this.number,
         pageSize: this.appConst.CERTIFICATES_PAGE_SIZE,
         currentPage: this.appConst.START_PAGE,
       };
@@ -78,52 +79,45 @@ export const certificatesComponent = {
     }
 
     async filterCertificates() {
-      this.certificatesData = await this.certificateService.filterCertificates(
+      this.cData = await this.certificateService.filterCertificates(
         this.pagerProps.pageSize,
         this.pagerProps.currentPage,
         this.filter);
 
-      this.orderIndexes = this.certificatesData.orderIndexes;
-      this.items = this.certificatesData.orderIndexes.map(item => item.certificate);
-      this.pagerProps.number = this.certificatesData.number;
+      this.orderedItems = this.cData.orderedItems;
+      this.items = this.cData.orderedItems.map(item => item.certificate);
+      this.haveOwnCertificates = this.cData.haveCertificates;
+      this.number = this.cData.number;
 
       this.pagerProps = {
-        number: this.pagerProps.number,
+        number:  this.number,
         pageSize: this.pagerProps.pageSize,
         currentPage: this.pagerProps.currentPage
       };
     }
 
-    onCertificateProductChange(event, certificate) {
-      this.haveOwnCertificates = event.haveOwnCertificates;
-      if (this.filter.my) {
-        const index = this.items.indexOf(certificate);
-        if (index > -1) {
-          this.items.splice(index, 1);
-        }
-      }
-      if (!this.haveOwnCertificates && this.filter.my) {
-        this.filter.my = false;
-        this.filterCertificates();
-      }
-    }
-
     async onStopSortable(event, ui) {
-      const orderIndexesToUpdate = [];
-      for (let i = 0; i < this.orderIndexes.length; i++) {
-        if (this.orderIndexes[i].certificate._id !== this.items[i]._id) {
-          orderIndexesToUpdate.push({
-            _id: this.orderIndexes[i]._id,
+      const orderedItemsToUpdate = [];
+      for (let i = 0; i < this.orderedItems.length; i++) {
+        const oldCertificateId = this.orderedItems[i].certificate._id;
+        const newCertificateId = this.items[i]._id;
+        if (oldCertificateId  !== newCertificateId) {
+          orderedItemsToUpdate.push({
+            _id: this.orderedItems[i]._id,
             certificateId: this.items[i]._id
           });
-          // this.orderIndexes[i].certificate = this.items[i];
+          this.orderedItems[i].certificate = this.items[i];
         }
       }
 
       await this.certificateService.updateOrder(
         this.pagerProps.pageSize,
         this.pagerProps.page,
-        orderIndexesToUpdate);
+        orderedItemsToUpdate);
+    }
+
+    onCertificateChange() {
+      this.filterCertificates();
     }
   }
 };

@@ -51,8 +51,7 @@
 <div class="card-deck mt-3" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.items">
   <certificate certificate="certificate"
                on-add-tag="$ctrl.addQueryTag($event);"
-               on-buy-certificate="$ctrl.onCertificateProductChange($event);"
-               on-certificate-product-change="$ctrl.onCertificateProductChange($event, certificate);"
+               on-certificate-change="$ctrl.onCertificateChange();"
                class="m-3"
                style="cursor: move;"
                ng-repeat="certificate in $ctrl.items">

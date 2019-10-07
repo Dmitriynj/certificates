@@ -20,5 +20,16 @@ config.$inject = ['$stateProvider', 'stateConst', 'componentConst'];
       data: {
         requireAdmin: true,
       },
+      resolve: {
+        cData
+      }
     });
+
+    cData.$inject = ['CertificateService'];
+    async function cData(CertificateService) {
+      return await CertificateService.filterCertificates(
+        appConst.CERTIFICATES_PAGE_SIZE,
+        appConst.START_PAGE,
+        {});
+    }
 }
