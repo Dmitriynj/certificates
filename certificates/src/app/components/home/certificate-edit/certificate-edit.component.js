@@ -1,6 +1,6 @@
 export const certificateEditComponent = {
   bindings: {
-    certificateId: '<',
+    certificate: '<',
   },
   template: require('./certificate-edit.html'),
   controller: class CertificateEditComponent {
@@ -14,10 +14,12 @@ export const certificateEditComponent = {
       this.stateConst = stateConst;
     }
 
-    updateCertificate(event) {
-      this.certificateService.update(event.certificate).then((response) => {
-        this.$state.go(this.stateConst.CERTIFICATES.name);
-      });
+    $onInit() {
+    }
+
+    async updateCertificate(event) {
+      await this.certificateService.update(event.certificate);
+      this.$state.go(this.stateConst.CERTIFICATES.name);
     }
   }
 };

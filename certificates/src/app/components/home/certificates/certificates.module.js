@@ -36,7 +36,7 @@ function config($stateProvider, stateConst, componentConst, appConst) {
 
   cData.$inject = ['CertificateService'];
   async function cData(CertificateService) {
-    return await CertificateService.filterCertificates(
+    return await CertificateService.getFiltered(
       appConst.CERTIFICATES_PAGE_SIZE,
       appConst.START_PAGE,
       {});

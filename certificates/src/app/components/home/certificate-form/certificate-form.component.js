@@ -1,5 +1,6 @@
 export const certificateFormComponent = {
   bindings: {
+    certificate: '<',
     buttonName: '<',
     actionName: '<',
     onSubmit: '&',
@@ -17,18 +18,7 @@ export const certificateFormComponent = {
     }
 
     $onInit() {
-      this.certificateService.getById(this.$stateParams.certificateId)
-        .then((response) => {
-          this.certificate = response;
-        }, error => {
-          this.certificate = {
-            cost: 0,
-            title: '',
-            description: '',
-            tags: [],
-          };
-        })
-        .finally(() => {
+
           this.titleFieldModel = {
             fieldNameKey: 'TITLE',
             fieldType: 'text',
@@ -49,7 +39,7 @@ export const certificateFormComponent = {
             fieldNameKey: 'DESCRIPTION',
             fieldType: 'text',
             fieldValue: this.certificate.description,
-            minlength: 1000,
+            maxlength: 1000,
             required: true,
             haveCustomFun: false,
           };
@@ -61,7 +51,6 @@ export const certificateFormComponent = {
             pattern: '^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$',
             haveCustomFun: false,
           };
-        });
     }
 
     addTag() {

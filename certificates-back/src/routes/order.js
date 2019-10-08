@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Order = require('../models/order');
-const Certificate = require('../models/certificates');
 const HttpStatus = require('http-status-codes');
 const router = express.Router();
 const handleError = require('../util/handle-error');

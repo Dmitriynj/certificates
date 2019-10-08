@@ -33,10 +33,14 @@ router.post('/register', (request, response) => {
         let user = new User(request.body);
         user._id = new mongoose.Types.ObjectId();
         user.role = 'USER';
-        bCrypt.hash(user.password, saltRounds, function (error, hash) {
+        bCrypt.hash(user.password, saltRounds, async function (error, hash) {
             user.password = hash;
-            user.save(result => response.status(HttpStatus.OK).send())
-                .catch(error => handleError(error, response));
+            try {
+                await user.save();
+                response.status(HttpStatus.OK).send();
+            } catch (error) {
+                handleError(error, response);
+            }
         });
     });
 });

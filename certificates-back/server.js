@@ -5,6 +5,7 @@ const cors = require('cors');
 const certificateRoute = require('./src/routes/certificates');
 const authRoute = require('./src/routes/authentication');
 const orderRoute = require('./src/routes/order');
+const orderItemRoute = require('./src/routes/ordered-item');
 const db = require('./src/config/db');
 const morgan = require('morgan');
 const HttpStatus = require('http-status-codes');
@@ -20,6 +21,7 @@ app.use(cors());
 app.use('/auth', authRoute);
 app.use('/certificate', certificateRoute);
 app.use('/order', orderRoute);
+app.use('/orderitem', orderItemRoute);
 
 app.use((request, response, next) => {
     const error = new Error('Not found');

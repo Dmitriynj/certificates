@@ -2,18 +2,21 @@ export const certificateComponent = {
   bindings: {
     certificate: '<',
     onAddTag: '&',
-    onCertificateChange: '&',
+    onBuyCertificate: '&',
+    onCellCertificate: '&',
+    onDeleteCertificate: '&'
   },
   template: require('./certificate.html'),
   controller: class CertificateComponent {
-    static $inject = ['$state', '$uibModal', 'AuthService', 'CertificateService', 'stateConst', 'componentConst'];
+    static $inject = ['$state', '$uibModal', 'AuthService', 'CertificateService', 'OrderService', 'stateConst', 'componentConst'];
 
-    constructor($state, $uibModal, AuthService, CertificateService, stateConst, componentConst) {
+    constructor($state, $uibModal, AuthService, CertificateService, OrderService, stateConst, componentConst) {
 
       this.$state = $state;
       this.$uibModal = $uibModal;
       this.authService = AuthService;
       this.certificateService = CertificateService;
+      this.orderService = OrderService;
       this.stateConst = stateConst;
       this.componentConst = componentConst;
     }
@@ -36,10 +39,11 @@ export const certificateComponent = {
       });
     }
 
-    async updateTags(event) {
+    async onUpdateTags(event) {
       this.certificate.tags = event.tags;
-      this.certificate = await this.certificateService.updateCertificate(this.certificate);
-      console.log(this.certificate);
+      try{
+        await this.certificateService.update(this.certificate);
+      } catch(error) { }
     }
 
     edit() {
@@ -51,8 +55,15 @@ export const certificateComponent = {
         component: this.componentConst.CONFIRM_MODAL,
         resolve: {bodyMessageKey: () => 'BUY_CONFIRM_MESSAGE'},
       }).result.then(async result => {
-        await this.certificateService.buyCertificate(this.certificate._id);
-        this.onCertificateChange();
+        try {
+          await this.orderService.buyCertificate(this.certificate._id);
+          this.certificate.isOwned = true;
+          this.onBuyCertificate({
+            $event: {
+              _id: this.certificate._id
+            }
+          });
+        } catch(error) {}
       }, error => {
       });
     }
@@ -62,8 +73,15 @@ export const certificateComponent = {
         component: this.componentConst.CONFIRM_MODAL,
         resolve: {bodyMessageKey: () => 'CELL_CONFIRM_MESSAGE'}
       }).result.then(async result => {
-        await this.certificateService.cellCertificate(this.certificate._id);
-        this.onCertificateChange();
+        try {
+          this.orderService.cellCertificate(this.certificate._id);
+          this.certificate.isOwned = false;
+          this.onCellCertificate({
+            $event: {
+                _id: this.certificate._id
+            }
+          });
+        } catch(error) { }
       }, error => {
       });
     }
@@ -73,8 +91,9 @@ export const certificateComponent = {
         component: this.componentConst.CONFIRM_MODAL,
         resolve: {bodyMessageKey: () => 'DELETE_CONFIRM_MESSAGE'}
       }).result.then(async result => {
-        await this.certificateService.delete(this.certificate._id);
-        this.onCertificateChange();
+        this.certificateService.delete(this.certificate._id)
+          .then(this.onDeleteCertificate)
+          .catch(error => {});
       }, error => {
       });
     }

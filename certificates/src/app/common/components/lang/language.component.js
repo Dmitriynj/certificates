@@ -1,6 +1,4 @@
 export const languageComponent = {
-  bindings: {
-  },
   template: require('./language.html'),
   controller: class LanguageComponent {
     static $inject = ['$translate', '$localStorage'];

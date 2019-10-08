@@ -5,6 +5,8 @@ import { certificateAdd } from './certificate-add/certificate-add.module';
 import { certificateEdit } from "./certificate-edit/certificate-edit.module";
 import { certificateTag } from './certificate-tag/certificate-tag.module';
 import { CertificateService } from './certificate.service';
+import {OrderService} from "./order.service";
+import {OrderItemService} from "./order-item.service";
 
 export const home = angular
   .module('components.home', [
@@ -16,5 +18,7 @@ export const home = angular
     certificateTag,
   ])
   .service('CertificateService', CertificateService)
+  .service('OrderService', OrderService)
+  .service('OrderItemService', OrderItemService)
   .name;
 

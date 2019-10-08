@@ -21,15 +21,12 @@ config.$inject = ['$stateProvider', 'stateConst', 'componentConst'];
         requireAdmin: true,
       },
       resolve: {
-        cData
+        certificate: cData
       }
     });
 
-    cData.$inject = ['CertificateService'];
-    async function cData(CertificateService) {
-      return await CertificateService.filterCertificates(
-        appConst.CERTIFICATES_PAGE_SIZE,
-        appConst.START_PAGE,
-        {});
+    cData.$inject = ['CertificateService', '$stateParams'];
+    async function cData(CertificateService, $stateParams) {
+      return await CertificateService.get($stateParams.certificateId);
     }
 }

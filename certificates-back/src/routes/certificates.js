@@ -2,14 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const Certificate = require('../models/certificates');
-const User = require('../models/user');
 const OrderedItem = require('../models/ordered-item');
 const Order = require('../models/order');
 const HttpStatus = require('http-status-codes');
 const handleError = require('../util/handle-error');
 const checkAuthenticated = require('../middleware/check-athenticated');
 const buildFilter = require('../util/filter-builder').buildFilter;
-const permit = require('../middleware/permission');
 
 router.use(checkAuthenticated);
 
@@ -30,80 +28,40 @@ router.post('/', (request, response) => {
             .json({error: error}));
 });
 
-router.get('/:id', (request, response) => {
-    Certificate.findById(request.params.id)
-        .exec()
-        .then(doc => response.status(HttpStatus.OK).json(doc))
-        .catch(error => response.status(HttpStatus.NOT_FOUND).json(error));
+router.get('/:id', async (request, response) => {
+    try {
+        const certificate = await Certificate.findById(mongoose.Types.ObjectId(request.params.id))
+            .exec();
+        response.status(HttpStatus.OK).send(certificate);
+    } catch (error) {
+        handleError(error, response);
+    }
 });
 
 router.delete('/:id', async (request, response) => {
     try {
         const certificateId = mongoose.Types.ObjectId(request.params.id);
-        await Order.remove({certificate: certificateId});
-        await OrderedItem.remove({certificate: certificateId});
-        await Certificate.remove({_id: certificateId});
+        await Order.deleteMany({certificate: certificateId});
+        await OrderedItem.deleteMany({certificate: certificateId});
+        await Certificate.deleteOne({_id: certificateId});
         response.status(HttpStatus.OK).send();
     } catch (error) {
         handleError(error, response);
     }
 });
 
-router.patch('/:id', (request, response) => {
-    Certificate.findOneAndUpdate({_id: request.params.id}, request.body, {new: true}, (result) => {
-        response.status(HttpStatus.OK).json(result);
-    }).catch(error => handleError(error, response));
+router.patch('/:id', async (request, response) => {
+    try {
+        console.log(request.params.id);
+        console.log(request.body);
+        await Certificate.findOneAndUpdate({_id: mongoose.Types.ObjectId(request.params.id)}, request.body, {new: true});
+        response.status(HttpStatus.OK).send();
+    } catch (error) {
+        handleError(error, response);
+    }
 });
 
-/**
- * Initial fun to init values
- */
-router.post('/order', async (request, response) => {
-    const user = await User.findById(request.userId)
-        .catch(error => handleError(error, response));
-
-    const certificates = await Certificate.find({})
-        .exec()
-        .catch(error => handleError(error, response));
-
-    console.log(user);
-    console.log(certificates.length);
-
-    certificates.forEach((certificate, index) => {
-        const orderedItem = new OrderedItem({
-            _id: mongoose.Types.ObjectId(),
-            index: index,
-            certificate: certificate,
-            user: user,
-        });
-        orderedItem.save();
-    });
-
-    response.status(HttpStatus.OK).send();
-});
-
-router.post('/updateOrder/:limit/:page', async (request, response) => {
-    const orderedItems = request.body.orderedItems;
-
-    console.log(orderedItems);
-
-    orderedItems.forEach(async orderedItem => {
-        await OrderedItem.update(
-            {
-                _id: mongoose.Types.ObjectId(orderedItem._id)
-            },
-            {
-                $set: {
-                    certificate: mongoose.Types.ObjectId(orderedItem.certificateId)
-                }
-            })
-            .catch(error => handleError(error, response));
-    });
-
-    response.status(HttpStatus.OK).send();
-});
-
-router.post('/ordered/:limit/:page', async (request, response) => {
+router.post('/filter/:limit/:page', async (request, response) => {
     const filter = buildFilter(request.body.filter, request.userId);
 
     try {

@@ -6,13 +6,6 @@ export const formFieldComponent = {
   },
   template: require('./form-field.html'),
   controller: class EditableFieldComponent {
-    static $inject = [];
-
-    constructor() {
-    }
-
-    $onInit() {
-    }
 
     $onChanges(changes) {
       if (changes.fieldModel) {

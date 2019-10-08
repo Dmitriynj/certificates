@@ -4,14 +4,15 @@ export const certificatesComponent = {
   },
   template: require('./certificates.html'),
   controller: class CertificatesComponent {
-    static $inject = ['$filter', '$stateParams', '$state', 'CertificateService', 'appConst'];
+    static $inject = ['$filter', '$stateParams', '$state', 'CertificateService', 'OrderItemService', 'appConst'];
 
-    constructor($filter, $stateParams, $state, CertificateService, appConst) {
+    constructor($filter, $stateParams, $state, CertificateService, OrderItemService, appConst) {
 
       this.$filter = $filter;
       this.$stateParams = $stateParams;
       this.$state = $state;
       this.certificateService = CertificateService;
+      this.orderItemService = OrderItemService;
       this.appConst = appConst;
     }
 
@@ -79,7 +80,7 @@ export const certificatesComponent = {
     }
 
     async filterCertificates() {
-      this.cData = await this.certificateService.filterCertificates(
+      this.cData = await this.certificateService.getFiltered(
         this.pagerProps.pageSize,
         this.pagerProps.currentPage,
         this.filter);
@@ -90,7 +91,7 @@ export const certificatesComponent = {
       this.number = this.cData.number;
 
       this.pagerProps = {
-        number:  this.number,
+        number: this.number,
         pageSize: this.pagerProps.pageSize,
         currentPage: this.pagerProps.currentPage
       };
@@ -101,7 +102,7 @@ export const certificatesComponent = {
       for (let i = 0; i < this.orderedItems.length; i++) {
         const oldCertificateId = this.orderedItems[i].certificate._id;
         const newCertificateId = this.items[i]._id;
-        if (oldCertificateId  !== newCertificateId) {
+        if (oldCertificateId !== newCertificateId) {
           orderedItemsToUpdate.push({
             _id: this.orderedItems[i]._id,
             certificateId: this.items[i]._id
@@ -110,13 +111,32 @@ export const certificatesComponent = {
         }
       }
 
-      await this.certificateService.updateOrder(
+      await this.orderItemService.updateOrder(
         this.pagerProps.pageSize,
         this.pagerProps.page,
         orderedItemsToUpdate);
     }
 
-    onCertificateChange() {
+    onBuyCertificate(event) {
+      if (!this.haveOwnCertificates) {
+        this.haveOwnCertificates = true;
+      }
+    }
+
+    onCellCertificate(event) {
+      if (this.filter.my) {
+        this.orderedItems = this.orderedItems.filter(item => item.certificate._id !== event._id);
+        if (this.orderedItems.length === 0) {
+          this.filter.my = false;
+          this.filterCertificates();
+        }
+        this.items = this.orderedItems.map(item => item.certificate);
+      } else {
+        this.filterCertificates();
+      }
+    }
+
+    onDeleteCertificate() {
       this.filterCertificates();
     }
   }
